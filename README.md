@@ -1,159 +1,129 @@
-# NexusAI — Full-Stack V4 — Campus Career Copilot
+# NexusAI — Campus Placement Portal
 
-NexusAI is a full-stack campus placement management and intelligent resume screening platform built around the supplied NexusAI HTML/CSS frontend.
+NexusAI is a **full-stack campus placement management and intelligent resume screening system** designed to connect students and recruiters through a single platform.
 
-## Stack
-- Frontend: HTML5, CSS3, JavaScript-ready Django templates
-- Backend: Python + Django
-- API: Django JSON endpoints / Django REST Framework dependency
-- Database: MySQL
-- Resume parsing: PyMuPDF + pypdf fallback + python-docx
-- Production static files: WhiteNoise
-- Production server: Gunicorn
-
-## Main workflows
+## 🚀 Features
 
 ### Student
-1. Register / login
-2. Maintain profile
-3. Browse and search campus jobs
-4. Review eligibility
-5. Apply to jobs
-6. Track applications and statuses
-7. Upload PDF/DOCX resume
-8. Run ATS-style skill analysis
-9. Practice aptitude, coding and assessment content
-10. Complete an AI mock interview and receive stored feedback
+- Register and login
+- Create and manage profile
+- Browse campus job opportunities
+- Check job eligibility
+- Apply for jobs
+- Track application status
+- Upload PDF/DOCX resumes
+- Resume ATS analysis with matched and missing keywords
+- Aptitude and coding practice
+- Mock interview and feedback
 
 ### Recruiter
-1. Register / login
-2. Manage recruiter profile
-3. Publish campus drives
-4. See live applicant counts
-5. Review candidates
-6. Move applications through screening / shortlist / interview / selected / rejected
-7. Review candidate dossiers with ATS, job-match and test history
-8. Shortlist candidates and move applications through the hiring pipeline
-9. Schedule technical, HR or behavioral interviews
-10. Provide an optional Google Meet/Zoom link or use the NexusAI interview response room
-11. Evaluate technical, communication and problem-solving skills
-12. Record feedback and choose next round / selected / not selected
-13. Search student profiles and view pipeline analytics
+- Recruiter registration and login
+- Create and manage job drives
+- View applicants
+- Review candidate profiles and resumes
+- ATS-based candidate screening
+- Shortlist candidates
+- Schedule interviews
+- Record interview feedback
+- Manage candidate application status
 
-## Local setup
+## 🛠️ Technologies
 
-### 1. Create MySQL database
+- **Frontend:** HTML5, CSS3, JavaScript
+- **Backend:** Python, Django
+- **Database:** MySQL
+- **Resume Processing:** PyMuPDF, pypdf, python-docx
+- **AI/Screening:** Local resume analysis and keyword matching
+- **Server:** Gunicorn
+- **Deployment:** Render
 
-```sql
-CREATE DATABASE nexusai CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+## 📁 Project Structure
+
+```text
+NexusAI/
+├── core/
+├── nexus/
+├── templates/
+├── static/
+├── manage.py
+├── requirements.txt
+├── .env.example
+├── Procfile
+└── README.md
 ```
 
-### 2. Create environment file
+## ⚙️ Setup
 
-Copy `.env.example` to `.env` and fill in the MySQL credentials.
+### 1. Clone the repository
 
-Never commit `.env`.
+```bash
+git clone https://github.com/Deepshika-2006/NexusAI-Campus-Placement-portal.git
+cd NexusAI-Campus-Placement-portal
+```
+
+### 2. Create virtual environment
+
+```bash
+python -m venv venv
+```
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
 
 ### 3. Install dependencies
 
-Windows PowerShell:
-
-```powershell
-python -m venv venv
-venv\Scripts\Activate.ps1
+```bash
 pip install -r requirements.txt
 ```
 
-### 4. Apply migrations
+### 4. Configure MySQL
 
-```powershell
+Create a MySQL database and configure the credentials in `.env`.
+
+```env
+DB_NAME=nexusai_final
+DB_USER=root
+DB_PASSWORD=
+DB_HOST=127.0.0.1
+DB_PORT=3306
+```
+
+Keep your actual `.env` file private.
+
+### 5. Run migrations
+
+```bash
 python manage.py migrate
 ```
 
-### 5. Create admin
+### 6. Start the server
 
-```powershell
-python manage.py createsuperuser
-```
-
-### 6. Optional demo data
-
-```powershell
-python manage.py seed_demo
-```
-
-Demo accounts:
-- Student: `student_demo@nexusai.local` / `Student@123`
-- Recruiter: `recruiter_demo` / `Recruiter@123`
-
-Change these credentials for any real deployment.
-
-### 7. Run
-
-```powershell
+```bash
 python manage.py runserver
 ```
 
 Open:
 
-`http://127.0.0.1:8000/`
-
-## Recruiter-to-student interview workflow
-
-1. Recruiter opens **Candidates** and clicks **Review**.
-2. Recruiter checks the candidate profile, ATS score, calculated job match and stored test results.
-3. Recruiter changes the application to **Shortlisted**.
-4. Recruiter clicks **Schedule Interview**, selects technical/HR/behavioral, date/time, duration, optional meeting link and interview prompt.
-5. The application automatically moves to **Interview** and the student sees the round under **Applications → Interview Center** and on the dashboard.
-6. The student can open the NexusAI interview room, submit a response and optionally open the recruiter meeting link.
-7. Recruiter opens the interview record, reviews the response, scores Technical / Communication / Problem Solving from 0–10, writes feedback and chooses **Next Round**, **Selected** or **Not Selected**.
-8. NexusAI stores the evaluation and updates the application status.
-
-The interview workflow is an application-management and interview-room feature; it does not claim to provide built-in video conferencing. For a live call, paste a Google Meet, Microsoft Teams or Zoom link into the meeting-link field.
-
-
-## V4 interview workflow fixes
-
-- Recruiter evaluation is locked until the candidate submits an interview response.
-- Zero scores can no longer be mistaken for an unanswered interview.
-- Recruiter Candidates shows the latest interview state and whether a response has been received.
-- Student Applications shows the latest interview status, response state, score and recruiter decision.
-- Existing `RecruiterInterview` migration `0005_recruiter_interview` remains unchanged; no new migration is required for V4.
-
-## Production
-
-Set:
-- `DEBUG=False`
-- strong `SECRET_KEY`
-- production `ALLOWED_HOSTS`
-- `CSRF_TRUSTED_ORIGINS`
-- production MySQL credentials
-
-Then:
-
-```bash
-pip install -r requirements.txt
-python manage.py migrate --noinput
-python manage.py collectstatic --noinput
-gunicorn nexus.wsgi:application
+```text
+http://127.0.0.1:8000/
 ```
 
-The project includes `Procfile`, `build.sh`, and `render.yaml` as deployment starting points.
+## 🔐 Security
 
-## Important implementation note
+- `.env` is excluded from GitHub.
+- Never commit API keys or passwords.
+- Use a strong Django `SECRET_KEY` for deployment.
+- Configure production database credentials securely.
 
-The ATS module is a deterministic keyword-based screening engine, not a claim of a connected commercial LLM. It extracts text from PDF/DOCX files, compares detected skills with a maintained skill library, stores the score and matched/missing skills, and uses the stored result for role matching.
+## 🎯 Project Goal
 
-Email password-reset delivery requires SMTP credentials. The current recovery workflow validates the account and provides a deployment configuration message rather than pretending an email was sent.
+NexusAI aims to simplify campus recruitment by providing students with **job discovery, application tracking, resume screening, preparation, and interview management**, while helping recruiters efficiently manage candidates and placement drives.
 
-## Security checklist before production
+## 👩‍💻 Developed By
 
-- Set a strong `SECRET_KEY`.
-- Keep `.env` outside version control.
-- Use HTTPS.
-- Configure `CSRF_TRUSTED_ORIGINS`.
-- Change demo credentials.
-- Configure a production MySQL user with least privilege.
-- Review upload limits and storage.
-- Configure SMTP if password-reset emails are required.
-- Run `python manage.py check --deploy`.
+**Deepshika Garlapati**
+
+GitHub: `https://github.com/Deepshika-2006`

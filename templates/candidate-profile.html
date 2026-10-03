@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- Responsive layout -->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Candidate Profile — NexusAI</title>
+
+    <!-- Main NexusAI stylesheet -->
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+</head>
+
+
+<body>
+
+    <div class="shell">
+
+
+        <!-- =====================================================
+             TOP NAVIGATION
+             ===================================================== -->
+
+        <header class="topbar">
+
+            <div class="topbar-inner">
+
+                <!-- NexusAI recruiter branding -->
+                <a
+                    class="brand"
+                    href="/recruiter-candidates.html"
+                >
+
+                    <div class="logo">
+                        N
+                    </div>
+
+
+                    <div>
+
+                        <div class="brand-title">
+
+                            NexusAI
+
+                            <span class="status">
+                                Recruiter
+                            </span>
+
+                        </div>
+
+
+                        <div class="brand-sub">
+                            Candidate Dossier
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Top-right navigation -->
+                <div class="top-actions">
+
+                    <!-- Logout -->
+                    <a
+                        class="logout-btn"
+                        href="/logout.html"
+                    >
+                        ↪
+                        <span>Logout</span>
+                    </a>
+
+
+                    <!-- Switch to student mode -->
+                    <a
+                        class="role-btn"
+                        href="/student-dashboard.html"
+                    >
+                        ⇄
+                        <span>Student Mode</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             MAIN CONTENT
+             ===================================================== -->
+
+        <main class="container">
+
+
+            <!-- =================================================
+                 CANDIDATE OVERVIEW
+                 ================================================= -->
+
+            <div class="grid g2">
+
+
+                <!-- =================================================
+                     BASIC CANDIDATE INFORMATION
+                     ================================================= -->
+
+                <div class="card pad">
+
+                    <div class="candidate">
+
+
+                        <!-- Candidate avatar -->
+                        <div
+                            class="avatar"
+                            style="display: grid; place-items: center;"
+                        >
+
+                            {{ profile.full_name|slice:":1"|upper|default:"C" }}
+
+                        </div>
+
+
+                        <!-- Candidate details -->
+                        <div>
+
+                            <strong style="font-size: 14px;">
+
+                                {{ profile.full_name|default:candidate.username }}
+
+                            </strong>
+
+
+                            <span>
+                                {{ candidate.email }}
+                            </span>
+
+
+                            <span>
+
+                                {{ profile.branch|default:"Computer Science" }}
+
+                                · Batch
+
+                                {{ profile.graduation_year|default:"2027" }}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CANDIDATE KPIs
+                         ================================================= -->
+
+                    <div class="section grid g3">
+
+
+                        <!-- CGPA -->
+                        <div class="kpi">
+
+                            <strong>
+                                CGPA
+                            </strong>
+
+                            <span>
+                                {{ profile.cgpa|default:"—" }}
+                            </span>
+
+                        </div>
+
+
+                        <!-- ATS Score -->
+                        <div class="kpi">
+
+                            <strong>
+                                ATS
+                            </strong>
+
+                            <span class="green">
+                                {{ resume.ats_score|default:"—" }}
+                            </span>
+
+                        </div>
+
+
+                        <!-- Number of applications -->
+                        <div class="kpi">
+
+                            <strong>
+                                Applications
+                            </strong>
+
+                            <span>
+                                {{ applications|length }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     SKILLS & BIO
+                     ================================================= -->
+
+                <div class="card pad">
+
+                    <div class="section-head">
+
+                        <h2>
+                            Skills
+                        </h2>
+
+                        <span>
+                            Profile stack
+                        </span>
+
+                    </div>
+
+
+                    <!-- Candidate skills -->
+                    <div class="chips">
+
+                        <span class="chip good">
+
+                            {{ profile.skills|default:"Skills not added yet" }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- Candidate profile summary -->
+                    <p
+                        class="muted"
+                        style="margin-top: 12px;"
+                    >
+
+                        {{ profile.bio|default:"No profile summary provided." }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 APPLICATION HISTORY
+                 ===================================================== -->
+
+            <section class="section card pad">
+
+                <div class="section-head">
+
+                    <h2>
+                        Application History
+                    </h2>
+
+                    <span>
+                        {{ applications|length }} records
+                    </span>
+
+                </div>
+
+
+                <div class="list">
+
+
+                    {% for application in applications %}
+
+                        <!-- Individual application record -->
+                        <div class="kpi">
+
+                            <strong>
+
+                                {{ application.job.company }}
+
+                                ·
+
+                                {{ application.job.title }}
+
+                            </strong>
+
+
+                            <span>
+
+                                {{ application.get_status_display }}
+
+                                ·
+
+                                {{ application.applied_at|date:"d M Y" }}
+
+                            </span>
+
+                        </div>
+
+
+                    {% empty %}
+
+
+                        <!-- No applications -->
+                        <div class="notice">
+
+                            No applications yet.
+
+                        </div>
+
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

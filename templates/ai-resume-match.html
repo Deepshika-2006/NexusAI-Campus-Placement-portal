@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        AI Resume Match — NexusAI
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <style>
+
+        .ai-score {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                2,
+                minmax(0, 1fr)
+            );
+            gap: 16px;
+        }
+
+        .ai-list {
+            white-space: pre-line;
+            line-height: 1.7;
+        }
+
+        .ai-pill {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #eefaf7;
+            margin: 4px;
+            font-size: 12px;
+        }
+
+        .ai-missing {
+            background: #fff4e8;
+        }
+
+        .ai-note {
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .ai-bar {
+            height: 10px;
+            background: #e7edf3;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .ai-bar span {
+            display: block;
+            height: 100%;
+            background: #00a67d;
+        }
+
+        .job-desc {
+            white-space: pre-line;
+            line-height: 1.7;
+        }
+
+        .muted {
+            color: #667085;
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .keyword {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: #eefaf7;
+            color: #087f63;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .keyword.missing {
+            background: #fff4e8;
+            color: #c75b00;
+        }
+
+        @media (max-width: 760px) {
+
+            .ai-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="shell">
+
+    <!-- ======================================================
+         TOP BAR
+    ======================================================= -->
+
+    <header class="topbar">
+
+        <div class="topbar-inner">
+
+            <a
+                class="brand"
+                href="/student-dashboard.html"
+            >
+
+                <div class="logo">
+                    N
+                </div>
+
+                <div>
+
+                    <div class="brand-title">
+
+                        NexusAI
+
+                        <span class="status">
+
+                            <i class="dot"></i>
+
+                            Placement Season Live
+
+                        </span>
+
+                    </div>
+
+                    <div class="brand-sub">
+
+                        Campus Career Copilot
+
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <div class="top-actions">
+
+                <a
+                    class="logout-btn"
+                    href="/logout.html"
+                >
+
+                    ↪
+
+                    <span>
+                        Logout
+                    </span>
+
+                </a>
+
+                <a
+                    class="role-btn"
+                    href="/jobs.html"
+                >
+                    Jobs
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ======================================================
+         MAIN CONTENT
+    ======================================================= -->
+
+    <main class="container">
+
+
+        <!-- ==================================================
+             DJANGO MESSAGES
+        =================================================== -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="notice section">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <!-- ==================================================
+             PAGE HEADER
+        =================================================== -->
+
+        <div class="section-head">
+
+            <div>
+
+                <span class="label">
+                    AI-POWERED RESUME SCREENING
+                </span>
+
+                <h1 class="page-title">
+
+                    {{ job.title }}
+
+                </h1>
+
+                <p class="subtitle">
+
+                    {{ job.company }}
+
+                    ·
+
+                    {{ job.location }}
+
+                </p>
+
+            </div>
+
+
+            <span class="badge">
+
+                Job-specific analysis
+
+            </span>
+
+        </div>
+
+
+        <!-- ==================================================
+             JOB + RESUME SELECTION
+        =================================================== -->
+
+        <section class="grid g2">
+
+
+            <!-- JOB DESCRIPTION -->
+
+            <div class="card pad">
+
+                <h2>
+                    Job Description
+                </h2>
+
+                <p class="job-desc">
+
+                    {{ job.description }}
+
+                </p>
+
+
+                <h3>
+                    Required Skills
+                </h3>
+
+                <p>
+
+                    {{ job.skills }}
+
+                </p>
+
+            </div>
+
+
+            <!-- RUN ANALYSIS -->
+
+            <div class="card pad">
+
+                <h2>
+                    Run Resume Match
+                </h2>
+
+
+                {% if resumes %}
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+
+                        <div class="field">
+
+                            <label for="resume_id">
+
+                                Choose Resume
+
+                            </label>
+
+
+                            <select
+                                id="resume_id"
+                                name="resume_id"
+                                required
+                            >
+
+                                {% for item in resumes %}
+
+                                    <option
+                                        value="{{ item.id }}"
+                                        {% if resume and item.id == resume.id %}
+                                            selected
+                                        {% endif %}
+                                    >
+
+                                        {{ item.file.name|cut:"resumes/" }}
+
+                                        —
+
+                                        ATS {{ item.ats_score }}%
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <button
+                            class="btn primary"
+                            type="submit"
+                        >
+
+                            ✨ Analyze with AI
+
+                        </button>
+
+                    </form>
+
+
+                {% else %}
+
+                    <div class="notice">
+
+                        Upload your resume first from
+
+                        <a
+                            href="/resume-intelligence.html"
+                        >
+                            Resume Intelligence
+                        </a>.
+
+                    </div>
+
+                {% endif %}
+
+
+                <p
+                    class="ai-note"
+                    style="margin-top:14px"
+                >
+
+                    NexusAI compares your resume with this
+                    recruiter's job description.
+
+                    The analysis uses the free local AI
+                    Sentence Transformer model.
+
+                    Missing keywords are shown as recommendations
+                    only and are never automatically added to
+                    your resume.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             SCREENING RESULT
+        =================================================== -->
+
+        {% if analysis %}
+
+            <section class="section card pad">
+
+
+                <!-- RESULT HEADER -->
+
+                <div class="section-head">
+
+                    <div>
+
+                        <h2>
+                            Screening Result
+                        </h2>
+
+                        <span class="muted">
+
+                            {% if analysis.ai_powered %}
+
+                                Powered by AI model
+
+                            {% else %}
+
+                                Local keyword fallback
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <span class="badge">
+
+                        {{ analysis.ats_score }}/100
+
+                    </span>
+
+                </div>
+
+
+                <!-- SCORE -->
+
+                <div class="ai-score">
+
+                    {{ analysis.ats_score }}
+
+                    <span style="font-size:18px">
+                        /100
+                    </span>
+
+                </div>
+
+
+                <div class="ai-bar">
+
+                    <span
+                        style="width:{{ analysis.ats_score }}%"
+                    ></span>
+
+                </div>
+
+
+                <!-- ==================================================
+                     MATCHED + MISSING
+                =================================================== -->
+
+                <div
+                    class="ai-grid"
+                    style="margin-top:18px"
+                >
+
+
+                    <!-- Matched Keywords -->
+<div class="card pad">
+    <h3>Matched Keywords</h3>
+
+    {% if analysis.matched_keywords %}
+        <div class="ai-list">
+            {{ analysis.matched_keywords }}
+        </div>
+    {% else %}
+        <p class="muted">
+            No strong matches identified.
+        </p>
+    {% endif %}
+</div>
+
+
+<!-- Missing / Weak Keywords -->
+<div class="card pad">
+    <h3>Missing / Weak Keywords</h3>
+
+    {% if analysis.missing_keywords %}
+        <div class="ai-list">
+            {{ analysis.missing_keywords }}
+        </div>
+    {% else %}
+        <p class="muted">
+            No major missing keywords identified.
+        </p>
+    {% endif %}
+</div>
+
+
+                <!-- ==================================================
+                     STRENGTHS + SUGGESTIONS
+                =================================================== -->
+
+                <div
+                    class="ai-grid"
+                    style="margin-top:16px"
+                >
+
+
+                    <!-- STRENGTHS -->
+
+                    <div class="card pad">
+
+                        <h3>
+                            Strengths
+                        </h3>
+
+                        <div class="ai-list">
+
+                            {{ analysis.strengths|default:"No additional strengths returned." }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- AI SUGGESTIONS -->
+
+                    <div class="card pad">
+
+                        <h3>
+                            AI Improvement Suggestions
+                        </h3>
+
+                        <div class="ai-list">
+
+                            {{ analysis.suggestions|default:"No additional suggestions returned." }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     ACTIONS
+                =================================================== -->
+
+                <div
+                    class="actions"
+                    style="margin-top:18px"
+                >
+
+                    <a
+                        class="btn secondary"
+                        href="/jobs/{{ job.id }}/apply/"
+                    >
+
+                        Continue to Application →
+
+                    </a>
+
+                </div>
+
+
+            </section>
+
+        {% endif %}
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Create Recruiter Account — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body class="auth-page">
+
+  <div class="auth-shell">
+
+
+    <!-- =========================================================
+         AUTHENTICATION HEADER
+    ========================================================== -->
+    <header class="auth-brand">
+
+      <a
+        class="brand"
+        href="/index.html"
+      >
+
+        <div class="logo">
+          N
+        </div>
+
+        <div>
+
+          <div class="brand-title">
+
+            NexusAI
+
+            <span class="status">
+
+              <i class="dot"></i>
+
+              Placement Season Live
+
+            </span>
+
+          </div>
+
+          <div class="brand-sub">
+            Campus Career Copilot
+          </div>
+
+        </div>
+
+      </a>
+
+    </header>
+
+
+    <!-- =========================================================
+         REGISTRATION CONTENT
+    ========================================================== -->
+    <div class="auth-grid register-grid">
+
+
+      <!-- =======================================================
+           LEFT — REGISTRATION INTRODUCTION
+      ======================================================== -->
+      <section class="auth-copy">
+
+        <span class="eyebrow">
+          JOIN NEXUSAI
+        </span>
+
+
+        <h1>
+          Build your campus hiring workspace in one place.
+        </h1>
+
+
+        <p>
+          Create a recruiter workspace for campus drives,
+          AI candidate screening, interview pipelines and
+          hiring analytics.
+        </p>
+
+
+        <!-- Recruiter Benefits -->
+        <div class="auth-benefits">
+
+
+          <!-- Benefit 01 -->
+          <div>
+
+            <b>
+              01
+            </b>
+
+            <span>
+              Campus drive management
+            </span>
+
+          </div>
+
+
+          <!-- Benefit 02 -->
+          <div>
+
+            <b>
+              02
+            </b>
+
+            <span>
+              AI-ranked candidates
+            </span>
+
+          </div>
+
+
+          <!-- Benefit 03 -->
+          <div>
+
+            <b>
+              03
+            </b>
+
+            <span>
+              Hiring pipeline analytics
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =======================================================
+           RIGHT — RECRUITER ACCOUNT FORM
+      ======================================================== -->
+      <section class="card auth-card auth-card-pro">
+
+
+        <!-- Form Heading -->
+        <div class="auth-heading">
+
+          <span class="label">
+            ACCOUNT SETUP
+          </span>
+
+          <h2>
+            Create your account
+          </h2>
+
+          <p>
+            Start your recruiter workspace.
+          </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             ROLE TABS
+        ====================================================== -->
+        <div class="role-tabs">
+
+          <!-- Student Registration -->
+          <a href="/register.html">
+            Student
+          </a>
+
+
+          <!-- Recruiter Registration — Active -->
+          <a
+            class="active"
+            href="/register-recruiter.html"
+          >
+            Recruiter
+          </a>
+
+        </div>
+
+
+        <!-- =====================================================
+             RECRUITER REGISTRATION FORM
+        ====================================================== -->
+        <form
+          action="/register-recruiter/"
+          method="post"
+        >
+
+          {% csrf_token %}
+
+
+          <div class="formgrid">
+
+
+            <!-- Recruiter Name -->
+            <div class="field full">
+
+              <label for="name">
+                Recruiter Name
+              </label>
+
+              <input
+                id="name"
+                name="name"
+                placeholder="Alex Chen"
+                required
+              >
+
+            </div>
+
+
+            <!-- Work Email -->
+            <div class="field">
+
+              <label for="email">
+                Work Email
+              </label>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="hiring@company.com"
+                required
+              >
+
+            </div>
+
+
+            <!-- Company -->
+            <div class="field">
+
+              <label for="company">
+                Company
+              </label>
+
+              <input
+                id="company"
+                name="company"
+                placeholder="Company Name"
+                required
+              >
+
+            </div>
+
+
+            <!-- Password -->
+            <div class="field">
+
+              <label for="password">
+                Password
+              </label>
+
+              <input
+                id="password"
+                name="password"
+                type="password"
+                minlength="6"
+                required
+              >
+
+            </div>
+
+
+            <!-- Confirm Password -->
+            <div class="field">
+
+              <label for="confirm">
+                Confirm Password
+              </label>
+
+              <input
+                id="confirm"
+                name="confirm"
+                type="password"
+                minlength="6"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- ===================================================
+               TERMS & CONDITIONS
+          ==================================================== -->
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              name="terms"
+              required
+            >
+
+            I agree to the placement workspace terms.
+
+          </label>
+
+
+          <!-- ===================================================
+               DJANGO REGISTRATION MESSAGES
+          ==================================================== -->
+          {% if messages %}
+
+            <div class="notice">
+
+              {% for message in messages %}
+
+                {{ message }}
+
+                {% if not forloop.last %}
+                  <br>
+                {% endif %}
+
+              {% endfor %}
+
+            </div>
+
+          {% endif %}
+
+
+          <!-- ===================================================
+               CREATE ACCOUNT BUTTON
+          ==================================================== -->
+          <button
+            class="btn primary auth-submit"
+            type="submit"
+          >
+            Create Recruiter Account →
+          </button>
+
+        </form>
+
+
+        <!-- =====================================================
+             SIGN-IN DIVIDER
+        ====================================================== -->
+        <div class="auth-divider">
+
+          <span>
+            Already have an account?
+          </span>
+
+        </div>
+
+
+        <!-- Back to Recruiter Sign In -->
+        <a
+          class="btn secondary auth-alt"
+          href="/login-recruiter.html"
+        >
+          Back to Sign In
+        </a>
+
+
+        <!-- Back to NexusAI Home -->
+        <p class="auth-legal">
+
+          <a href="/index.html">
+            ← Back to NexusAI home
+          </a>
+
+        </p>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

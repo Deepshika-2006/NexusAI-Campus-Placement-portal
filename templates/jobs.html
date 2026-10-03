@@ -1,0 +1,1165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Jobs & Match — NexusAI</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           NEXUSAI JOBS PAGE
+           ========================================================= */
+
+        .nx-jobs-page {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 34px 24px 110px;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+           ========================================================= */
+
+        .nx-jobs-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .nx-jobs-header-main {
+            min-width: 0;
+        }
+
+        .nx-jobs-title {
+            margin: 0;
+            color: #172033;
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.08;
+            font-weight: 900;
+            letter-spacing: -.035em;
+        }
+
+        .nx-jobs-subtitle {
+            margin: 9px 0 0;
+            color: #5b687c;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .nx-role-count {
+            flex: 0 0 auto;
+            padding: 8px 12px;
+            border: 1px solid #d8e9e4;
+            border-radius: 999px;
+            background: #eefaf7;
+            color: #008d70;
+            font-size: 10px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           SEARCH
+           ========================================================= */
+
+        .nx-search-panel {
+            padding: 18px;
+            margin-bottom: 28px;
+            border: 1px solid #d8dfeb;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(32,48,75,.06);
+        }
+
+        .nx-search-notice {
+            color: #425069;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .nx-search-notice strong {
+            color: #172033;
+            font-weight: 900;
+        }
+
+        .nx-search-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .nx-search-input {
+            flex: 1;
+            min-width: 0;
+            height: 44px;
+            padding: 0 14px;
+            border: 1px solid #d5ddea;
+            border-radius: 11px;
+            outline: none;
+            background: #ffffff;
+            color: #172033;
+            font-size: 12px;
+            box-sizing: border-box;
+        }
+
+        .nx-search-input:focus {
+            border-color: #969aff;
+            box-shadow: 0 0 0 3px rgba(115,119,245,.10);
+        }
+
+        .nx-search-button {
+            height: 44px;
+            padding: 0 18px;
+            border: 1px solid #aeb1ff;
+            border-radius: 11px;
+            background: #b8b9ff;
+            color: #20254a;
+            font-size: 12px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           JOB LIST
+           ========================================================= */
+
+        .nx-job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+
+        /* =========================================================
+           JOB CARD
+           ========================================================= */
+
+        .nx-job-card {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #d8dfeb;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: 0 8px 24px rgba(32,48,75,.07);
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================================================
+           JOB TOP ROW
+           ========================================================= */
+
+        .nx-job-top {
+            display: grid;
+            grid-template-columns: 52px minmax(0, 1fr) auto;
+            align-items: start;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .nx-company-logo {
+            width: 52px;
+            height: 52px;
+
+            display: grid;
+            place-items: center;
+
+            flex: 0 0 52px;
+
+            border: 1px solid #dfe4ed;
+            border-radius: 13px;
+
+            background: #f4f6fa;
+            color: #34415a;
+
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .nx-job-main {
+            min-width: 0;
+            width: 100%;
+        }
+
+        .nx-job-title {
+            margin: 0;
+            color: #172033;
+            font-size: 18px;
+            line-height: 1.25;
+            font-weight: 900;
+        }
+
+        .nx-company-name {
+            margin-top: 4px;
+            color: #5d687a;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           META
+           ========================================================= */
+
+        .nx-job-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 11px;
+        }
+
+        .nx-meta-item {
+            display: inline-flex;
+            align-items: center;
+
+            min-height: 27px;
+            padding: 0 9px;
+
+            border: 1px solid #e0e5ed;
+            border-radius: 8px;
+
+            background: #f6f8fb;
+            color: #536176;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           MATCH SCORE
+           ========================================================= */
+
+        .nx-match {
+            min-width: 72px;
+            padding: 9px 10px;
+
+            border: 1px solid #bde8dc;
+            border-radius: 11px;
+
+            background: #effbf8;
+
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .nx-match-score {
+            color: #008d70;
+            font-size: 17px;
+            line-height: 1;
+            font-weight: 950;
+        }
+
+        .nx-match-label {
+            margin-top: 4px;
+            color: #5c837b;
+            font-size: 8px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+
+        /* =========================================================
+           SKILLS
+           ========================================================= */
+
+        .nx-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 13px;
+        }
+
+        .nx-skill {
+            padding: 5px 8px;
+
+            border: 1px solid #dbe3ed;
+            border-radius: 7px;
+
+            background: #f6f8fb;
+            color: #536176;
+
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           DESCRIPTION
+           ========================================================= */
+
+        .nx-job-description {
+            margin-top: 15px;
+            padding: 13px 14px;
+
+            border: 1px solid #e2e7ef;
+            border-radius: 11px;
+
+            background: #f8fafc;
+            color: #536176;
+
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           ACTIONS
+           ========================================================= */
+
+        .nx-job-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 15px;
+        }
+
+        .nx-job-actions form {
+            margin: 0;
+        }
+
+        .nx-job-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 39px;
+            padding: 0 15px;
+
+            border-radius: 10px;
+
+            font-size: 10px;
+            font-weight: 900;
+
+            text-decoration: none;
+            cursor: pointer;
+
+            box-sizing: border-box;
+        }
+
+        .nx-job-primary {
+            border: 1px solid #aeb1ff;
+            background: #b8b9ff;
+            color: #20254a;
+        }
+
+        .nx-job-secondary {
+            border: 1px solid #d3dce8;
+            background: #ffffff;
+            color: #39465e;
+        }
+
+        .nx-job-success {
+            border: 1px solid #bce6dc;
+            background: #eefaf7;
+            color: #008d70;
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+           ========================================================= */
+
+        .nx-job-empty {
+            padding: 35px 20px;
+
+            border: 1px dashed #cdd7e5;
+            border-radius: 16px;
+
+            background: #ffffff;
+            color: #69768a;
+
+            text-align: center;
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           STUDENT BOTTOM NAVIGATION
+           ========================================================= */
+
+        .nx-bottom-nav {
+            position: fixed;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            z-index: 9999;
+
+            height: 70px;
+
+            border-top: 1px solid #dce2eb;
+
+            background: rgba(255,255,255,.98);
+
+            box-shadow:
+                0 -6px 25px rgba(30,45,75,.10);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .nx-bottom-inner {
+            width: 100%;
+            max-width: 1180px;
+            height: 100%;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            align-items: stretch;
+        }
+
+        .nx-nav-item {
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            color: #6d7890;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            transition:
+                background .18s ease,
+                color .18s ease;
+        }
+
+        .nx-nav-item:hover {
+            background: #f7f8fc;
+            color: #6268df;
+        }
+
+        .nx-nav-item.active {
+            background: #f4f4ff;
+            color: #6268df;
+        }
+
+        .nx-nav-icon {
+            display: block;
+
+            font-size: 17px;
+
+            line-height: 1;
+
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           PREVENT NAVIGATION FROM COVERING CONTENT
+           ========================================================= */
+
+        body {
+            padding-bottom: 70px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 760px) {
+
+            .nx-jobs-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nx-job-top {
+                grid-template-columns:
+                    48px minmax(0, 1fr);
+            }
+
+            .nx-company-logo {
+                width: 48px;
+                height: 48px;
+            }
+
+            .nx-match {
+                grid-column: 2;
+                justify-self: start;
+                margin-top: 2px;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .nx-bottom-nav {
+                height: 66px;
+            }
+
+            body {
+                padding-bottom: 66px;
+            }
+
+            .nx-nav-item {
+                font-size: 8px;
+            }
+
+            .nx-nav-icon {
+                font-size: 15px;
+            }
+
+        }
+
+
+        @media (max-width: 560px) {
+
+            .nx-jobs-page {
+                padding: 24px 14px 100px;
+            }
+
+            .nx-search-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nx-search-button {
+                width: 100%;
+            }
+
+            .nx-job-card {
+                padding: 16px;
+            }
+
+            .nx-job-top {
+                grid-template-columns:
+                    44px minmax(0, 1fr);
+            }
+
+            .nx-company-logo {
+                width: 44px;
+                height: 44px;
+            }
+
+            .nx-match {
+                grid-column: 1 / -1;
+                width: fit-content;
+            }
+
+            .nx-job-title {
+                font-size: 16px;
+            }
+
+            .nx-job-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .nx-job-actions form {
+                width: 100%;
+            }
+
+            .nx-job-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="shell">
+
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         ========================================================= -->
+
+    <header class="topbar">
+
+        <div class="topbar-inner">
+
+            <a
+                class="brand"
+                href="/"
+            >
+
+                <div class="logo">
+                    N
+                </div>
+
+                <div>
+
+                    <div class="brand-title">
+
+                        NexusAI
+
+                        <span class="status">
+
+                            <i class="dot"></i>
+
+                            Placement Season Live
+
+                        </span>
+
+                    </div>
+
+                    <div class="brand-sub">
+                        Campus Career Copilot
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <div class="top-actions">
+
+                <a
+                    class="logout-btn"
+                    href="/logout/"
+                >
+                    ↪ <span>Logout</span>
+                </a>
+
+
+                <a
+                    class="role-btn"
+                    href="/recruiter-dashboard/"
+                >
+                    ⇄ <span>Recruiter Mode</span>
+                </a>
+
+
+                <a
+                    class="icon-btn"
+                    href="/applications/"
+                >
+                    ◌
+                </a>
+
+
+                <a
+                    class="icon-btn"
+                    href="/profile/"
+                >
+                    A
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MESSAGES
+         ========================================================= -->
+
+    {% if messages %}
+
+        <div class="container">
+
+            {% for message in messages %}
+
+                <div
+                    class="notice {% if message.tags == 'error' %}warn{% endif %}"
+                >
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =========================================================
+         JOBS PAGE
+         ========================================================= -->
+
+    <main class="nx-jobs-page">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+             ===================================================== -->
+
+        <div class="nx-jobs-header">
+
+            <div class="nx-jobs-header-main">
+
+                <h1 class="nx-jobs-title">
+                    Jobs & Match
+                </h1>
+
+                <p class="nx-jobs-subtitle">
+                    AI-ranked campus opportunities connected to real applications.
+                </p>
+
+            </div>
+
+
+            <div class="nx-role-count">
+
+                {{ jobs|length }} Active Roles
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SEARCH
+             ===================================================== -->
+
+        <section class="nx-search-panel">
+
+            <div class="nx-search-notice">
+
+                <strong>
+                    Placement Fit
+                </strong>
+
+                · Search live roles by title, company or required skills.
+
+            </div>
+
+
+            <form
+                class="nx-search-form"
+                method="get"
+            >
+
+                <input
+                    class="nx-search-input"
+                    type="search"
+                    name="q"
+                    value="{{ query }}"
+                    placeholder="Search roles, companies, skills..."
+                >
+
+
+                <button
+                    class="nx-search-button"
+                    type="submit"
+                >
+                    Search
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- =====================================================
+             JOB LIST
+             ===================================================== -->
+
+        <section>
+
+            <div class="nx-job-list">
+
+
+                {% for job in jobs %}
+
+
+                    <article
+                        class="nx-job-card"
+                        id="job-{{ job.id }}"
+                    >
+
+
+                        <!-- =================================================
+                             JOB TOP
+                             ================================================= -->
+
+                        <div class="nx-job-top">
+
+
+                            <!-- COMPANY LOGO -->
+
+                            <div class="nx-company-logo">
+
+                                {{ job.company|slice:":2"|upper }}
+
+                            </div>
+
+
+                            <!-- JOB INFORMATION -->
+
+                            <div class="nx-job-main">
+
+
+                                <h2 class="nx-job-title">
+                                    {{ job.title }}
+                                </h2>
+
+
+                                <div class="nx-company-name">
+                                    {{ job.company }}
+                                </div>
+
+
+                                <!-- JOB META -->
+
+                                <div class="nx-job-meta">
+
+
+                                    <span class="nx-meta-item">
+                                        📍 {{ job.location }}
+                                    </span>
+
+
+                                    <span class="nx-meta-item">
+                                        💼 {{ job.salary|default:"Salary not specified" }}
+                                    </span>
+
+
+                                    {% if job.deadline %}
+
+                                        <span class="nx-meta-item">
+                                            📅 {{ job.deadline|date:"d M Y" }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    <span class="nx-meta-item">
+                                        🎓 Min CGPA {{ job.min_cgpa }}
+                                    </span>
+
+
+                                </div>
+
+
+                                <!-- SKILLS -->
+
+                                {% if job.skills %}
+
+                                    <div class="nx-skills">
+
+                                        <span class="nx-skill">
+                                            {{ job.skills }}
+                                        </span>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                            <!-- MATCH SCORE -->
+
+                            <div class="nx-match">
+
+                                <div class="nx-match-score">
+                                    {{ job.display_match }}%
+                                </div>
+
+                                <div class="nx-match-label">
+                                    Match
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- =================================================
+                             DESCRIPTION
+                             ================================================= -->
+
+                        <div class="nx-job-description">
+
+                            {{ job.description|truncatechars:220 }}
+
+                        </div>
+
+
+                        <!-- =================================================
+                             ACTIONS
+                             ================================================= -->
+
+                        <div class="nx-job-actions">
+
+
+                            <!-- VIEW DETAILS -->
+
+                            <a
+                                class="nx-job-button nx-job-primary"
+                                href="/jobs/{{ job.id }}/"
+                            >
+                                View Details →
+                            </a>
+
+
+                            <!-- APPLY -->
+
+                            {% if job.id in applied_ids %}
+
+
+                                <span
+                                    class="nx-job-button nx-job-success"
+                                >
+                                    ✓ Applied
+                                </span>
+
+
+                            {% else %}
+
+
+                                <a
+                                    class="nx-job-button nx-job-primary"
+                                    href="/jobs/{{ job.id }}/apply/"
+                                >
+                                    Apply Now
+                                </a>
+
+                                <a
+                                    class="btn secondary"
+                                    href="/jobs/{{ job.id }}/ai-match/"
+                                    style="margin-top:8px;"
+                                >
+                                    ✨ AI Resume Match
+                                </a>
+
+
+                            {% endif %}
+
+
+                            <!-- BOOKMARK -->
+
+                            {% if job.id in bookmarked_ids %}
+
+
+                                <form
+                                    method="post"
+                                    action="/jobs/{{ job.id }}/bookmark/"
+                                >
+
+                                    {% csrf_token %}
+
+
+                                    <button
+                                        class="nx-job-button nx-job-secondary"
+                                        type="submit"
+                                    >
+                                        ★ Saved
+                                    </button>
+
+                                </form>
+
+
+                            {% else %}
+
+
+                                <form
+                                    method="post"
+                                    action="/jobs/{{ job.id }}/bookmark/"
+                                >
+
+                                    {% csrf_token %}
+
+
+                                    <button
+                                        class="nx-job-button nx-job-secondary"
+                                        type="submit"
+                                    >
+                                        ☆ Bookmark
+                                    </button>
+
+                                </form>
+
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </article>
+
+
+                {% empty %}
+
+
+                    <div class="nx-job-empty">
+
+                        No active jobs match your search.
+
+                        Recruiter drives will appear here when published.
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         FIXED STUDENT BOTTOM NAVIGATION
+         ========================================================= -->
+
+    <nav
+        class="nx-bottom-nav"
+        aria-label="Student navigation"
+    >
+
+        <div class="nx-bottom-inner">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                class="nx-nav-item"
+                href="/student-dashboard/"
+            >
+
+                <span class="nx-nav-icon">
+                    ▦
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- RESUME AI -->
+
+            <a
+                class="nx-nav-item"
+                href="/resume-intelligence/"
+            >
+
+                <span class="nx-nav-icon">
+                    ✦
+                </span>
+
+                <span>
+                    Resume AI
+                </span>
+
+            </a>
+
+
+            <!-- JOBS & MATCH -->
+
+            <a
+                class="nx-nav-item active"
+                href="/jobs/"
+                aria-current="page"
+            >
+
+                <span class="nx-nav-icon">
+                    ⌁
+                </span>
+
+                <span>
+                    Jobs &amp; Match
+                </span>
+
+            </a>
+
+
+            <!-- PREP & TESTS -->
+
+            <a
+                class="nx-nav-item"
+                href="/prep-and-tests/"
+            >
+
+                <span class="nx-nav-icon">
+                    ◫
+                </span>
+
+                <span>
+                    Prep &amp; Tests
+                </span>
+
+            </a>
+
+
+            <!-- APPLICATIONS -->
+
+            <a
+                class="nx-nav-item"
+                href="/applications/"
+            >
+
+                <span class="nx-nav-icon">
+                    ✓
+                </span>
+
+                <span>
+                    Applications
+                </span>
+
+            </a>
+
+
+        </div>
+
+    </nav>
+
+
+</div>
+
+</body>
+
+</html>

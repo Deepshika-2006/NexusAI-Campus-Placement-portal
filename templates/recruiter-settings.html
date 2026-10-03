@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Recruiter Settings — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Recruiter Branding -->
+        <a
+          class="brand"
+          href="/recruiter-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                Recruiter
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Talent Sourcing &amp; Pipeline
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Recruiter Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+
+          <!-- Student Mode -->
+          <a
+            class="role-btn"
+            href="/student-dashboard.html"
+          >
+            ⇄ <span>Student Mode</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           DJANGO MESSAGES
+      ======================================================== -->
+      {% if messages %}
+
+        {% for message in messages %}
+
+          <div class="notice section">
+            {{ message }}
+          </div>
+
+        {% endfor %}
+
+      {% endif %}
+
+
+      <!-- =======================================================
+           PAGE HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            Recruiter Settings
+          </h1>
+
+          <p class="subtitle">
+            Manage the recruiter identity used on your campus drives.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =======================================================
+           RECRUITER SETTINGS FORM
+      ======================================================== -->
+      <section class="card pad">
+
+        <form
+          method="post"
+          action="/recruiter-settings/"
+        >
+
+          {% csrf_token %}
+
+
+          <div class="formgrid">
+
+
+            <!-- Recruiter Name -->
+            <div class="field">
+
+              <label for="full-name">
+                Recruiter Name
+              </label>
+
+              <input
+                id="full-name"
+                name="full_name"
+                value="{{ profile.full_name }}"
+              >
+
+            </div>
+
+
+            <!-- Company -->
+            <div class="field">
+
+              <label for="company-name">
+                Company
+              </label>
+
+              <input
+                id="company-name"
+                name="company_name"
+                value="{{ profile.company_name }}"
+              >
+
+            </div>
+
+
+            <!-- Phone -->
+            <div class="field full">
+
+              <label for="phone">
+                Phone
+              </label>
+
+              <input
+                id="phone"
+                name="phone"
+                value="{{ profile.phone }}"
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- Save Button -->
+          <div class="actions">
+
+            <button
+              class="btn primary"
+              type="submit"
+            >
+              Save Settings
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         RECRUITER BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+
+        <!-- Candidates -->
+        <a
+          class="nav-item"
+          href="/recruiter-candidates.html"
+        >
+          ♟ Candidates
+        </a>
+
+
+        <!-- Jobs -->
+        <a
+          class="nav-item"
+          href="/recruiter-jobs.html"
+        >
+          ▣ Jobs
+        </a>
+
+
+        <!-- Analytics -->
+        <a
+          class="nav-item"
+          href="/recruiter-analytics.html"
+        >
+          ◒ Analytics
+        </a>
+
+
+        <!-- Sourcing -->
+        <a
+          class="nav-item"
+          href="/recruiter-sourcing.html"
+        >
+          ⌕ Sourcing
+        </a>
+
+
+        <!-- Settings — Active -->
+        <a
+          class="nav-item active"
+          href="/recruiter-settings.html"
+        >
+          ⚙ Settings
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

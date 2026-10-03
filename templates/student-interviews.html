@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>My Interviews — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+
+        <!-- NexusAI Student Branding -->
+        <a
+          class="brand"
+          href="/student-dashboard/"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+
+                <i class="dot"></i>
+
+                Placement Season Live
+
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              My Interviews
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Student Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout/"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           DJANGO MESSAGES
+      ======================================================== -->
+      {% if messages %}
+
+        {% for message in messages %}
+
+          <div class="notice section">
+            {{ message }}
+          </div>
+
+        {% endfor %}
+
+      {% endif %}
+
+
+      <!-- =======================================================
+           PAGE HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            Interview Center
+          </h1>
+
+          <p class="subtitle">
+            Track scheduled interviews, submitted responses
+            and recruiter decisions.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =======================================================
+           ACTIVE INTERVIEWS
+      ======================================================== -->
+      <section class="section">
+
+        <div class="section-head">
+
+          <h2>
+            Active Interviews
+          </h2>
+
+          <span>
+            {{ upcoming|length }} active
+          </span>
+
+        </div>
+
+
+        <div class="list">
+
+          {% for interview in upcoming %}
+
+            <!-- =================================================
+                 ACTIVE INTERVIEW CARD
+            ================================================== -->
+            <article class="card pad">
+
+              <div class="job">
+
+
+                <!-- Company Logo -->
+                <div class="company-logo">
+
+                  {{ interview.application.job.company|slice:":2"|upper }}
+
+                </div>
+
+
+                <!-- Interview Information -->
+                <div class="job-main">
+
+                  <h3 class="job-title">
+                    {{ interview.application.job.title }}
+                  </h3>
+
+
+                  <div class="job-company">
+
+                    {{ interview.application.job.company }}
+
+                    ·
+
+                    {{ interview.get_interview_type_display }}
+
+                  </div>
+
+
+                  <!-- Interview Metadata -->
+                  <div class="job-meta">
+
+                    <span>
+                      {{ interview.scheduled_at|date:"d M Y, h:i A" }}
+                    </span>
+
+                    <span>
+                      {{ interview.duration_minutes }} minutes
+                    </span>
+
+
+                    {% if interview.candidate_response %}
+
+                      <span>
+                        Response submitted ✓
+                      </span>
+
+                    {% else %}
+
+                      <span>
+                        Response pending
+                      </span>
+
+                    {% endif %}
+
+                  </div>
+
+                </div>
+
+
+                <!-- Interview Status -->
+                <span class="badge">
+                  {{ interview.get_status_display }}
+                </span>
+
+              </div>
+
+
+              <!-- Interview Actions -->
+              <div class="actions">
+
+
+                <!-- Open Interview / View Response -->
+                <a
+                  class="btn primary"
+                  href="/my-interviews/{{ interview.id }}/"
+                >
+
+                  {% if interview.candidate_response %}
+
+                    View Response
+
+                  {% else %}
+
+                    Open Interview
+
+                  {% endif %}
+
+                </a>
+
+
+                <!-- Meeting Link -->
+                {% if interview.meeting_link and interview.status == "scheduled" %}
+
+                  <a
+                    class="btn secondary"
+                    href="{{ interview.meeting_link }}"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    Join Meeting ↗
+                  </a>
+
+                {% endif %}
+
+              </div>
+
+            </article>
+
+
+          {% empty %}
+
+            <!-- No Active Interviews -->
+            <div class="notice">
+
+              No active company interviews.
+              Your scheduled and response-submitted interviews
+              will appear here.
+
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </section>
+
+
+      <!-- =======================================================
+           COMPLETED INTERVIEWS
+      ======================================================== -->
+      <section class="section">
+
+        <div class="section-head">
+
+          <h2>
+            Completed Interviews
+          </h2>
+
+          <span>
+            {{ completed|length }} completed
+          </span>
+
+        </div>
+
+
+        <div class="list">
+
+          {% for interview in completed %}
+
+            <!-- Completed Interview -->
+            <a
+              class="kpi"
+              href="/my-interviews/{{ interview.id }}/"
+            >
+
+              <strong>
+
+                {{ interview.application.job.company }}
+
+                ·
+
+                {{ interview.get_interview_type_display }}
+
+              </strong>
+
+              <span>
+
+                Score
+                {{ interview.overall_score }}%
+
+                ·
+
+                {{ interview.get_decision_display }}
+
+                ·
+
+                {{ interview.scheduled_at|date:"d M Y" }}
+
+              </span>
+
+            </a>
+
+
+          {% empty %}
+
+            <!-- No Completed Interviews -->
+            <div class="notice">
+              No completed recruiter interviews yet.
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </section>
+
+
+      <!-- =======================================================
+           CANCELLED INTERVIEWS
+           This section is displayed only when cancelled interviews
+           are available.
+      ======================================================== -->
+      {% if cancelled %}
+
+        <section class="section">
+
+          <div class="section-head">
+
+            <h2>
+              Cancelled Interviews
+            </h2>
+
+            <span>
+              {{ cancelled|length }}
+            </span>
+
+          </div>
+
+
+          <div class="list">
+
+            {% for interview in cancelled %}
+
+              <!-- Cancelled Interview -->
+              <div class="kpi">
+
+                <strong>
+
+                  {{ interview.application.job.company }}
+
+                  ·
+
+                  {{ interview.get_interview_type_display }}
+
+                </strong>
+
+                <span>
+
+                  {{ interview.scheduled_at|date:"d M Y, h:i A" }}
+
+                  ·
+
+                  Cancelled
+
+                </span>
+
+              </div>
+
+            {% endfor %}
+
+          </div>
+
+        </section>
+
+      {% endif %}
+
+    </main>
+
+
+    <!-- =========================================================
+         STUDENT BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+
+        <!-- Dashboard -->
+        <a
+          class="nav-item"
+          href="/student-dashboard/"
+        >
+          ▦ Dashboard
+        </a>
+
+
+        <!-- Resume AI -->
+        <a
+          class="nav-item"
+          href="/resume-intelligence/"
+        >
+          ✦ Resume AI
+        </a>
+
+
+        <!-- Jobs -->
+        <a
+          class="nav-item"
+          href="/jobs/"
+        >
+          ⌁ Jobs &amp; Match
+        </a>
+
+
+        <!-- Prep & Tests -->
+        <a
+          class="nav-item"
+          href="/prep-and-tests/"
+        >
+          ◫ Prep &amp; Tests
+        </a>
+
+
+        <!-- Applications — Active -->
+        <a
+          class="nav-item active"
+          href="/applications/"
+        >
+          ✓ Applications
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Candidate Profile — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         Branding, logout, recruiter mode, notifications,
+         and profile access.
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Branding -->
+        <a
+          class="brand"
+          href="/student-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                <i class="dot"></i>
+                Placement Season Live
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Campus Career Copilot
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Navigation Actions -->
+        <div class="top-actions">
+
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+          <a
+            class="role-btn"
+            href="/recruiter-dashboard.html"
+          >
+            ⇄ <span>Recruiter Mode</span>
+          </a>
+
+          <a
+            class="icon-btn"
+            href="/applications.html"
+          >
+            ◌
+          </a>
+
+          <a
+            class="icon-btn"
+            href="/profile.html"
+          >
+            A
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           DJANGO MESSAGES
+           Displays profile update / validation messages.
+      ======================================================== -->
+      {% if messages %}
+
+        {% for message in messages %}
+
+          <div class="notice section">
+            {{ message }}
+          </div>
+
+        {% endfor %}
+
+      {% endif %}
+
+
+      <!-- =======================================================
+           PAGE HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            Candidate Profile
+          </h1>
+
+          <p class="subtitle">
+            Keep your placement profile current for matching
+            and recruiter review.
+          </p>
+
+        </div>
+
+        <span class="badge">
+          Live Profile
+        </span>
+
+      </div>
+
+
+      <!-- =======================================================
+           PROFILE FORM
+      ======================================================== -->
+      <section class="card pad">
+
+        <form
+          method="post"
+          action="/profile/"
+        >
+
+          <!-- Django CSRF Protection -->
+          {% csrf_token %}
+
+
+          <!-- ===================================================
+               PROFILE FIELDS
+          ==================================================== -->
+          <div class="formgrid">
+
+
+            <!-- Full Name -->
+            <div class="field full">
+
+              <label>
+                Full Name
+              </label>
+
+              <input
+                name="full_name"
+                value="{{ profile.full_name }}"
+              >
+
+            </div>
+
+
+            <!-- Email -->
+            <div class="field">
+
+              <label>
+                Email
+              </label>
+
+              <input
+                value="{{ request.user.email }}"
+                disabled
+              >
+
+            </div>
+
+
+            <!-- Phone -->
+            <div class="field">
+
+              <label>
+                Phone
+              </label>
+
+              <input
+                name="phone"
+                value="{{ profile.phone }}"
+              >
+
+            </div>
+
+
+            <!-- College -->
+            <div class="field">
+
+              <label>
+                College
+              </label>
+
+              <input
+                name="college"
+                value="{{ profile.college }}"
+              >
+
+            </div>
+
+
+            <!-- Branch -->
+            <div class="field">
+
+              <label>
+                Branch
+              </label>
+
+              <input
+                name="branch"
+                value="{{ profile.branch }}"
+              >
+
+            </div>
+
+
+            <!-- Graduation Year -->
+            <div class="field">
+
+              <label>
+                Graduation Year
+              </label>
+
+              <input
+                name="graduation_year"
+                type="number"
+                value="{{ profile.graduation_year }}"
+              >
+
+            </div>
+
+
+            <!-- CGPA -->
+            <div class="field">
+
+              <label>
+                CGPA
+              </label>
+
+              <input
+                name="cgpa"
+                type="number"
+                min="0"
+                max="10"
+                step="0.01"
+                value="{{ profile.cgpa }}"
+              >
+
+            </div>
+
+
+            <!-- Active Backlogs -->
+            <div class="field">
+
+              <label>
+                Active Backlogs
+              </label>
+
+              <input
+                name="backlogs"
+                type="number"
+                min="0"
+                value="{{ profile.backlogs }}"
+              >
+
+            </div>
+
+
+            <!-- Skills -->
+            <div class="field full">
+
+              <label>
+                Skills (comma separated)
+              </label>
+
+              <input
+                name="skills"
+                value="{{ profile.skills }}"
+                placeholder="Python, Django, SQL, React"
+              >
+
+            </div>
+
+
+            <!-- Profile Summary -->
+            <div class="field full">
+
+              <label>
+                Profile Summary
+              </label>
+
+              <textarea
+                name="bio"
+                rows="4"
+              >{{ profile.bio }}</textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- ===================================================
+               FORM ACTIONS
+          ==================================================== -->
+          <div class="actions">
+
+            <!-- Save Profile -->
+            <button
+              class="btn primary"
+              type="submit"
+            >
+              Save Profile
+            </button>
+
+            <!-- Cancel -->
+            <a
+              class="btn secondary"
+              href="/student-dashboard.html"
+            >
+              Cancel
+            </a>
+
+          </div>
+
+        </form>
+
+      </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+        <!-- Dashboard -->
+        <a
+          class="nav-item"
+          href="/student-dashboard.html"
+        >
+          ▦ Dashboard
+        </a>
+
+
+        <!-- Resume AI -->
+        <a
+          class="nav-item"
+          href="/resume-intelligence.html"
+        >
+          ✦ Resume AI
+        </a>
+
+
+        <!-- Jobs & Match -->
+        <a
+          class="nav-item"
+          href="/jobs.html"
+        >
+          ⌁ Jobs &amp; Match
+        </a>
+
+
+        <!-- Prep & Tests -->
+        <a
+          class="nav-item"
+          href="/prep-and-tests.html"
+        >
+          ◫ Prep &amp; Tests
+        </a>
+
+
+        <!-- Applications -->
+        <a
+          class="nav-item"
+          href="/applications.html"
+        >
+          ✓ Applications
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

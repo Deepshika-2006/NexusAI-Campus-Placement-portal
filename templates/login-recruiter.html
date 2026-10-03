@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recruiter Sign In — NexusAI</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth-shell">
+
+    <header class="auth-brand">
+        <a class="brand" href="/index.html">
+            <div class="logo">N</div>
+
+            <div>
+                <div class="brand-title">
+                    NexusAI
+                    <span class="status">
+                        <i class="dot"></i>
+                        Placement Season Live
+                    </span>
+                </div>
+
+                <div class="brand-sub">
+                    Campus Career Copilot
+                </div>
+            </div>
+        </a>
+    </header>
+
+    <div class="auth-grid">
+
+        <section class="auth-copy">
+
+            <span class="eyebrow">
+                AI-POWERED PLACEMENT COMMAND CENTER
+            </span>
+
+            <h1>
+                Your campus hiring workspace, ready.
+            </h1>
+
+            <p>
+                Sign in to manage campus drives, review AI-ranked candidates,
+                and move high-fit applicants through your hiring pipeline.
+            </p>
+
+            <div class="auth-points">
+
+                <div>
+                    <b>14+</b>
+                    <span>Eligible opportunities</span>
+                </div>
+
+                <div>
+                    <b>88</b>
+                    <span>Current ATS score</span>
+                </div>
+
+                <div>
+                    <b>3</b>
+                    <span>Upcoming interviews</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="card auth-card auth-card-pro">
+
+            <div class="auth-heading">
+
+                <div>
+                    <span class="label">
+                        SECURE ACCESS
+                    </span>
+
+                    <h2>
+                        Welcome back
+                    </h2>
+
+                    <p>
+                        Sign in as a recruiter to continue.
+                    </p>
+                </div>
+
+                <span class="secure-badge">
+                    ● Secure
+                </span>
+
+            </div>
+
+            <div class="role-tabs">
+                <a href="/login.html">
+                    Student
+                </a>
+
+                <a class="active" href="/login-recruiter.html">
+                    Recruiter
+                </a>
+            </div>
+
+            <form
+                action="/login-recruiter/"
+                method="post"
+                class="auth-form"
+            >
+
+                {% csrf_token %}
+
+                <div class="field">
+
+                    <label for="email">
+                        Work Email
+                    </label>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        placeholder="hiring@company.com"
+                        required
+                    >
+
+                </div>
+
+                <div class="field">
+
+                    <div class="field-label-row">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <a href="/forgot-password.html">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        minlength="6"
+                        autocomplete="current-password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+                <label class="check-row">
+                    <input
+                        type="checkbox"
+                        name="remember"
+                    >
+                    Remember me on this device
+                </label>
+
+                {% if messages %}
+
+                    <div class="notice">
+
+                        {% for message in messages %}
+
+                            {{ message }}
+
+                            {% if not forloop.last %}
+                                <br>
+                            {% endif %}
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+                <button
+                    class="btn primary auth-submit"
+                    type="submit"
+                >
+                    Sign In as Recruiter →
+                </button>
+
+            </form>
+
+            <div class="auth-divider">
+                <span>
+                    New to NexusAI?
+                </span>
+            </div>
+
+            <a
+                class="btn secondary auth-alt"
+                href="/register-recruiter.html"
+            >
+                Create Recruiter Account
+            </a>
+
+            <p class="auth-legal">
+                By continuing, you agree to the NexusAI placement
+                workspace terms and privacy notice.
+            </p>
+
+            <p
+                class="auth-legal"
+                style="margin-top:10px!important"
+            >
+                <a href="/index.html">
+                    ← Back to NexusAI home
+                </a>
+            </p>
+
+        </section>
+
+    </div>
+
+</div>
+
+</body>
+</html>

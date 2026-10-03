@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- Responsive layout -->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Apply — {{ job.title }} — NexusAI</title>
+
+    <!-- Main NexusAI stylesheet -->
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <style>
+        /* =========================================================
+           APPLICATION PAGE LAYOUT
+           ========================================================= */
+
+        .apply-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+
+        /* ---------------------------------------------------------
+           Existing Resume Option
+           --------------------------------------------------------- */
+
+        .resume-option {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 14px;
+            border: 1px solid #dfe5ee;
+            border-radius: 12px;
+            margin: 10px 0;
+            background: #ffffff;
+        }
+
+        .resume-option input {
+            margin-top: 4px;
+        }
+
+
+        /* ---------------------------------------------------------
+           New Resume Upload Box
+           --------------------------------------------------------- */
+
+        .upload-box {
+            padding: 18px;
+            border: 1.5px dashed #b9c4d8;
+            border-radius: 14px;
+            background: #f8faff;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cdd7e6;
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+
+        /* ---------------------------------------------------------
+           Sticky Role Summary
+           --------------------------------------------------------- */
+
+        .sticky-card {
+            position: sticky;
+            top: 90px;
+        }
+
+
+        /* ---------------------------------------------------------
+           Responsive Layout
+           --------------------------------------------------------- */
+
+        @media (max-width: 850px) {
+
+            .apply-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sticky-card {
+                position: static;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="shell">
+
+
+        <!-- =====================================================
+             TOP NAVIGATION
+             ===================================================== -->
+
+        <header class="topbar">
+
+            <div class="topbar-inner">
+
+                <!-- NexusAI branding -->
+                <a
+                    class="brand"
+                    href="/jobs.html"
+                >
+
+                    <div class="logo">
+                        N
+                    </div>
+
+                    <div>
+
+                        <div class="brand-title">
+
+                            NexusAI
+
+                            <span class="status">
+
+                                <i class="dot"></i>
+
+                                Placement Season Live
+
+                            </span>
+
+                        </div>
+
+                        <div class="brand-sub">
+                            Campus Career Copilot
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Logout -->
+                <div class="top-actions">
+
+                    <a
+                        class="logout-btn"
+                        href="/logout.html"
+                    >
+                        ↪
+                        <span>Logout</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             MAIN APPLICATION CONTENT
+             ===================================================== -->
+
+        <main class="container">
+
+
+            <!-- =================================================
+                 DJANGO MESSAGES
+                 ================================================= -->
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="notice section">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
+
+            <div class="section-head">
+
+                <div>
+
+                    <span class="label">
+                        APPLICATION CENTER
+                    </span>
+
+                    <h1 class="page-title">
+                        Apply for {{ job.title }}
+                    </h1>
+
+                    <p class="subtitle">
+                        {{ job.company }}
+                        ·
+                        {{ job.location }}
+                    </p>
+
+                </div>
+
+
+                <!-- AI job match -->
+                <span class="badge">
+
+                    {{ job.match_score }}% AI Match
+
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 ALREADY APPLIED
+                 ================================================= -->
+
+            {% if application %}
+
+                <section class="card pad">
+
+                    <h2>
+                        Already Applied
+                    </h2>
+
+                    <p class="muted">
+                        You have already applied for this role.
+                    </p>
+
+                    <a
+                        class="btn primary"
+                        href="/applications.html#app-{{ job.id }}"
+                    >
+                        View Application →
+                    </a>
+
+                </section>
+
+
+            {% else %}
+
+
+                <!-- =================================================
+                     APPLICATION FORM
+                     ================================================= -->
+
+                <form
+                    method="post"
+                    enctype="multipart/form-data"
+                    action="/jobs/{{ job.id }}/apply/"
+                >
+
+                    {% csrf_token %}
+
+
+                    <div class="apply-grid">
+
+
+                        <!-- =================================================
+                             RESUME SELECTION
+                             ================================================= -->
+
+                        <section class="card pad">
+
+                            <h2>
+                                Resume for this application
+                            </h2>
+
+                            <p class="muted">
+
+                                Recruiters will receive the exact resume
+                                selected or uploaded here.
+
+                                You can use a previously uploaded resume
+                                or upload a new version specifically for
+                                this role.
+
+                            </p>
+
+
+                            <!-- =============================================
+                                 EXISTING RESUMES
+                                 ============================================= -->
+
+                            {% if resumes %}
+
+                                <h3 style="margin-top: 18px;">
+
+                                    Choose an existing resume
+
+                                </h3>
+
+
+                                {% for resume in resumes %}
+
+                                    <label class="resume-option">
+
+                                        <!--
+                                            Select this resume for the
+                                            current job application.
+                                        -->
+                                        <input
+                                            type="radio"
+                                            name="resume_id"
+                                            value="{{ resume.id }}"
+
+                                            {% if forloop.first %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+
+                                        <span>
+
+                                            <strong>
+
+                                                {{ resume.file.name|cut:"resumes/" }}
+
+                                            </strong>
+
+                                            <br>
+
+                                            <span class="muted">
+
+                                                Uploaded
+                                                {{ resume.created_at|date:"d M Y, h:i A" }}
+
+                                                ·
+
+                                                ATS
+                                                {{ resume.ats_score }}%
+
+                                            </span>
+
+                                        </span>
+
+                                    </label>
+
+                                {% endfor %}
+
+
+                            {% else %}
+
+
+                                <!-- No existing resume -->
+                                <div class="notice">
+
+                                    No resume is uploaded yet.
+
+                                    Upload one below to continue.
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- =================================================
+                                 UPLOAD NEW RESUME
+                                 ================================================= -->
+
+                            <div
+                                class="upload-box"
+                                style="margin-top: 18px;"
+                            >
+
+                                <h3>
+                                    Or upload a new resume
+                                </h3>
+
+                                <p class="muted">
+
+                                    PDF, DOC or DOCX recommended.
+
+                                    This exact file will be attached
+                                    to your application.
+
+                                </p>
+
+
+                                <input
+                                    class="file-input"
+                                    type="file"
+                                    name="resume_file"
+                                    accept=".pdf,.doc,.docx"
+                                >
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 RECRUITER VISIBILITY NOTICE
+                                 ================================================= -->
+
+                            <div
+                                class="notice"
+                                style="margin-top: 18px;"
+                            >
+
+                                <strong>
+                                    Recruiter visibility
+                                </strong>
+
+                                <br>
+
+                                Your selected/uploaded resume will be
+                                visible to the recruiter who owns this job
+                                from the candidate review page.
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 SUBMIT APPLICATION
+                                 ================================================= -->
+
+                            <button
+                                class="btn primary"
+                                style="margin-top: 18px;"
+                                type="submit"
+                            >
+
+                                Submit Application &amp; Resume →
+
+                            </button>
+
+                        </section>
+
+
+                        <!-- =================================================
+                             ROLE SUMMARY
+                             ================================================= -->
+
+                        <section class="card pad sticky-card">
+
+                            <h2>
+                                Role Summary
+                            </h2>
+
+
+                            <div class="list">
+
+
+                                <!-- Company -->
+                                <div class="kpi">
+
+                                    <strong>
+                                        Company
+                                    </strong>
+
+                                    <span>
+                                        {{ job.company }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- Role -->
+                                <div class="kpi">
+
+                                    <strong>
+                                        Role
+                                    </strong>
+
+                                    <span>
+                                        {{ job.title }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- Minimum CGPA -->
+                                <div class="kpi">
+
+                                    <strong>
+                                        Minimum CGPA
+                                    </strong>
+
+                                    <span>
+                                        {{ job.min_cgpa }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- Graduation batch -->
+                                <div class="kpi">
+
+                                    <strong>
+                                        Batch
+                                    </strong>
+
+                                    <span>
+                                        {{ job.batch }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- Required skills -->
+                                <div class="kpi">
+
+                                    <strong>
+                                        Skills
+                                    </strong>
+
+                                    <span>
+                                        {{ job.skills }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- Application deadline -->
+                                <div class="kpi">
+
+                                    <strong>
+                                        Deadline
+                                    </strong>
+
+                                    <span>
+
+                                        {{ job.deadline|date:"d M Y"|default:"Not specified" }}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                </form>
+
+            {% endif %}
+
+        </main>
+
+
+        <!-- =====================================================
+             BOTTOM NAVIGATION
+             ===================================================== -->
+
+        <nav class="bottom-nav">
+
+            <div class="bottom-inner">
+
+
+                <!-- Dashboard -->
+                <a
+                    class="nav-item"
+                    href="/student-dashboard.html"
+                >
+                    ▦
+                    Dashboard
+                </a>
+
+
+                <!-- Jobs -->
+                <a
+                    class="nav-item active"
+                    href="/jobs.html"
+                >
+                    ⌁
+                    Jobs &amp; Match
+                </a>
+
+
+                <!-- Applications -->
+                <a
+                    class="nav-item"
+                    href="/applications.html"
+                >
+                    ✓
+                    Applications
+                </a>
+
+            </div>
+
+        </nav>
+
+    </div>
+
+</body>
+
+</html>

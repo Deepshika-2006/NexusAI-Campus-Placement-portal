@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Recruiter Command Center — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         Recruiter branding, account actions, student mode,
+         settings, and candidate access.
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Recruiter Branding -->
+        <a
+          class="brand"
+          href="/recruiter-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                <i class="dot"></i>
+                Recruiter Workspace
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Campus Hiring Command Center
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Recruiter Navigation Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+
+          <!-- Switch to Student Mode -->
+          <a
+            class="role-btn"
+            href="/student-dashboard.html"
+          >
+            ⇄ <span>Student Mode</span>
+          </a>
+
+
+          <!-- Recruiter Settings -->
+          <a
+            class="icon-btn"
+            href="/recruiter-settings.html"
+          >
+            ⚙
+          </a>
+
+
+          <!-- Candidate Center -->
+          <a
+            class="icon-btn"
+            href="/recruiter-candidates.html"
+          >
+            R
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           DJANGO MESSAGES
+      ======================================================== -->
+      {% if messages %}
+
+        {% for message in messages %}
+
+          <div class="notice section">
+            {{ message }}
+          </div>
+
+        {% endfor %}
+
+      {% endif %}
+
+
+      <!-- =======================================================
+           RECRUITER HERO
+      ======================================================== -->
+      <div class="hero">
+
+        <span class="eyebrow">
+          RECRUITER AI COMMAND CENTER
+        </span>
+
+        <h1>
+          Welcome back, Hiring Team
+        </h1>
+
+        <p>
+          Manage campus drives, review AI-ranked candidates,
+          and move high-fit applicants through the hiring pipeline.
+        </p>
+
+
+        <!-- Hero Actions -->
+        <div class="actions">
+
+          <a
+            class="btn primary"
+            href="/recruiter-candidates.html"
+          >
+            Review Candidates
+          </a>
+
+          <a
+            class="btn secondary"
+            href="/recruiter-jobs.html"
+          >
+            Manage Drives
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- =======================================================
+           RECRUITER METRICS
+      ======================================================== -->
+      <section class="section grid g4">
+
+
+        <!-- Active Drives -->
+        <div class="card pad">
+
+          <span class="label">
+            Active Drives
+          </span>
+
+          <div class="value purple">
+            {{ stats.active_drives }}
+          </div>
+
+          <p class="muted">
+            Live postings
+          </p>
+
+        </div>
+
+
+        <!-- Candidates -->
+        <div class="card pad">
+
+          <span class="label">
+            Candidates
+          </span>
+
+          <div class="value green">
+            {{ stats.candidates }}
+          </div>
+
+          <p class="muted">
+            Unique applicants
+          </p>
+
+        </div>
+
+
+        <!-- Shortlisted -->
+        <div class="card pad">
+
+          <span class="label">
+            Shortlisted
+          </span>
+
+          <div class="value orange">
+            {{ stats.shortlisted }}
+          </div>
+
+          <p class="muted">
+            Top-fit profiles
+          </p>
+
+        </div>
+
+
+        <!-- Interviews -->
+        <div class="card pad">
+
+          <span class="label">
+            Interviews
+          </span>
+
+          <div class="value">
+            {{ stats.interviews }}
+          </div>
+
+          <p class="muted">
+            Upcoming pipeline
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- =======================================================
+           ACTIVE DRIVES + RECRUITER TOOLS
+      ======================================================== -->
+      <section class="section grid g2">
+
+
+        <!-- =====================================================
+             ACTIVE CAMPUS DRIVES
+        ====================================================== -->
+        <div class="card pad">
+
+          <div class="section-head">
+
+            <h2>
+              Active Campus Drives
+            </h2>
+
+            <a href="/recruiter-jobs.html">
+              Manage ›
+            </a>
+
+          </div>
+
+
+          <div class="list">
+
+            {% for job in jobs|slice:":5" %}
+
+              <a
+                class="kpi"
+                href="/recruiter-jobs.html"
+              >
+
+                <strong>
+                  {{ job.title }}
+                </strong>
+
+                <span>
+                  {{ job.company }}
+                  ·
+                  {{ job.applications.count }} applicants
+                </span>
+
+              </a>
+
+
+            {% empty %}
+
+              <div class="notice">
+                No drives yet.
+              </div>
+
+            {% endfor %}
+
+          </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             RECRUITER TOOLS
+        ====================================================== -->
+        <div class="card pad">
+
+          <div class="section-head">
+
+            <h2>
+              Recruiter tools
+            </h2>
+
+            <span>
+              AI-assisted workflow
+            </span>
+
+          </div>
+
+
+          <div class="grid g3">
+
+
+            <!-- Candidate Ranking -->
+            <a
+              class="feature"
+              href="/recruiter-candidates.html"
+            >
+
+              <span class="feature-icon">
+                ◎
+              </span>
+
+              <span>
+
+                <h3>
+                  Candidate Ranking
+                </h3>
+
+                <p>
+                  Review applicants
+                </p>
+
+              </span>
+
+            </a>
+
+
+            <!-- Hiring Analytics -->
+            <a
+              class="feature"
+              href="/recruiter-analytics.html"
+            >
+
+              <span class="feature-icon">
+                ▥
+              </span>
+
+              <span>
+
+                <h3>
+                  Hiring Analytics
+                </h3>
+
+                <p>
+                  Pipeline metrics
+                </p>
+
+              </span>
+
+            </a>
+
+
+            <!-- AI Sourcing -->
+            <a
+              class="feature"
+              href="/recruiter-sourcing.html"
+            >
+
+              <span class="feature-icon">
+                ⌕
+              </span>
+
+              <span>
+
+                <h3>
+                  AI Sourcing
+                </h3>
+
+                <p>
+                  Find talent
+                </p>
+
+              </span>
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =======================================================
+           ACTIVE INTERVIEWS
+      ======================================================== -->
+      <section class="section card pad">
+
+        <div class="section-head">
+
+          <h2>
+            Active Interviews
+          </h2>
+
+          <a href="/recruiter-candidates.html">
+            Manage Pipeline →
+          </a>
+
+        </div>
+
+
+        <div class="list">
+
+          {% for interview in upcoming_interviews %}
+
+            <a
+              class="kpi"
+              href="/recruiter-interviews/{{ interview.id }}/"
+            >
+
+              <!-- Candidate + Role -->
+              <strong>
+
+                {{ interview.application.student.profile.full_name|default:interview.application.student.username }}
+
+                ·
+
+                {{ interview.application.job.title }}
+
+              </strong>
+
+
+              <!-- Interview Details -->
+              <span>
+
+                {{ interview.get_interview_type_display }}
+
+                ·
+
+                {{ interview.scheduled_at|date:"d M Y, h:i A" }}
+
+              </span>
+
+            </a>
+
+
+          {% empty %}
+
+            <div class="notice">
+              No active interviews.
+              Shortlist a candidate to create the next hiring step.
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         RECRUITER BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+        <!-- Dashboard — Active -->
+        <a
+          class="nav-item active"
+          href="/recruiter-dashboard.html"
+        >
+          ▦ Dashboard
+        </a>
+
+
+        <!-- Candidates -->
+        <a
+          class="nav-item"
+          href="/recruiter-candidates.html"
+        >
+          ◎ Candidates
+        </a>
+
+
+        <!-- Jobs -->
+        <a
+          class="nav-item"
+          href="/recruiter-jobs.html"
+        >
+          ▤ Jobs
+        </a>
+
+
+        <!-- Analytics -->
+        <a
+          class="nav-item"
+          href="/recruiter-analytics.html"
+        >
+          ▥ Analytics
+        </a>
+
+
+        <!-- Settings -->
+        <a
+          class="nav-item"
+          href="/recruiter-settings.html"
+        >
+          ⚙ Settings
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

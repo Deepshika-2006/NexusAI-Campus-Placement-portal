@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Recruiter Sourcing — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Recruiter Branding -->
+        <a
+          class="brand"
+          href="/recruiter-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                Recruiter
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              AI Talent Sourcing
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Recruiter Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+
+          <!-- Student Mode -->
+          <a
+            class="role-btn"
+            href="/student-dashboard.html"
+          >
+            ⇄ <span>Student Mode</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           PAGE HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            AI Sourcing
+          </h1>
+
+          <p class="subtitle">
+            Search student profiles by name, college or skills.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =======================================================
+           SEARCH BAR
+      ======================================================== -->
+      <div class="card pad">
+
+        <form
+          class="searchbar"
+          method="get"
+          action="/recruiter-sourcing/"
+        >
+
+          <!-- Search Query -->
+          <input
+            name="q"
+            value="{{ request.GET.q }}"
+            placeholder="Search candidates, skills, college..."
+          >
+
+
+          <!-- Search Button -->
+          <button
+            class="btn secondary"
+            type="submit"
+          >
+            ⌕ Search Pool
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- =======================================================
+           STUDENT PROFILE RESULTS
+      ======================================================== -->
+      <section class="section">
+
+        <div class="list">
+
+          {% for candidate in profiles %}
+
+            <!-- =================================================
+                 CANDIDATE CARD
+            ================================================== -->
+            <div class="card pad">
+
+              <div class="candidate">
+
+
+                <!-- Candidate Avatar -->
+                <div
+                  class="avatar"
+                  style="display: grid; place-items: center;"
+                >
+                  {{ candidate.full_name|slice:":1"|upper|default:"C" }}
+                </div>
+
+
+                <!-- Candidate Information -->
+                <div>
+
+                  <strong>
+                    {{ candidate.full_name|default:candidate.user.username }}
+                  </strong>
+
+
+                  <!-- College + Branch -->
+                  <span>
+
+                    {{ candidate.college|default:"College not added" }}
+
+                    ·
+
+                    {{ candidate.branch|default:"CSE" }}
+
+                  </span>
+
+
+                  <!-- Skills -->
+                  <span>
+
+                    {{ candidate.skills|default:"Skills not added" }}
+
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <!-- Candidate Actions -->
+              <div class="actions">
+
+                <a
+                  class="btn secondary"
+                  href="/candidate-profile/{{ candidate.user.id }}/"
+                >
+                  View Dossier →
+                </a>
+
+              </div>
+
+            </div>
+
+
+          {% empty %}
+
+            <!-- No Matching Profiles -->
+            <div class="notice">
+              No matching student profiles.
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         RECRUITER BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+
+        <!-- Candidates -->
+        <a
+          class="nav-item"
+          href="/recruiter-candidates.html"
+        >
+          ♟ Candidates
+        </a>
+
+
+        <!-- Jobs -->
+        <a
+          class="nav-item"
+          href="/recruiter-jobs.html"
+        >
+          ▣ Jobs
+        </a>
+
+
+        <!-- Analytics -->
+        <a
+          class="nav-item"
+          href="/recruiter-analytics.html"
+        >
+          ◒ Analytics
+        </a>
+
+
+        <!-- Sourcing — Active -->
+        <a
+          class="nav-item active"
+          href="/recruiter-sourcing.html"
+        >
+          ⌕ Sourcing
+        </a>
+
+
+        <!-- Settings -->
+        <a
+          class="nav-item"
+          href="/recruiter-settings.html"
+        >
+          ⚙ Settings
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

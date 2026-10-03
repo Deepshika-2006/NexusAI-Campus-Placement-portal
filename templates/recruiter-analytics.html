@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Recruiter Analytics — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         Recruiter branding, account actions, student mode,
+         settings, and candidate access.
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- Recruiter Branding -->
+        <a
+          class="brand"
+          href="/recruiter-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                Recruiter
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Talent Sourcing &amp; Pipeline
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Recruiter Navigation Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+
+          <!-- Switch to Student Mode -->
+          <a
+            class="role-btn"
+            href="/student-dashboard.html"
+          >
+            ⇄ <span>Student Mode</span>
+          </a>
+
+
+          <!-- Recruiter Settings -->
+          <a
+            class="icon-btn"
+            href="/recruiter-settings.html"
+          >
+            ⚙
+          </a>
+
+
+          <!-- Candidates -->
+          <a
+            class="icon-btn"
+            href="/recruiter-candidates.html"
+          >
+            R
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           PAGE HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            Placement Cell Intelligence
+          </h1>
+
+          <p class="subtitle">
+            Live recruiter pipeline statistics from your
+            MySQL applications.
+          </p>
+
+        </div>
+
+        <span class="badge">
+          Live
+        </span>
+
+      </div>
+
+
+      <!-- =======================================================
+           PIPELINE METRICS
+      ======================================================== -->
+      <section class="grid g4">
+
+
+        <!-- Total Applications -->
+        <div class="card metric">
+
+          <div class="label">
+            Applications
+          </div>
+
+          <div class="value">
+            {{ total }}
+          </div>
+
+          <div class="note">
+            All your drives
+          </div>
+
+        </div>
+
+
+        <!-- Shortlisted Candidates -->
+        <div class="card metric">
+
+          <div class="label">
+            Shortlisted
+          </div>
+
+          <div class="value green">
+            {{ shortlisted }}
+          </div>
+
+          <div class="note">
+            Ready for next stage
+          </div>
+
+        </div>
+
+
+        <!-- Interviews -->
+        <div class="card metric">
+
+          <div class="label">
+            Interviews
+          </div>
+
+          <div class="value purple">
+            {{ interviews }}
+          </div>
+
+          <div class="note">
+            Interview stage
+          </div>
+
+        </div>
+
+
+        <!-- Selected Candidates -->
+        <div class="card metric">
+
+          <div class="label">
+            Selected
+          </div>
+
+          <div class="value green">
+            {{ selected }}
+          </div>
+
+          <div class="note">
+            Offers / selections
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =======================================================
+           PIPELINE BY STATUS
+      ======================================================== -->
+      <section class="section card pad">
+
+        <div class="section-head">
+
+          <h2>
+            Pipeline by Status
+          </h2>
+
+          <a href="/recruiter-candidates.html">
+            Manage candidates →
+          </a>
+
+        </div>
+
+
+        <!-- Status Statistics -->
+        <div class="list">
+
+          {% for row in stats %}
+
+            <div class="kpi">
+
+              <strong>
+                {{ row.status|title }}
+              </strong>
+
+              <span>
+                {{ row.total }}
+              </span>
+
+            </div>
+
+
+          {% empty %}
+
+            <!-- No Applications -->
+            <div class="notice">
+              No applications yet.
+              Publish a drive and invite students to apply.
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         RECRUITER BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+        <!-- Candidates -->
+        <a
+          class="nav-item"
+          href="/recruiter-candidates.html"
+        >
+          ♟ Candidates
+        </a>
+
+
+        <!-- Jobs -->
+        <a
+          class="nav-item"
+          href="/recruiter-jobs.html"
+        >
+          ▣ Jobs
+        </a>
+
+
+        <!-- Analytics — Active -->
+        <a
+          class="nav-item active"
+          href="/recruiter-analytics.html"
+        >
+          ◒ Analytics
+        </a>
+
+
+        <!-- Sourcing -->
+        <a
+          class="nav-item"
+          href="/recruiter-sourcing.html"
+        >
+          ⌕ Sourcing
+        </a>
+
+
+        <!-- Settings -->
+        <a
+          class="nav-item"
+          href="/recruiter-settings.html"
+        >
+          ⚙ Settings
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

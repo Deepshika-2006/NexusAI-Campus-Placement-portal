@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Review Candidate — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- =========================================================
+       CANDIDATE REVIEW PAGE STYLES
+  ========================================================== -->
+  <style>
+
+    /* Candidate review layout */
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    /* Large score display */
+    .score-big {
+      font-size: 36px;
+      font-weight: 950;
+      color: #6268df;
+    }
+
+    /* Skill tags */
+    .skill-box {
+      padding: 8px 11px;
+      border-radius: 9px;
+      background: #f4f6fb;
+      margin: 4px 0;
+      display: inline-block;
+    }
+
+    /* Test / interview history rows */
+    .history-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #e7ebf1;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 850px) {
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- Recruiter Branding -->
+        <a
+          class="brand"
+          href="/recruiter-candidates.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                Recruiter
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Candidate Review
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Recruiter Actions -->
+        <div class="top-actions">
+
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           DJANGO MESSAGES
+      ======================================================== -->
+      {% if messages %}
+
+        {% for message in messages %}
+
+          <div class="notice section">
+            {{ message }}
+          </div>
+
+        {% endfor %}
+
+      {% endif %}
+
+
+      <!-- =======================================================
+           CANDIDATE HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            {{ profile.full_name|default:candidate.username }}
+          </h1>
+
+          <p class="subtitle">
+            {{ application.job.title }}
+            ·
+            {{ application.job.company }}
+          </p>
+
+        </div>
+
+        <!-- Current Application Status -->
+        <span class="badge">
+          {{ application.get_status_display }}
+        </span>
+
+      </div>
+
+
+      <!-- =======================================================
+           CANDIDATE REVIEW GRID
+      ======================================================== -->
+      <div class="review-grid">
+
+
+        <!-- =====================================================
+             CANDIDATE INFORMATION
+        ====================================================== -->
+        <section class="card pad">
+
+          <!-- Candidate Identity -->
+          <div class="candidate">
+
+            <div
+              class="avatar"
+              style="display: grid; place-items: center; font-size: 20px"
+            >
+              {{ profile.full_name|slice:":1"|upper|default:"C" }}
+            </div>
+
+
+            <div>
+
+              <strong>
+                {{ profile.full_name|default:candidate.username }}
+              </strong>
+
+              <span>
+                {{ candidate.email }}
+              </span>
+
+              <span>
+                {{ profile.college|default:"College not added" }}
+                ·
+                {{ profile.branch|default:"CSE" }}
+                ·
+                Batch {{ profile.graduation_year|default:"2027" }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- ===================================================
+               CANDIDATE KPIs
+          ==================================================== -->
+          <div class="section grid g3">
+
+            <!-- CGPA -->
+            <div class="kpi">
+
+              <strong>
+                CGPA
+              </strong>
+
+              <span>
+                {{ profile.cgpa|default:"—" }}
+              </span>
+
+            </div>
+
+
+            <!-- ATS Score -->
+            <div class="kpi">
+
+              <strong>
+                ATS
+              </strong>
+
+              <span class="green">
+                {{ resume.ats_score|default:"—" }}
+              </span>
+
+            </div>
+
+
+            <!-- Job Match -->
+            <div class="kpi">
+
+              <strong>
+                Job Match
+              </strong>
+
+              <span class="score-big">
+                {{ match }}%
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- ===================================================
+               SKILLS
+          ==================================================== -->
+          <h3>
+            Skills
+          </h3>
+
+          <div>
+
+            {% if profile.skills %}
+
+              <span class="skill-box">
+                {{ profile.skills }}
+              </span>
+
+            {% else %}
+
+              <span class="muted">
+                Skills not added.
+              </span>
+
+            {% endif %}
+
+          </div>
+
+
+          <!-- ===================================================
+               PROFILE SUMMARY
+          ==================================================== -->
+          {% if profile.bio %}
+
+            <h3 style="margin-top: 18px">
+              Profile Summary
+            </h3>
+
+            <p class="muted">
+              {{ profile.bio }}
+            </p>
+
+          {% endif %}
+
+
+          <!-- ===================================================
+               SUBMITTED RESUME
+          ==================================================== -->
+          {% if resume %}
+
+            <div class="actions">
+
+              <a
+                class="btn primary"
+                href="{{ resume.file.url }}"
+                target="_blank"
+              >
+                View Submitted Resume ↗
+              </a>
+
+              <span class="muted">
+                This is the resume attached to this application.
+              </span>
+
+            </div>
+
+          {% else %}
+
+            <div class="notice">
+              No resume was attached to this application.
+            </div>
+
+          {% endif %}
+
+        </section>
+
+
+        <!-- =====================================================
+             RECRUITER DECISION
+        ====================================================== -->
+        <section class="card pad">
+
+          <div class="section-head">
+
+            <h2>
+              Recruiter Decision
+            </h2>
+
+            <span>
+              Pipeline control
+            </span>
+
+          </div>
+
+
+          <p class="muted">
+            Review the candidate evidence before moving them forward.
+          </p>
+
+
+          <!-- ===================================================
+               PIPELINE STATUS FORM
+          ==================================================== -->
+          {% if not active_interview and not interviews and application.status != "selected" and application.status != "rejected" %}
+
+            <form
+              action="/recruiter-candidates/{{ application.id }}/status/"
+              method="post"
+            >
+
+              <!-- Django CSRF Protection -->
+              {% csrf_token %}
+
+
+              <!-- Pipeline Status -->
+              <label class="field">
+
+                <span>
+                  Pipeline Status
+                </span>
+
+                <select name="status">
+
+                  <option
+                    value="screening"
+                    {% if application.status == "screening" %}selected{% endif %}
+                  >
+                    Screening
+                  </option>
+
+                  <option
+                    value="shortlisted"
+                    {% if application.status == "shortlisted" %}selected{% endif %}
+                  >
+                    Shortlisted
+                  </option>
+
+                  <option
+                    value="rejected"
+                    {% if application.status == "rejected" %}selected{% endif %}
+                  >
+                    Rejected
+                  </option>
+
+                </select>
+
+              </label>
+
+
+              <!-- Recruiter Notes -->
+              <label class="field">
+
+                <span>
+                  Recruiter Notes
+                </span>
+
+                <textarea
+                  name="notes"
+                  rows="5"
+                  placeholder="Add screening notes..."
+                >{{ application.notes }}</textarea>
+
+              </label>
+
+
+              <!-- Update Status -->
+              <button
+                class="btn primary"
+                type="submit"
+              >
+                Update Pipeline Status
+              </button>
+
+            </form>
+
+
+          <!-- ===================================================
+               ACTIVE INTERVIEW
+          ==================================================== -->
+          {% elif active_interview %}
+
+            <div class="notice">
+
+              <strong>
+                Interview stage active
+              </strong>
+
+              <br>
+
+              The interview workflow now controls this
+              candidate's status. Use the interview room to
+              wait for the response or evaluate it.
+
+            </div>
+
+
+          <!-- ===================================================
+               COMPLETED PREVIOUS INTERVIEW
+          ==================================================== -->
+          {% elif latest_interview and latest_interview.status == "completed" %}
+
+            <div class="notice">
+
+              <strong>
+                Previous interview finalized
+              </strong>
+
+              <br>
+
+              The interview decision controls the next pipeline
+              step. Use the dedicated interview action below.
+
+            </div>
+
+
+          <!-- ===================================================
+               FINALIZED APPLICATION
+          ==================================================== -->
+          {% else %}
+
+            <div class="notice">
+
+              <strong>
+                Application finalized
+              </strong>
+
+              <br>
+
+              No further pipeline changes are available.
+
+            </div>
+
+          {% endif %}
+
+
+          <!-- ===================================================
+               INTERVIEW WORKFLOW CONTROLS
+          ==================================================== -->
+
+          {% if active_interview %}
+
+            <!-- Interview Already Sent -->
+            <div
+              class="notice"
+              style="margin-top: 12px"
+            >
+
+              <strong>
+                Interview already sent ✓
+              </strong>
+
+              <br>
+
+              {% if active_interview.candidate_response %}
+
+                Candidate response received.
+                Evaluation is ready.
+
+              {% else %}
+
+                Waiting for the candidate to submit
+                their response.
+
+              {% endif %}
+
+            </div>
+
+
+            <!-- Open Interview -->
+            <div
+              class="actions"
+              style="margin-top: 12px"
+            >
+
+              <a
+                class="btn primary"
+                href="/recruiter-interviews/{{ active_interview.id }}/"
+              >
+
+                {% if active_interview.candidate_response %}
+                  Evaluate Response →
+                {% else %}
+                  Open Interview Status →
+                {% endif %}
+
+              </a>
+
+            </div>
+
+
+          <!-- ===================================================
+               NEXT ROUND
+          ==================================================== -->
+          {% elif can_schedule_next_round %}
+
+            <div
+              class="notice"
+              style="margin-top: 12px"
+            >
+
+              <strong>
+                Next round approved ✓
+              </strong>
+
+              <br>
+
+              The previous interview was finalized with
+              “Move to Next Round”.
+
+            </div>
+
+
+            <div
+              class="actions"
+              style="margin-top: 12px"
+            >
+
+              <a
+                class="btn primary"
+                href="/recruiter-candidates/{{ application.id }}/schedule-interview/"
+              >
+                Schedule Next Round →
+              </a>
+
+            </div>
+
+
+          <!-- ===================================================
+               FIRST INTERVIEW
+          ==================================================== -->
+          {% elif application.status == "shortlisted" %}
+
+            <div
+              class="actions"
+              style="margin-top: 12px"
+            >
+
+              <a
+                class="btn primary"
+                href="/recruiter-candidates/{{ application.id }}/schedule-interview/"
+              >
+                Schedule Interview →
+              </a>
+
+            </div>
+
+          {% endif %}
+
+        </section>
+
+      </div>
+
+
+      <!-- =======================================================
+           TEST RESULTS
+      ======================================================== -->
+      <section class="section card pad">
+
+        <div class="section-head">
+
+          <h2>
+            Test Results
+          </h2>
+
+          <span>
+            Evidence from NexusAI
+          </span>
+
+        </div>
+
+
+        <div class="list">
+
+          {% for attempt in attempts %}
+
+            <div class="history-row">
+
+              <!-- Test Information -->
+              <div>
+
+                <strong>
+                  {{ attempt.get_practice_type_display }}
+                </strong>
+
+                <div class="muted">
+                  {{ attempt.submitted_at|date:"d M Y, h:i A" }}
+                </div>
+
+              </div>
+
+
+              <!-- Test Score -->
+              <strong class="green">
+                {{ attempt.score }}/{{ attempt.total }}
+              </strong>
+
+            </div>
+
+
+          {% empty %}
+
+            <div class="notice">
+              No completed tests yet.
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </section>
+
+
+      <!-- =======================================================
+           INTERVIEW HISTORY
+      ======================================================== -->
+      <section class="section card pad">
+
+        <div class="section-head">
+
+          <h2>
+            Interview History
+          </h2>
+
+          <span>
+            {{ interviews|length }} round(s)
+          </span>
+
+        </div>
+
+
+        <div class="list">
+
+          {% for interview in interviews %}
+
+            <a
+              class="kpi"
+              href="/recruiter-interviews/{{ interview.id }}/"
+            >
+
+              <!-- Interview Information -->
+              <strong>
+                {{ interview.get_interview_type_display }}
+                ·
+                {{ interview.get_status_display }}
+              </strong>
+
+
+              <!-- Interview Details -->
+              <span>
+
+                {{ interview.scheduled_at|date:"d M Y, h:i A" }}
+
+                · Score
+                {{ interview.overall_score }}%
+
+                ·
+                {{ interview.get_decision_display }}
+
+                ·
+
+                {% if interview.candidate_response %}
+                  Response received
+                {% else %}
+                  Waiting for response
+                {% endif %}
+
+              </span>
+
+            </a>
+
+
+          {% empty %}
+
+            <div class="notice">
+              No interviews scheduled.
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+
+</html>

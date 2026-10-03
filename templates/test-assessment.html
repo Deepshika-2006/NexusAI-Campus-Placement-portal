@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>AI Strategic Accelerator — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+
+        <!-- NexusAI Student Branding -->
+        <a
+          class="brand"
+          href="/student-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+
+                <i class="dot"></i>
+
+                Placement Season Live
+
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Campus Career Copilot
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Student Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+
+          <!-- Recruiter Mode -->
+          <a
+            class="role-btn"
+            href="/recruiter-dashboard.html"
+          >
+            ⇄ <span>Recruiter Mode</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+      <div class="modal-page">
+
+        <div class="card pad quiz-card">
+
+
+          <!-- ===================================================
+               QUIZ HEADER
+          ==================================================== -->
+          <div class="modal-head">
+
+            <div>
+
+              <span class="label">
+                Quiz
+              </span>
+
+              <h1 class="page-title">
+                AI Strategic Accelerator — 15-Min Test
+              </h1>
+
+            </div>
+
+
+            <!-- Close / Back -->
+            <a
+              class="close"
+              href="/prep-and-tests.html"
+            >
+              ×
+            </a>
+
+          </div>
+
+
+          <!-- ===================================================
+               ASSESSMENT FORM
+          ==================================================== -->
+          <form
+            method="post"
+            action="/practice/submit/"
+          >
+
+            {% csrf_token %}
+
+
+            <!-- Practice Type -->
+            <input
+              type="hidden"
+              name="practice_type"
+              value="assessment"
+            >
+
+
+            <!-- Total Questions -->
+            <input
+              type="hidden"
+              name="total"
+              value="4"
+            >
+
+
+            <!-- =================================================
+                 QUIZ SECTION
+            ================================================== -->
+            <section
+              class="quiz-step"
+              style="display: block;"
+            >
+
+              <span class="label">
+                MCQ Format · System Fundamentals
+              </span>
+
+
+              <!-- =================================================
+                   QUESTION 1
+              ================================================== -->
+              <div class="question">
+                1. What does consistent hashing primarily minimize
+                when nodes change?
+              </div>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q1"
+                  value="1"
+                  required
+                >
+
+                Only the newest node receives all keys.
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q1"
+                  value="0"
+                >
+
+                Keys between adjacent nodes are redistributed
+                to a new database.
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q1"
+                  value="0"
+                >
+
+                Every key must be moved to a new database.
+
+              </label>
+
+
+              <!-- =================================================
+                   QUESTION 2
+              ================================================== -->
+              <div class="question">
+                2. Which policy helps a rate limiter allow
+                controlled bursts?
+              </div>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q2"
+                  value="1"
+                  required
+                >
+
+                Token Bucket
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q2"
+                  value="0"
+                >
+
+                LRU
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q2"
+                  value="0"
+                >
+
+                Random Write
+
+              </label>
+
+
+              <!-- =================================================
+                   QUESTION 3
+              ================================================== -->
+              <div class="question">
+                3. What is the main purpose of a circuit breaker?
+              </div>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q3"
+                  value="1"
+                  required
+                >
+
+                Stop repeated calls to a failing service
+                and allow recovery.
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q3"
+                  value="0"
+                >
+
+                Permanently block every request.
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q3"
+                  value="0"
+                >
+
+                Store database backups.
+
+              </label>
+
+
+              <!-- =================================================
+                   QUESTION 4
+              ================================================== -->
+              <div class="question">
+                4. Which statement is a core safety property
+                of a replicated log?
+              </div>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q4"
+                  value="1"
+                  required
+                >
+
+                A committed log entry is not lost or replaced.
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q4"
+                  value="0"
+                >
+
+                Two leaders may commit conflicting entries.
+
+              </label>
+
+
+              <label class="option">
+
+                <input
+                  type="radio"
+                  name="q4"
+                  value="0"
+                >
+
+                Followers can commit arbitrary entries.
+
+              </label>
+
+
+              <!-- =================================================
+                   HIDDEN SCORE
+              ================================================== -->
+              <input
+                type="hidden"
+                name="score"
+                id="assessment-score"
+                value="0"
+              >
+
+
+              <!-- =================================================
+                   FORM ACTIONS
+              ================================================== -->
+              <div class="actions">
+
+                <!-- Submit Assessment -->
+                <button
+                  class="btn success"
+                  type="submit"
+                  onclick="document.getElementById('assessment-score').value=[...document.querySelectorAll('input[type=radio][name^=q]:checked')].reduce((s,e)=>s+Number(e.value),0)"
+                >
+                  Submit Assessment ✓
+                </button>
+
+
+                <!-- Back to Preparation -->
+                <a
+                  class="btn secondary"
+                  href="/prep-and-tests.html"
+                >
+                  Back to Prep
+                </a>
+
+              </div>
+
+            </section>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         STUDENT BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+
+        <!-- Dashboard -->
+        <a
+          class="nav-item"
+          href="/student-dashboard.html"
+        >
+          ▦ Dashboard
+        </a>
+
+
+        <!-- Prep & Tests — Active -->
+        <a
+          class="nav-item active"
+          href="/prep-and-tests.html"
+        >
+          ◫ Prep &amp; Tests
+        </a>
+
+
+        <!-- Applications -->
+        <a
+          class="nav-item"
+          href="/applications.html"
+        >
+          ✓ Applications
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

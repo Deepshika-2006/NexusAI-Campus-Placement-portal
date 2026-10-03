@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Student Sign In — NexusAI</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        /* =====================================================
+           FULL SCREEN LOGIN PAGE
+           ===================================================== */
+
+        html,
+        body {
+            width: 100%;
+            min-width: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body.auth-page {
+            width: 100vw;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .auth-shell {
+            width: 100%;
+            max-width: none;
+            min-height: 100vh;
+            margin: 0;
+            padding: 28px 40px 40px;
+            box-sizing: border-box;
+        }
+
+        .auth-brand {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .auth-grid {
+            width: 100%;
+            min-height: calc(100vh - 105px);
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                minmax(420px, 520px);
+
+            gap: 60px;
+
+            align-items: center;
+        }
+
+        .auth-copy {
+            width: 100%;
+            max-width: 700px;
+            padding: 20px;
+        }
+
+        .auth-copy h1 {
+            max-width: 650px;
+        }
+
+        .auth-copy p {
+            max-width: 620px;
+        }
+
+        .auth-card-pro {
+            width: 100%;
+            max-width: 520px;
+            justify-self: end;
+
+            padding: 28px;
+            box-sizing: border-box;
+        }
+
+        /* =====================================================
+           TABLET
+           ===================================================== */
+
+        @media (max-width: 950px) {
+
+            .auth-shell {
+                padding: 22px;
+            }
+
+            .auth-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                min-height: auto;
+            }
+
+            .auth-copy {
+                max-width: 700px;
+                margin: auto;
+                text-align: center;
+            }
+
+            .auth-copy p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .auth-points {
+                justify-content: center;
+            }
+
+            .auth-card-pro {
+                justify-self: center;
+                width: min(520px, 100%);
+            }
+        }
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (max-width: 560px) {
+
+            .auth-shell {
+                padding: 16px 12px 30px;
+            }
+
+            .auth-grid {
+                display: block;
+            }
+
+            .auth-copy {
+                display: none;
+            }
+
+            .auth-card-pro {
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-shell">
+
+        <!-- =================================================
+             BRAND
+             ================================================= -->
+
+        <header class="auth-brand">
+
+            <a class="brand" href="/index.html">
+
+                <div class="logo">
+                    N
+                </div>
+
+                <div>
+
+                    <div class="brand-title">
+
+                        NexusAI
+
+                        <span class="status">
+
+                            <i class="dot"></i>
+
+                            Placement Season Live
+
+                        </span>
+
+                    </div>
+
+                    <div class="brand-sub">
+                        Campus Career Copilot
+                    </div>
+
+                </div>
+
+            </a>
+
+        </header>
+
+
+        <!-- =================================================
+             MAIN LOGIN AREA
+             ================================================= -->
+
+        <div class="auth-grid">
+
+
+            <!-- =================================================
+                 LEFT CONTENT
+                 ================================================= -->
+
+            <section class="auth-copy">
+
+                <span class="eyebrow">
+                    AI-POWERED PLACEMENT COMMAND CENTER
+                </span>
+
+                <h1>
+                    Your placement journey, organized.
+                </h1>
+
+                <p>
+                    Sign in to discover campus roles, improve your
+                    resume, practice aptitude and coding, and prepare
+                    for interviews.
+                </p>
+
+
+                <div class="auth-points">
+
+                    <div>
+                        <b>14+</b>
+                        <span>Eligible opportunities</span>
+                    </div>
+
+                    <div>
+                        <b>88</b>
+                        <span>Current ATS score</span>
+                    </div>
+
+                    <div>
+                        <b>3</b>
+                        <span>Upcoming interviews</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 LOGIN CARD
+                 ================================================= -->
+
+            <section class="card auth-card auth-card-pro">
+
+
+                <!-- HEADER -->
+
+                <div class="auth-heading">
+
+                    <div>
+
+                        <span class="label">
+                            SECURE ACCESS
+                        </span>
+
+                        <h2>
+                            Welcome back
+                        </h2>
+
+                        <p>
+                            Sign in as a student to continue.
+                        </p>
+
+                    </div>
+
+                    <span class="secure-badge">
+                        ● Secure
+                    </span>
+
+                </div>
+
+
+                <!-- ROLE TABS -->
+
+                <div class="role-tabs">
+
+                    <a
+                        class="active"
+                        href="/login.html"
+                    >
+                        Student
+                    </a>
+
+                    <a
+                        href="/login-recruiter.html"
+                    >
+                        Recruiter
+                    </a>
+
+                </div>
+
+
+                <!-- LOGIN FORM -->
+
+                <form
+                    action="/login/"
+                    method="post"
+                    class="auth-form"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- EMAIL -->
+
+                    <div class="field">
+
+                        <label for="email">
+                            College Email
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="student_demo@nexusai.local"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="field">
+
+                        <div class="field-label-row">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <a href="/forgot-password.html">
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            minlength="6"
+                            autocomplete="current-password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- REMEMBER -->
+
+                    <label class="check-row">
+
+                        <input
+                            type="checkbox"
+                            name="remember"
+                        >
+
+                        Remember me on this device
+
+                    </label>
+
+
+                    <!-- DJANGO MESSAGES -->
+
+                    {% if messages %}
+
+                        <div class="notice">
+
+                            {% for message in messages %}
+
+                                {{ message }}
+
+                                {% if not forloop.last %}
+                                    <br>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- LOGIN BUTTON -->
+
+                    <button
+                        class="btn primary auth-submit"
+                        type="submit"
+                    >
+                        Sign In as Student →
+                    </button>
+
+                </form>
+
+
+                <!-- DIVIDER -->
+
+                <div class="auth-divider">
+
+                    <span>
+                        New to NexusAI?
+                    </span>
+
+                </div>
+
+
+                <!-- REGISTER -->
+
+                <a
+                    class="btn secondary auth-alt"
+                    href="/register.html"
+                >
+                    Create Student Account
+                </a>
+
+
+                <!-- TERMS -->
+
+                <p class="auth-legal">
+
+                    By continuing, you agree to the
+                    NexusAI placement workspace terms
+                    and privacy notice.
+
+                </p>
+
+
+                <!-- BACK -->
+
+                <p
+                    class="auth-legal"
+                    style="margin-top:10px!important"
+                >
+
+                    <a href="/index.html">
+                        ← Back to NexusAI home
+                    </a>
+
+                </p>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

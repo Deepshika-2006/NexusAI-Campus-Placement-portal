@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>NexusAI — Campus Career Copilot</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- =========================================================
+       LANDING PAGE STYLES
+       These styles control the public homepage hero,
+       feature cards, preview dashboard, and responsiveness.
+  ========================================================== -->
+  <style>
+
+    /* =========================================================
+       LANDING PAGE LAYOUT
+    ========================================================== */
+
+    .landing {
+      min-height: 100vh;
+    }
+
+    .landing-main {
+      padding: 54px 0 110px;
+    }
+
+
+    /* =========================================================
+       HERO SECTION
+    ========================================================== */
+
+    .landing-hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .landing-copy,
+    .landing-preview {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(28, 35, 54, 0.96),
+          rgba(18, 24, 37, 0.96)
+        );
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+
+    /* =========================================================
+       HERO LEFT SIDE
+    ========================================================== */
+
+    .landing-copy {
+      padding: 48px;
+      color: #ffffff;
+    }
+
+    .landing-copy h1 {
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: 0.98;
+      margin: 18px 0;
+      color: #ffffff;
+    }
+
+    .landing-copy p {
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 700px;
+      color: #ffffff;
+    }
+
+
+    /* =========================================================
+       HERO ACTION BUTTONS
+    ========================================================== */
+
+    .landing-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+
+    /* =========================================================
+       DASHBOARD PREVIEW
+    ========================================================== */
+
+    .landing-preview {
+      padding: 24px;
+      color: #ffffff;
+    }
+
+    .preview-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .preview-top h2 {
+      color: #ffffff;
+    }
+
+    .preview-score {
+      font-size: 52px;
+      font-weight: 900;
+      color: #00d7aa;
+    }
+
+    .preview-card {
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 16px;
+      background: #171e2d;
+      margin-top: 12px;
+      color: #ffffff;
+    }
+
+    .preview-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .preview-row:last-child {
+      border-bottom: 0;
+    }
+
+
+    /* =========================================================
+       LANDING PAGE SECTIONS
+    ========================================================== */
+
+    .landing-section {
+      margin-top: 28px;
+    }
+
+    .landing-section h2 {
+      text-align: center;
+      font-size: 30px;
+    }
+
+
+    /* =========================================================
+       FEATURE GRID
+    ========================================================== */
+
+    .landing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .landing-feature {
+      padding: 24px;
+      min-height: 150px;
+    }
+
+    .landing-feature h3 {
+      margin: 8px 0;
+    }
+
+    .landing-feature p {
+      color: #aeb8d3;
+      line-height: 1.6;
+    }
+
+
+    /* =========================================================
+       PUBLIC NAVIGATION
+    ========================================================== */
+
+    .public-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .public-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .public-actions .btn {
+      white-space: nowrap;
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================== */
+
+    .landing-footer {
+      text-align: center;
+      color: #77829e;
+      font-size: 12px;
+      padding: 25px 0;
+    }
+
+
+    /* =========================================================
+       SMALL UI ELEMENTS
+    ========================================================== */
+
+    .eyebrow {
+      display: inline-flex;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .pill-row span {
+      padding: 7px 10px;
+      border: 1px solid rgba(0, 215, 170, 0.25);
+      border-radius: 999px;
+      background: rgba(0, 215, 170, 0.07);
+      color: #8ff4dc;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+
+    /* =========================================================
+       TABLET RESPONSIVE DESIGN
+    ========================================================== */
+
+    @media (max-width: 850px) {
+
+      .landing-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .landing-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .landing-copy {
+        padding: 32px;
+      }
+
+      .landing-main {
+        padding-top: 28px;
+      }
+
+    }
+
+
+    /* =========================================================
+       MOBILE RESPONSIVE DESIGN
+    ========================================================== */
+
+    @media (max-width: 560px) {
+
+      .landing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .landing-copy h1 {
+        font-size: 44px;
+      }
+
+      .public-actions .btn.secondary {
+        display: none;
+      }
+
+      .topbar-inner {
+        gap: 10px;
+      }
+
+      .brand-sub {
+        display: none;
+      }
+
+      .landing-preview {
+        padding: 18px;
+      }
+
+    }
+
+
+    /* =========================================================
+       HERO TEXT VISIBILITY FIX
+       Keeps all landing hero text bright and readable
+       against the dark background.
+    ========================================================== */
+
+    .landing-copy,
+    .landing-copy h1,
+    .landing-copy p,
+    .landing-copy .eyebrow,
+    .landing-preview,
+    .landing-preview h2,
+    .landing-preview .label,
+    .landing-preview .preview-row,
+    .landing-preview strong {
+      color: #ffffff !important;
+    }
+
+    .landing-preview .preview-row span:not(.green):not(.orange) {
+      color: #e8edf7 !important;
+    }
+
+  </style>
+</head>
+
+
+<body class="landing">
+
+  <!-- =========================================================
+       PUBLIC HEADER
+       Navigation available before login.
+  ========================================================== -->
+  <header class="topbar public-nav">
+
+    <div class="topbar-inner">
+
+      <!-- NexusAI Branding -->
+      <a class="brand" href="/index.html">
+
+        <div class="logo">
+          N
+        </div>
+
+        <div>
+
+          <div class="brand-title">
+            NexusAI
+
+            <span class="status">
+              <i class="dot"></i>
+              Placement Season Live
+            </span>
+          </div>
+
+          <div class="brand-sub">
+            Campus Career Copilot
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <!-- Public Actions -->
+      <div class="public-actions">
+
+        <a
+          class="btn secondary"
+          href="/login.html"
+        >
+          Sign In
+        </a>
+
+        <a
+          class="btn primary"
+          href="/register.html"
+        >
+          Create Account
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================================
+       MAIN LANDING PAGE CONTENT
+  ========================================================== -->
+  <main class="container landing-main">
+
+
+    <!-- =======================================================
+         HERO SECTION
+    ======================================================== -->
+    <section class="landing-hero">
+
+      <!-- Hero Introduction -->
+      <div class="landing-copy">
+
+        <span class="eyebrow">
+          AI-POWERED CAMPUS PLACEMENT PLATFORM
+        </span>
+
+        <h1>
+          Turn campus applications into career momentum.
+        </h1>
+
+        <p>
+          NexusAI brings job matching, resume intelligence,
+          aptitude practice, coding preparation and interview
+          readiness into one professional placement workspace.
+        </p>
+
+
+        <!-- Hero Buttons -->
+        <div class="landing-actions">
+
+          <a
+            class="btn primary"
+            href="/login.html"
+          >
+            Sign In to NexusAI →
+          </a>
+
+          <a
+            class="btn secondary"
+            href="/register.html"
+          >
+            Create Free Workspace
+          </a>
+
+        </div>
+
+
+        <!-- Platform Feature Pills -->
+        <div class="pill-row">
+
+          <span>
+            AI Resume Insights
+          </span>
+
+          <span>
+            Campus Job Matching
+          </span>
+
+          <span>
+            Coding Practice
+          </span>
+
+          <span>
+            Mock Interviews
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           STUDENT DASHBOARD PREVIEW
+      ====================================================== -->
+      <div class="landing-preview">
+
+        <div class="preview-top">
+
+          <div>
+
+            <span class="label">
+              STUDENT COMMAND CENTER
+            </span>
+
+            <h2>
+              Placement readiness
+            </h2>
+
+          </div>
+
+          <span class="badge green">
+            Live
+          </span>
+
+        </div>
+
+
+        <!-- ATS Score -->
+        <div class="preview-score">
+          88
+
+          <span
+            style="font-size: 20px; color: #9ba6c2"
+          >
+            / ATS
+          </span>
+        </div>
+
+
+        <!-- Progress Bar -->
+        <div class="progress green">
+          <span style="width: 88%"></span>
+        </div>
+
+
+        <!-- Dashboard Preview Card -->
+        <div class="preview-card">
+
+          <!-- Job Match -->
+          <div class="preview-row">
+
+            <strong>
+              Senior Frontend Engineer
+            </strong>
+
+            <span class="green">
+              95% match
+            </span>
+
+          </div>
+
+
+          <!-- Resume Intelligence -->
+          <div class="preview-row">
+
+            <strong>
+              Resume Intelligence
+            </strong>
+
+            <span>
+              Ready to scan
+            </span>
+
+          </div>
+
+
+          <!-- Interview Preparation -->
+          <div class="preview-row">
+
+            <strong>
+              Interview Prep
+            </strong>
+
+            <span class="orange">
+              3 upcoming
+            </span>
+
+          </div>
+
+
+          <!-- Practice Arena -->
+          <div class="preview-row">
+
+            <strong>
+              Practice Arena
+            </strong>
+
+            <span>
+              12 modules
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         PLATFORM FEATURES
+    ======================================================== -->
+    <section class="landing-section">
+
+      <h2>
+        Everything for your placement journey
+      </h2>
+
+
+      <div class="landing-grid">
+
+        <!-- Resume Intelligence -->
+        <article class="card landing-feature">
+
+          <span class="feature-icon">
+            ✦
+          </span>
+
+          <h3>
+            Resume Intelligence
+          </h3>
+
+          <p>
+            Review ATS fit, identify missing keywords and prepare
+            your resume for high-value roles.
+          </p>
+
+        </article>
+
+
+        <!-- Jobs & Match -->
+        <article class="card landing-feature">
+
+          <span class="feature-icon">
+            ⌁
+          </span>
+
+          <h3>
+            Jobs &amp; Match
+          </h3>
+
+          <p>
+            Explore campus opportunities with role-specific
+            eligibility and AI alignment insights.
+          </p>
+
+        </article>
+
+
+        <!-- Aptitude Practice -->
+        <article class="card landing-feature">
+
+          <span class="feature-icon">
+            ?
+          </span>
+
+          <h3>
+            Aptitude Practice
+          </h3>
+
+          <p>
+            Practice realistic placement-style quantitative
+            and reasoning questions.
+          </p>
+
+        </article>
+
+
+        <!-- Coding Arena -->
+        <article class="card landing-feature">
+
+          <span class="feature-icon">
+            &lt;/&gt;
+          </span>
+
+          <h3>
+            Coding Arena
+          </h3>
+
+          <p>
+            Work through common interview problems with an
+            editable coding workspace.
+          </p>
+
+        </article>
+
+
+        <!-- Mock Interviews -->
+        <article class="card landing-feature">
+
+          <span class="feature-icon">
+            ◉
+          </span>
+
+          <h3>
+            Mock Interviews
+          </h3>
+
+          <p>
+            Prepare for technical and behavioral rounds with
+            structured interview scenarios.
+          </p>
+
+        </article>
+
+
+        <!-- Placement Pipeline -->
+        <article class="card landing-feature">
+
+          <span class="feature-icon">
+            ▥
+          </span>
+
+          <h3>
+            Placement Pipeline
+          </h3>
+
+          <p>
+            Keep applications, interviews, tests and offers
+            organized in one place.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =======================================================
+         STUDENTS & RECRUITERS SECTION
+    ======================================================== -->
+    <section
+      class="landing-section card pad"
+      style="text-align: center"
+    >
+
+      <span class="eyebrow">
+        FOR STUDENTS &amp; RECRUITERS
+      </span>
+
+      <h2 style="margin: 14px 0 8px">
+        A realistic campus hiring workspace
+      </h2>
+
+      <p
+        class="muted"
+        style="max-width: 720px; margin: 0 auto 20px; line-height: 1.7"
+      >
+        Students can prepare and track opportunities, while
+        recruiters can manage drives, review candidates and
+        move talent through the hiring pipeline.
+      </p>
+
+
+      <!-- CTA Buttons -->
+      <div
+        class="landing-actions"
+        style="justify-content: center"
+      >
+
+        <a
+          class="btn primary"
+          href="/register.html"
+        >
+          Get Started
+        </a>
+
+        <a
+          class="btn secondary"
+          href="/login.html"
+        >
+          Already have an account?
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================== -->
+  <footer class="landing-footer">
+    NexusAI Campus Career Copilot · Frontend prototype ·
+    HTML + CSS · Responsive
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Coding Practice Arena — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         Branding, account actions, recruiter mode,
+         notifications, and profile access.
+    ========================================================== -->
+    <header class="topbar">
+      <div class="topbar-inner">
+
+        <!-- NexusAI Branding -->
+        <a class="brand" href="/index.html">
+          <div class="logo">N</div>
+
+          <div>
+            <div class="brand-title">
+              NexusAI
+              <span class="status">
+                <i class="dot"></i>
+                Placement Season Live
+              </span>
+            </div>
+
+            <div class="brand-sub">
+              Campus Career Copilot
+            </div>
+          </div>
+        </a>
+
+        <!-- Navigation Actions -->
+        <div class="top-actions">
+
+          <a class="logout-btn" href="/logout.html">
+            ↪ <span>Logout</span>
+          </a>
+
+          <a class="role-btn" href="/recruiter-dashboard.html">
+            ⇄ <span>Recruiter Mode</span>
+          </a>
+
+          <a class="icon-btn" href="/applications.html">
+            ◌
+          </a>
+
+          <a class="icon-btn" href="/profile.html">
+            A
+          </a>
+
+        </div>
+      </div>
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+         Coding practice questions and practice roadmap.
+    ========================================================== -->
+    <main class="container practice-page">
+
+      <!-- =======================================================
+           PRACTICE HEADER
+           Displays practice overview, time limit, and difficulty.
+      ======================================================== -->
+      <div class="practice-hero">
+
+        <div>
+          <span class="eyebrow">
+            INTERVIEW CODING PRACTICE
+          </span>
+
+          <h1 class="page-title">
+            Coding Speed Arena
+          </h1>
+
+          <p class="subtitle">
+            Solve common placement-style programming problems.
+            Write your solution in the editor and compare it
+            with the expected approach.
+          </p>
+        </div>
+
+        <!-- Practice Statistics -->
+        <div class="practice-stats">
+          <span>
+            <b>5</b> Problems
+          </span>
+
+          <span>
+            <b>45</b> Minutes
+          </span>
+
+          <span>
+            <b>Easy → Medium</b>
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- =======================================================
+           CODING WORKSPACE
+           Contains all five coding questions.
+      ======================================================== -->
+      <div class="practice-layout">
+
+        <section class="card pad coding-card">
+
+          <!-- Hidden radio buttons control question navigation
+               using the existing HTML/CSS-only interaction. -->
+          <input
+            class="interaction-toggle"
+            type="radio"
+            name="codeq"
+            id="c1"
+            checked
+          >
+
+          <input
+            class="interaction-toggle"
+            type="radio"
+            name="codeq"
+            id="c2"
+          >
+
+          <input
+            class="interaction-toggle"
+            type="radio"
+            name="codeq"
+            id="c3"
+          >
+
+          <input
+            class="interaction-toggle"
+            type="radio"
+            name="codeq"
+            id="c4"
+          >
+
+          <input
+            class="interaction-toggle"
+            type="radio"
+            name="codeq"
+            id="c5"
+          >
+
+
+          <!-- =====================================================
+               PROBLEM 1 — REVERSE A STRING
+          ====================================================== -->
+          <div class="quiz-step step-c1">
+
+            <div class="quiz-top">
+              <span class="badge purple">
+                Problem 1 of 5
+              </span>
+
+              <span class="badge">
+                Easy
+              </span>
+            </div>
+
+            <h2>
+              Reverse a String
+            </h2>
+
+            <p class="muted">
+              Given a string <code>s</code>, return the string reversed.
+              Do not use a built-in reverse function.
+            </p>
+
+            <!-- Example -->
+            <div class="example">
+              <b>Example</b>
+
+              <span>
+                Input:
+                <code>"placement"</code>
+              </span>
+
+              <span>
+                Output:
+                <code>"tnemecalp"</code>
+              </span>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="field">
+              <label>
+                Your solution
+              </label>
+
+              <textarea
+                class="code-editor"
+                spellcheck="false"
+                placeholder="Write your solution here..."
+              >def reverse_string(s):
+    # write your solution
+    pass</textarea>
+            </div>
+
+            <!-- Expected Approach -->
+            <details>
+              <summary>
+                Expected approach
+              </summary>
+
+              <p>
+                Use two pointers or iterate from the last character
+                to the first. Target complexity: O(n) time and
+                O(n) output space.
+              </p>
+            </details>
+
+            <!-- Question Actions -->
+            <div class="actions">
+
+              <a
+                class="btn secondary"
+                href="#code-submitted"
+              >
+                Run &amp; Submit
+              </a>
+
+              <label
+                class="btn primary quiz-nav-label"
+                for="c2"
+              >
+                Next Problem →
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <!-- =====================================================
+               PROBLEM 2 — TWO SUM
+          ====================================================== -->
+          <div class="quiz-step step-c2">
+
+            <div class="quiz-top">
+              <span class="badge purple">
+                Problem 2 of 5
+              </span>
+
+              <span class="badge orange">
+                Medium
+              </span>
+            </div>
+
+            <h2>
+              Two Sum
+            </h2>
+
+            <p class="muted">
+              Given an integer array and a target, return the indices
+              of two numbers whose sum equals the target.
+              Assume exactly one solution.
+            </p>
+
+            <!-- Example -->
+            <div class="example">
+              <b>Example</b>
+
+              <span>
+                Input:
+                <code>[2,7,11,15], target = 9</code>
+              </span>
+
+              <span>
+                Output:
+                <code>[0,1]</code>
+              </span>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="field">
+              <label>
+                Your solution
+              </label>
+
+              <textarea
+                class="code-editor"
+                spellcheck="false"
+                placeholder="Write your solution here..."
+              >def two_sum(nums, target):
+    # use a hash map for O(n)
+    pass</textarea>
+            </div>
+
+            <!-- Expected Approach -->
+            <details>
+              <summary>
+                Expected approach
+              </summary>
+
+              <p>
+                Store previously seen values in a hash map.
+                For each value x, check whether target − x
+                has already been seen.
+              </p>
+            </details>
+
+            <!-- Question Actions -->
+            <div class="actions">
+
+              <label
+                class="btn secondary quiz-nav-label"
+                for="c1"
+              >
+                ← Previous
+              </label>
+
+              <a
+                class="btn secondary"
+                href="#code-submitted"
+              >
+                Run &amp; Submit
+              </a>
+
+              <label
+                class="btn primary quiz-nav-label"
+                for="c3"
+              >
+                Next Problem →
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <!-- =====================================================
+               PROBLEM 3 — PALINDROME CHECK
+          ====================================================== -->
+          <div class="quiz-step step-c3">
+
+            <div class="quiz-top">
+              <span class="badge purple">
+                Problem 3 of 5
+              </span>
+
+              <span class="badge">
+                Easy
+              </span>
+            </div>
+
+            <h2>
+              Palindrome Check
+            </h2>
+
+            <p class="muted">
+              Return true when a string reads the same forward
+              and backward, ignoring case.
+            </p>
+
+            <!-- Example -->
+            <div class="example">
+              <b>Example</b>
+
+              <span>
+                Input:
+                <code>"Level"</code>
+              </span>
+
+              <span>
+                Output:
+                <code>true</code>
+              </span>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="field">
+              <label>
+                Your solution
+              </label>
+
+              <textarea
+                class="code-editor"
+                spellcheck="false"
+                placeholder="Write your solution here..."
+              >def is_palindrome(s):
+    # compare characters from both ends
+    pass</textarea>
+            </div>
+
+            <!-- Expected Approach -->
+            <details>
+              <summary>
+                Expected approach
+              </summary>
+
+              <p>
+                Normalize the case, then compare characters from
+                the two ends using two pointers.
+                Target complexity: O(n) time.
+              </p>
+            </details>
+
+            <!-- Question Actions -->
+            <div class="actions">
+
+              <label
+                class="btn secondary quiz-nav-label"
+                for="c2"
+              >
+                ← Previous
+              </label>
+
+              <a
+                class="btn secondary"
+                href="#code-submitted"
+              >
+                Run &amp; Submit
+              </a>
+
+              <label
+                class="btn primary quiz-nav-label"
+                for="c4"
+              >
+                Next Problem →
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <!-- =====================================================
+               PROBLEM 4 — SECOND LARGEST ELEMENT
+          ====================================================== -->
+          <div class="quiz-step step-c4">
+
+            <div class="quiz-top">
+              <span class="badge purple">
+                Problem 4 of 5
+              </span>
+
+              <span class="badge orange">
+                Medium
+              </span>
+            </div>
+
+            <h2>
+              Second Largest Element
+            </h2>
+
+            <p class="muted">
+              Find the second largest distinct element in an integer
+              array without sorting the entire array.
+            </p>
+
+            <!-- Example -->
+            <div class="example">
+              <b>Example</b>
+
+              <span>
+                Input:
+                <code>[10, 5, 8, 10, 3]</code>
+              </span>
+
+              <span>
+                Output:
+                <code>8</code>
+              </span>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="field">
+              <label>
+                Your solution
+              </label>
+
+              <textarea
+                class="code-editor"
+                spellcheck="false"
+                placeholder="Write your solution here..."
+              >def second_largest(nums):
+    # track the largest and second largest
+    pass</textarea>
+            </div>
+
+            <!-- Expected Approach -->
+            <details>
+              <summary>
+                Expected approach
+              </summary>
+
+              <p>
+                Maintain two variables for largest and second-largest
+                distinct values while scanning once.
+                Target complexity: O(n) time and O(1) extra space.
+              </p>
+            </details>
+
+            <!-- Question Actions -->
+            <div class="actions">
+
+              <label
+                class="btn secondary quiz-nav-label"
+                for="c3"
+              >
+                ← Previous
+              </label>
+
+              <a
+                class="btn secondary"
+                href="#code-submitted"
+              >
+                Run &amp; Submit
+              </a>
+
+              <label
+                class="btn primary quiz-nav-label"
+                for="c5"
+              >
+                Next Problem →
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <!-- =====================================================
+               PROBLEM 5 — FIRST NON-REPEATING CHARACTER
+          ====================================================== -->
+          <div class="quiz-step step-c5">
+
+            <div class="quiz-top">
+              <span class="badge purple">
+                Problem 5 of 5
+              </span>
+
+              <span class="badge orange">
+                Medium
+              </span>
+            </div>
+
+            <h2>
+              First Non-Repeating Character
+            </h2>
+
+            <p class="muted">
+              Return the first character that appears exactly once.
+              Return <code>-1</code> if every character repeats.
+            </p>
+
+            <!-- Example -->
+            <div class="example">
+              <b>Example</b>
+
+              <span>
+                Input:
+                <code>"swiss"</code>
+              </span>
+
+              <span>
+                Output:
+                <code>"w"</code>
+              </span>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="field">
+              <label>
+                Your solution
+              </label>
+
+              <textarea
+                class="code-editor"
+                spellcheck="false"
+                placeholder="Write your solution here..."
+              >def first_unique(s):
+    # count characters, then scan again
+    pass</textarea>
+            </div>
+
+            <!-- Expected Approach -->
+            <details>
+              <summary>
+                Expected approach
+              </summary>
+
+              <p>
+                Count frequencies with a hash map, then scan the
+                string again and return the first character with
+                frequency one. O(n) time.
+              </p>
+            </details>
+
+            <!-- Final Question Actions -->
+            <div class="actions">
+
+              <label
+                class="btn secondary quiz-nav-label"
+                for="c4"
+              >
+                ← Previous
+              </label>
+
+              <a
+                class="btn success"
+                href="/prep-and-tests.html#coding-complete"
+              >
+                ✓ Finish Practice
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- =====================================================
+               SUBMISSION / COMPLETION MESSAGES
+          ====================================================== -->
+
+          <!-- Shown after clicking Run & Submit -->
+          <div
+            id="code-submitted"
+            class="notice success-box"
+          >
+            <b>Solution submitted for review.</b>
+            This HTML/CSS-only build cannot execute code,
+            but your editor content is preserved while you
+            stay on this question.
+          </div>
+
+          <!-- Coding practice completion message -->
+          <div
+            id="code-complete"
+            class="notice success-box"
+          >
+            <b>Coding practice complete.</b>
+            Compare your solutions with the expected approaches
+            and use Mock Interview for timed practice.
+          </div>
+
+        </section>
+
+
+        <!-- =======================================================
+             PRACTICE SIDEBAR
+             Links to coding, aptitude, and assessment modules.
+        ======================================================== -->
+        <aside class="practice-side">
+
+          <!-- Skill Focus Card -->
+          <div class="card pad">
+
+            <div class="section-head">
+              <h2>
+                Skill focus
+              </h2>
+
+              <span>
+                5 core patterns
+              </span>
+            </div>
+
+            <!-- Skills Covered -->
+            <div class="chips">
+
+              <span class="chip good">
+                Strings
+              </span>
+
+              <span class="chip good">
+                Hash Map
+              </span>
+
+              <span class="chip good">
+                Two Pointers
+              </span>
+
+              <span class="chip good">
+                Arrays
+              </span>
+
+              <span class="chip good">
+                Complexity
+              </span>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Mock Interview -->
+            <a
+              class="btn primary"
+              style="width: 100%"
+              href="/mock-interview.html"
+            >
+              ▶ Launch Mock Interview
+            </a>
+
+          </div>
+
+
+          <!-- How to Practice Card -->
+          <div class="card pad">
+
+            <h3>
+              How to practice
+            </h3>
+
+            <ol class="muted compact-list">
+
+              <li>
+                Read constraints first.
+              </li>
+
+              <li>
+                State your approach.
+              </li>
+
+              <li>
+                Write a clean solution.
+              </li>
+
+              <li>
+                Check complexity.
+              </li>
+
+            </ol>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         BOTTOM NAVIGATION
+         Quick links to the main student platform sections.
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+        <!-- Dashboard -->
+        <a
+          class="nav-item"
+          href="/student-dashboard.html"
+        >
+          <span class="nav-icon">▦</span>
+          Dashboard
+        </a>
+
+        <!-- Resume AI -->
+        <a
+          class="nav-item"
+          href="/resume-intelligence.html"
+        >
+          <span class="nav-icon">✦</span>
+          Resume AI
+        </a>
+
+        <!-- Jobs -->
+        <a
+          class="nav-item"
+          href="/jobs.html"
+        >
+          <span class="nav-icon">⌁</span>
+          Jobs &amp; Match
+        </a>
+
+        <!-- Prep & Tests — Active -->
+        <a
+          class="nav-item active"
+          href="/prep-and-tests.html"
+        >
+          <span class="nav-icon">◫</span>
+          Prep &amp; Tests
+        </a>
+
+        <!-- Applications -->
+        <a
+          class="nav-item"
+          href="/applications.html"
+        >
+          <span class="nav-icon">✓</span>
+          Applications
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

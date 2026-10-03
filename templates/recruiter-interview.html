@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Interview Evaluation — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- =========================================================
+       PAGE-SPECIFIC INTERVIEW STYLES
+  ========================================================== -->
+  <style>
+    /* Main two-column interview layout */
+    .interview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    /* Interview question / prompt */
+    .prompt {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.45;
+      color: #172033;
+      background: #f7f8fc;
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    /* Score input fields */
+    .score-fields {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    /* Waiting for candidate response */
+    .response-waiting {
+      padding: 16px;
+      border: 1px solid #f2c94c;
+      background: #fff8df;
+      border-radius: 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    /* Candidate response received */
+    .response-received {
+      padding: 16px;
+      border: 1px solid #8ddfd1;
+      background: #effcf9;
+      border-radius: 12px;
+    }
+
+    /* Evaluation locked state */
+    .evaluation-locked {
+      padding: 20px;
+      border: 1px solid #d8deea;
+      background: #f7f8fc;
+      border-radius: 14px;
+      display: grid;
+      gap: 8px;
+    }
+
+    /* Final interview result */
+    .final-result {
+      padding: 18px;
+      border: 1px solid #8ddfd1;
+      background: #effcf9;
+      border-radius: 14px;
+    }
+
+    /* Final score */
+    .final-score {
+      font-size: 42px;
+      font-weight: 950;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 800px) {
+      .interview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .score-fields {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Branding -->
+        <a
+          class="brand"
+          href="/recruiter-candidates/"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                Recruiter
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Interview Room &amp; Evaluation
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Recruiter Actions -->
+        <div class="top-actions">
+
+          <a
+            class="logout-btn"
+            href="/logout/"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           INTERVIEW HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            {{ interview.get_interview_type_display }}
+          </h1>
+
+          <p class="subtitle">
+
+            {{ application.student.profile.full_name|default:application.student.username }}
+
+            ·
+
+            {{ application.job.title }}
+
+            ·
+
+            {{ application.job.company }}
+
+          </p>
+
+        </div>
+
+
+        <!-- Current Interview Status -->
+        <span class="badge">
+          {{ interview.get_status_display }}
+        </span>
+
+      </div>
+
+
+      <!-- =======================================================
+           DJANGO MESSAGES
+      ======================================================== -->
+      {% if messages %}
+
+        {% for message in messages %}
+
+          <div class="notice section">
+            {{ message }}
+          </div>
+
+        {% endfor %}
+
+      {% endif %}
+
+
+      <!-- =======================================================
+           INTERVIEW GRID
+           Left  = Interview details + candidate response
+           Right = Evaluation
+      ======================================================== -->
+      <div class="interview-grid">
+
+
+        <!-- =====================================================
+             LEFT COLUMN — INTERVIEW BRIEF
+        ====================================================== -->
+        <section class="card pad">
+
+          <h2>
+            Interview Brief
+          </h2>
+
+
+          <!-- Interview Schedule -->
+          <p class="muted">
+
+            Scheduled:
+
+            {{ interview.scheduled_at|date:"d M Y, h:i A" }}
+
+            ·
+
+            {{ interview.duration_minutes }}
+            minutes
+
+          </p>
+
+
+          <!-- Interview Question -->
+          <div class="prompt">
+            {{ interview.question }}
+          </div>
+
+
+          <!-- ===================================================
+               MEETING LINK
+          ==================================================== -->
+          {% if interview.meeting_link %}
+
+            <div class="actions">
+
+              <a
+                class="btn primary"
+                href="{{ interview.meeting_link }}"
+                target="_blank"
+                rel="noopener"
+              >
+                Open Meeting ↗
+              </a>
+
+            </div>
+
+          {% else %}
+
+            <div
+              class="notice"
+              style="margin-top: 14px;"
+            >
+              No external meeting link was added.
+              Use the NexusAI interview response area for the demo.
+            </div>
+
+          {% endif %}
+
+
+          <!-- ===================================================
+               CANDIDATE RESPONSE
+          ==================================================== -->
+          <h3 style="margin-top: 22px;">
+            Candidate Response
+          </h3>
+
+
+          <div
+            class="card pad"
+            style="background: #f9fafc;"
+          >
+
+            {% if interview.candidate_response %}
+
+              <!-- Response Received -->
+              <div class="response-received">
+
+                <strong>
+                  Response received ✓
+                </strong>
+
+                <!-- Candidate's submitted answer -->
+                <div
+                  style="margin-top: 10px; white-space: pre-wrap;"
+                >
+                  {{ interview.candidate_response }}
+                </div>
+
+                <p
+                  class="muted"
+                  style="margin-bottom: 0;"
+                >
+                  The candidate has submitted their response.
+                  Evaluation is available below.
+                </p>
+
+              </div>
+
+            {% else %}
+
+              <!-- Waiting for Candidate -->
+              <div class="response-waiting">
+
+                <strong>
+                  Waiting for candidate response
+                </strong>
+
+                <span>
+                  The recruiter cannot score this interview
+                  until the candidate submits an answer.
+                </span>
+
+              </div>
+
+            {% endif %}
+
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RIGHT COLUMN — INTERVIEW EVALUATION
+        ====================================================== -->
+        <section class="card pad">
+
+          <div class="section-head">
+
+            <h2>
+              Interview Evaluation
+            </h2>
+
+
+            <!-- Evaluation State -->
+            <span>
+
+              {% if interview.status == "completed" %}
+
+                Finalized
+
+              {% elif interview.candidate_response and interview.decision == "pending" %}
+
+                Evaluation / Decision Pending
+
+              {% else %}
+
+                Waiting for Response
+
+              {% endif %}
+
+            </span>
+
+          </div>
+
+
+          <!-- ===================================================
+               FINALIZED INTERVIEW
+          ==================================================== -->
+          {% if interview.status == "completed" %}
+
+            <div class="final-result">
+
+              <span class="label">
+                FINAL RESULT
+              </span>
+
+
+              <!-- Overall Score -->
+              <div class="final-score">
+                {{ interview.overall_score }}%
+              </div>
+
+
+              <!-- Final Decision -->
+              <strong>
+                {{ interview.get_decision_display }}
+              </strong>
+
+
+              <!-- Recruiter Feedback -->
+              {% if interview.recruiter_feedback %}
+
+                <p style="white-space: pre-wrap;">
+                  {{ interview.recruiter_feedback }}
+                </p>
+
+              {% endif %}
+
+
+              <p
+                class="muted"
+                style="margin-bottom: 0;"
+              >
+                This interview is finalized and can no longer be edited.
+              </p>
+
+            </div>
+
+
+          <!-- ===================================================
+               RESPONSE RECEIVED — EVALUATION AVAILABLE
+          ==================================================== -->
+          {% elif interview.candidate_response %}
+
+            <div
+              class="notice"
+              style="margin-bottom: 14px;"
+            >
+
+              <strong>
+                Response received ✓
+              </strong>
+
+              <br>
+
+              The candidate has submitted their answer.
+              You can now score the three evaluation areas
+              and choose whether to keep the decision pending
+              or finalize the round.
+
+            </div>
+
+
+            <p class="muted">
+              Score each area from 0 to 10.
+              The overall percentage is calculated automatically.
+            </p>
+
+
+            <!-- =================================================
+                 EVALUATION FORM
+            ================================================== -->
+            <form
+              method="post"
+              action="/recruiter-interviews/{{ interview.id }}/"
+            >
+
+              {% csrf_token %}
+
+
+              <!-- ===============================================
+                   SCORE FIELDS
+              ================================================ -->
+              <div class="score-fields">
+
+
+                <!-- Technical Score -->
+                <label class="field">
+
+                  <span>
+                    Technical
+                  </span>
+
+                  <input
+                    type="number"
+                    name="technical_score"
+                    min="0"
+                    max="10"
+                    value="{{ interview.technical_score }}"
+                    required
+                  >
+
+                </label>
+
+
+                <!-- Communication Score -->
+                <label class="field">
+
+                  <span>
+                    Communication
+                  </span>
+
+                  <input
+                    type="number"
+                    name="communication_score"
+                    min="0"
+                    max="10"
+                    value="{{ interview.communication_score }}"
+                    required
+                  >
+
+                </label>
+
+
+                <!-- Problem Solving Score -->
+                <label class="field">
+
+                  <span>
+                    Problem Solving
+                  </span>
+
+                  <input
+                    type="number"
+                    name="problem_solving_score"
+                    min="0"
+                    max="10"
+                    value="{{ interview.problem_solving_score }}"
+                    required
+                  >
+
+                </label>
+
+              </div>
+
+
+              <!-- ===============================================
+                   RECRUITER FEEDBACK
+              ================================================ -->
+              <label class="field">
+
+                <span>
+                  Recruiter Feedback
+                </span>
+
+                <textarea
+                  name="recruiter_feedback"
+                  rows="7"
+                  placeholder="Explain strengths, concerns and next steps..."
+                >{{ interview.recruiter_feedback }}</textarea>
+
+              </label>
+
+
+              <!-- ===============================================
+                   INTERVIEW DECISION
+              ================================================ -->
+              <label class="field">
+
+                <span>
+                  Decision
+                </span>
+
+                <select name="decision">
+
+                  <!-- Pending -->
+                  <option
+                    value="pending"
+                    {% if interview.decision == "pending" %}
+                      selected
+                    {% endif %}
+                  >
+                    Pending — save evaluation for later
+                  </option>
+
+
+                  <!-- Next Round -->
+                  <option
+                    value="next_round"
+                    {% if interview.decision == "next_round" %}
+                      selected
+                    {% endif %}
+                  >
+                    Move to Next Round
+                  </option>
+
+
+                  <!-- Selected -->
+                  <option
+                    value="selected"
+                    {% if interview.decision == "selected" %}
+                      selected
+                    {% endif %}
+                  >
+                    Selected
+                  </option>
+
+
+                  <!-- Rejected -->
+                  <option
+                    value="rejected"
+                    {% if interview.decision == "rejected" %}
+                      selected
+                    {% endif %}
+                  >
+                    Not Selected
+                  </option>
+
+                </select>
+
+              </label>
+
+
+              <!-- Submit Evaluation -->
+              <button
+                class="btn primary"
+                type="submit"
+              >
+                Save Interview Evaluation
+              </button>
+
+            </form>
+
+
+          <!-- ===================================================
+               RESPONSE NOT YET RECEIVED — LOCK EVALUATION
+          ==================================================== -->
+          {% else %}
+
+            <div class="evaluation-locked">
+
+              <strong>
+                Evaluation locked
+              </strong>
+
+              <p>
+                Scores can only be entered after the candidate
+                submits a response.
+              </p>
+
+              <span>
+                Ask the candidate to open the Interview Center
+                and submit their response.
+              </span>
+
+            </div>
+
+          {% endif %}
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+
+</html>

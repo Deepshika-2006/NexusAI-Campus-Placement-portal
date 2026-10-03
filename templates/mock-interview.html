@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Mock Interview — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         Branding, logout, and recruiter mode.
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Branding -->
+        <a
+          class="brand"
+          href="/student-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                <i class="dot"></i>
+                Placement Season Live
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Campus Career Copilot
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Navigation Actions -->
+        <div class="top-actions">
+
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+          <a
+            class="role-btn"
+            href="/recruiter-dashboard.html"
+          >
+            ⇄ <span>Recruiter Mode</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+      <div class="interview">
+
+
+        <!-- =====================================================
+             INTERVIEW HEADER
+        ====================================================== -->
+        <div class="section-head">
+
+          <div>
+
+            <h1 class="page-title">
+              AI Mock Interview Simulator
+            </h1>
+
+            <p class="subtitle">
+              Active Session · NexusAI Interview Evaluator
+            </p>
+
+          </div>
+
+          <span class="badge orange">
+            AI Feedback
+          </span>
+
+        </div>
+
+
+        <!-- =====================================================
+             INTERVIEW WORKSPACE
+        ====================================================== -->
+        <div class="grid g2">
+
+
+          <!-- ===================================================
+               INTERVIEW PROMPT
+          ==================================================== -->
+          <div class="card pad">
+
+            <span class="label">
+              INTERVIEW PROMPT
+            </span>
+
+            <h2>
+              {{ interview.prompt }}
+            </h2>
+
+            <p class="muted">
+              Use the STAR structure where relevant.
+              Mention your exact technical contribution
+              and measurable outcome.
+            </p>
+
+          </div>
+
+
+          <!-- ===================================================
+               STUDENT RESPONSE
+          ==================================================== -->
+          <div class="card pad">
+
+            <h2>
+              Your response
+            </h2>
+
+
+            <!-- Interview Response Form -->
+            <form
+              method="post"
+              action="/interview/submit/"
+            >
+
+              <!-- Django CSRF Protection -->
+              {% csrf_token %}
+
+
+              <!-- Current Interview Session ID -->
+              <input
+                type="hidden"
+                name="session_id"
+                value="{{ interview.id }}"
+              >
+
+
+              <!-- Student Answer -->
+              <textarea
+                name="answer"
+                rows="12"
+                placeholder="Type your answer here..."
+                required
+              ></textarea>
+
+
+              <!-- Interview Actions -->
+              <div class="actions">
+
+                <button
+                  class="btn primary"
+                  type="submit"
+                >
+                  Finish &amp; Get Report
+                </button>
+
+                <a
+                  class="btn secondary"
+                  href="/student-dashboard.html"
+                >
+                  End Round
+                </a>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             COMPLETED INTERVIEW REPORT
+             Displayed only after the interview is completed.
+        ====================================================== -->
+        {% if interview.status == "completed" %}
+
+          <section class="section card pad">
+
+            <div class="notice">
+
+              <strong>
+                ✓ Interview completed
+              </strong>
+
+              <br>
+
+              Score:
+              <span class="green">
+                {{ interview.score }}/100
+              </span>
+
+              <br>
+
+              {{ interview.feedback }}
+
+            </div>
+
+          </section>
+
+        {% endif %}
+
+      </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+        <!-- Dashboard -->
+        <a
+          class="nav-item"
+          href="/student-dashboard.html"
+        >
+          ▦ Dashboard
+        </a>
+
+
+        <!-- Mock Interview — Active -->
+        <a
+          class="nav-item active"
+          href="/mock-interview.html"
+        >
+          ◉ Mock Interview
+        </a>
+
+
+        <!-- Applications -->
+        <a
+          class="nav-item"
+          href="/applications.html"
+        >
+          ✓ Applications
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

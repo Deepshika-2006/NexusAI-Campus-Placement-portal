@@ -1,0 +1,2248 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Student Dashboard — NexusAI</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           NEXUSAI STUDENT DASHBOARD
+           ========================================================= */
+
+        .nx-dashboard-page {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+
+            padding: 32px 24px 120px;
+
+            box-sizing: border-box;
+        }
+
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .nx-dashboard-hero {
+
+            width: 100%;
+
+            padding: 28px;
+
+            margin-bottom: 22px;
+
+            border: 1px solid #d9dfeb;
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f5f6ff 100%
+                );
+
+            box-shadow:
+                0 10px 30px rgba(30,45,75,.07);
+
+            box-sizing: border-box;
+        }
+
+
+        .nx-eyebrow {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 6px 10px;
+
+            margin-bottom: 12px;
+
+            border: 1px solid #dedfff;
+
+            border-radius: 999px;
+
+            background: #f2f2ff;
+
+            color: #6369df;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing: .08em;
+
+            text-transform: uppercase;
+        }
+
+
+        .nx-dashboard-hero h1 {
+
+            margin: 0;
+
+            color: #172033;
+
+            font-size: clamp(28px, 4vw, 43px);
+
+            line-height: 1.08;
+
+            font-weight: 950;
+
+            letter-spacing: -.04em;
+        }
+
+
+        .nx-dashboard-hero p {
+
+            max-width: 720px;
+
+            margin: 10px 0 0;
+
+            color: #5e6a7e;
+
+            font-size: 13px;
+
+            line-height: 1.65;
+        }
+
+
+        .nx-hero-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 18px;
+        }
+
+
+        /* =========================================================
+           BUTTONS
+           ========================================================= */
+
+        .nx-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 40px;
+
+            padding: 0 15px;
+
+            border: 1px solid #d3dce9;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            color: #293650;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            text-decoration: none;
+
+            box-sizing: border-box;
+
+            transition:
+                transform .18s ease,
+                box-shadow .18s ease;
+        }
+
+
+        .nx-btn:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 8px 18px rgba(35,48,75,.10);
+        }
+
+
+        .nx-btn-primary {
+
+            border-color: #aaaefc;
+
+            background: #b8b9ff;
+
+            color: #20254a;
+        }
+
+
+        .nx-btn-success {
+
+            border-color: #b9e7dc;
+
+            background: #edf9f6;
+
+            color: #008d70;
+        }
+
+
+        /* =========================================================
+           SECTION
+           ========================================================= */
+
+        .nx-section {
+
+            width: 100%;
+
+            margin-top: 24px;
+        }
+
+
+        .nx-section-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .nx-section-title {
+
+            margin: 0;
+
+            color: #172033;
+
+            font-size: 18px;
+
+            font-weight: 950;
+        }
+
+
+        .nx-section-link {
+
+            color: #6268df;
+
+            font-size: 10px;
+
+            font-weight: 900;
+
+            text-decoration: none;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================================
+           METRICS
+           ========================================================= */
+
+        .nx-metrics {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            gap: 15px;
+
+            width: 100%;
+        }
+
+
+        .nx-metric {
+
+            min-width: 0;
+
+            min-height: 132px;
+
+            padding: 18px;
+
+            border: 1px solid #d9dfeb;
+
+            border-radius: 15px;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 8px 22px rgba(32,48,75,.06);
+
+            box-sizing: border-box;
+        }
+
+
+        .nx-metric-label {
+
+            color: #68758a;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            letter-spacing: .08em;
+
+            text-transform: uppercase;
+        }
+
+
+        .nx-metric-value {
+
+            margin-top: 15px;
+
+            color: #172033;
+
+            font-size: 30px;
+
+            line-height: 1;
+
+            font-weight: 950;
+        }
+
+
+        .nx-metric-value.purple {
+            color: #656be5;
+        }
+
+
+        .nx-metric-value.orange {
+            color: #e98243;
+        }
+
+
+        .nx-metric-value.green {
+            color: #00a987;
+        }
+
+
+        .nx-metric-note {
+
+            margin-top: 10px;
+
+            color: #69768a;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================================
+           TWO COLUMN
+           ========================================================= */
+
+        .nx-two-column {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 15px;
+
+            width: 100%;
+        }
+
+
+        .nx-panel {
+
+            min-width: 0;
+
+            padding: 19px;
+
+            border: 1px solid #d9dfeb;
+
+            border-radius: 16px;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 8px 22px rgba(32,48,75,.06);
+
+            box-sizing: border-box;
+        }
+
+
+        .nx-panel-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            margin-bottom: 13px;
+        }
+
+
+        .nx-panel-title {
+
+            margin: 0;
+
+            color: #172033;
+
+            font-size: 15px;
+
+            font-weight: 950;
+        }
+
+
+        .nx-panel-badge {
+
+            padding: 6px 9px;
+
+            border-radius: 999px;
+
+            background: #f0f1ff;
+
+            color: #6369df;
+
+            font-size: 8px;
+
+            font-weight: 900;
+
+            white-space: nowrap;
+        }
+
+
+        .nx-panel-text {
+
+            margin: 0;
+
+            color: #657287;
+
+            font-size: 10px;
+
+            line-height: 1.6;
+        }
+
+
+        .nx-panel-actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 15px;
+        }
+
+
+        /* =========================================================
+           DEADLINES
+           ========================================================= */
+
+        .nx-deadline-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+
+        .nx-deadline {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 10px 11px;
+
+            border: 1px solid #e0e5ed;
+
+            border-radius: 10px;
+
+            background: #fafbfd;
+        }
+
+
+        .nx-deadline-icon {
+
+            width: 30px;
+
+            height: 30px;
+
+            flex: 0 0 30px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 8px;
+
+            background: #eef0ff;
+
+            color: #6268df;
+
+            font-size: 12px;
+
+            font-weight: 900;
+        }
+
+
+        .nx-deadline-main {
+
+            min-width: 0;
+
+            flex: 1;
+        }
+
+
+        .nx-deadline-title {
+
+            margin: 0;
+
+            color: #26324a;
+
+            font-size: 10px;
+
+            font-weight: 900;
+        }
+
+
+        .nx-deadline-text {
+
+            margin-top: 3px;
+
+            color: #737f91;
+
+            font-size: 9px;
+
+            line-height: 1.4;
+        }
+
+
+        /* =========================================================
+           JOB CARDS
+           ========================================================= */
+
+        .nx-job-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 13px;
+        }
+
+
+        .nx-job-card {
+
+            width: 100%;
+
+            padding: 17px;
+
+            border: 1px solid #d9dfeb;
+
+            border-radius: 15px;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 7px 20px rgba(32,48,75,.055);
+
+            box-sizing: border-box;
+        }
+
+
+        .nx-job-row {
+
+            display: grid;
+
+            grid-template-columns:
+                46px minmax(0, 1fr) auto;
+
+            align-items: start;
+
+            gap: 13px;
+
+            width: 100%;
+        }
+
+
+        .nx-company-logo {
+
+            width: 46px;
+
+            height: 46px;
+
+            flex: 0 0 46px;
+
+            display: grid;
+
+            place-items: center;
+
+            border: 1px solid #dce2ec;
+
+            border-radius: 11px;
+
+            background: #f2f4f8;
+
+            color: #34415a;
+
+            font-size: 11px;
+
+            font-weight: 950;
+        }
+
+
+        .nx-job-main {
+
+            min-width: 0;
+        }
+
+
+        .nx-job-title {
+
+            margin: 0;
+
+            color: #172033;
+
+            font-size: 14px;
+
+            line-height: 1.3;
+
+            font-weight: 950;
+        }
+
+
+        .nx-job-company {
+
+            margin-top: 4px;
+
+            color: #68758a;
+
+            font-size: 10px;
+        }
+
+
+        .nx-job-meta {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 6px;
+
+            margin-top: 9px;
+        }
+
+
+        .nx-job-meta span {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 24px;
+
+            padding: 0 7px;
+
+            border: 1px solid #e0e5ed;
+
+            border-radius: 7px;
+
+            background: #f7f9fb;
+
+            color: #59667a;
+
+            font-size: 8px;
+
+            font-weight: 800;
+        }
+
+
+        .nx-score {
+
+            min-width: 58px;
+
+            padding: 8px;
+
+            border: 1px solid #bce7dc;
+
+            border-radius: 9px;
+
+            background: #effaf7;
+
+            text-align: center;
+        }
+
+
+        .nx-score-value {
+
+            color: #008d70;
+
+            font-size: 15px;
+
+            font-weight: 950;
+
+            line-height: 1;
+        }
+
+
+        .nx-score-label {
+
+            margin-top: 3px;
+
+            color: #63867e;
+
+            font-size: 7px;
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+        }
+
+
+        .nx-job-actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 13px;
+        }
+
+
+        /* =========================================================
+           COHORT
+           ========================================================= */
+
+        .nx-statline {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            color: #68758a;
+
+            font-size: 10px;
+        }
+
+
+        .nx-statline strong {
+
+            color: #008d70;
+        }
+
+
+        .nx-progress {
+
+            width: 100%;
+
+            height: 8px;
+
+            margin-top: 9px;
+
+            overflow: hidden;
+
+            border-radius: 999px;
+
+            background: #e8edf4;
+        }
+
+
+        .nx-progress span {
+
+            display: block;
+
+            width: 94%;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background: #00b891;
+        }
+
+
+        .nx-small-note {
+
+            margin: 9px 0 0;
+
+            color: #717d90;
+
+            font-size: 9px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           PREPARATION HUB
+           ========================================================= */
+
+        .nx-prep-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 9px;
+        }
+
+
+        .nx-prep-card {
+
+            min-width: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 10px;
+
+            border: 1px solid #e0e5ed;
+
+            border-radius: 10px;
+
+            background: #fafbfd;
+
+            color: inherit;
+
+            text-decoration: none;
+        }
+
+
+        .nx-prep-icon {
+
+            width: 32px;
+
+            height: 32px;
+
+            flex: 0 0 32px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 8px;
+
+            background: #eef0ff;
+
+            color: #6268df;
+
+            font-size: 12px;
+
+            font-weight: 900;
+        }
+
+
+        .nx-prep-main {
+
+            min-width: 0;
+        }
+
+
+        .nx-prep-title {
+
+            margin: 0;
+
+            color: #27334a;
+
+            font-size: 9px;
+
+            font-weight: 900;
+        }
+
+
+        .nx-prep-description {
+
+            margin-top: 3px;
+
+            color: #778397;
+
+            font-size: 8px;
+
+        }
+
+
+        /* =========================================================
+           EMPTY
+           ========================================================= */
+
+        .nx-empty {
+
+            padding: 22px;
+
+            border: 1px dashed #cfd8e5;
+
+            border-radius: 13px;
+
+            background: #ffffff;
+
+            color: #68758a;
+
+            text-align: center;
+
+            font-size: 11px;
+        }
+
+
+        .nx-empty a {
+
+            color: #6268df;
+
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           FIXED BOTTOM NAVIGATION
+           ========================================================= */
+
+        .nx-bottom-nav {
+
+            position: fixed;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 0;
+
+            z-index: 1000;
+
+            height: 70px;
+
+            border-top: 1px solid #dce2eb;
+
+            background: rgba(255,255,255,.97);
+
+            box-shadow:
+                0 -5px 25px rgba(30,45,75,.08);
+
+            backdrop-filter: blur(12px);
+        }
+
+
+        .nx-bottom-inner {
+
+            width: 100%;
+
+            max-width: 1180px;
+
+            height: 100%;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            align-items: stretch;
+        }
+
+
+        .nx-nav-item {
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 4px;
+
+            color: #6d7890;
+
+            font-size: 9px;
+
+            font-weight: 900;
+
+            text-decoration: none;
+
+            text-align: center;
+
+            transition:
+                background .18s ease,
+                color .18s ease;
+        }
+
+
+        .nx-nav-item:hover {
+
+            background: #f7f8fc;
+
+            color: #6268df;
+        }
+
+
+        .nx-nav-item.active {
+
+            color: #6268df;
+
+            background: #f5f5ff;
+        }
+
+
+        .nx-nav-icon {
+
+            font-size: 17px;
+
+            line-height: 1;
+
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .nx-metrics {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .nx-two-column {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .nx-dashboard-page {
+
+                padding:
+                    22px 14px 105px;
+            }
+
+
+            .nx-dashboard-hero {
+
+                padding: 21px;
+            }
+
+
+            .nx-dashboard-hero h1 {
+
+                font-size: 29px;
+            }
+
+
+            .nx-metrics {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .nx-job-row {
+
+                grid-template-columns:
+                    42px minmax(0, 1fr);
+            }
+
+
+            .nx-company-logo {
+
+                width: 42px;
+
+                height: 42px;
+            }
+
+
+            .nx-score {
+
+                grid-column: 2;
+
+                justify-self: start;
+            }
+
+
+            .nx-prep-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .nx-hero-actions {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .nx-hero-actions .nx-btn {
+
+                width: 100%;
+            }
+
+
+            .nx-job-actions {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .nx-job-actions .nx-btn {
+
+                width: 100%;
+            }
+        }
+
+
+        @media (max-width: 420px) {
+
+            .nx-bottom-nav {
+
+                height: 64px;
+            }
+
+
+            .nx-nav-item {
+
+                font-size: 7px;
+            }
+
+
+            .nx-nav-icon {
+
+                font-size: 15px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="shell">
+
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         ========================================================= -->
+
+    <header class="topbar">
+
+        <div class="topbar-inner">
+
+            <a
+                class="brand"
+                href="/student-dashboard/"
+            >
+
+                <div class="logo">
+                    N
+                </div>
+
+                <div>
+
+                    <div class="brand-title">
+
+                        NexusAI
+
+                        <span class="status">
+
+                            <i class="dot"></i>
+
+                            Placement Season Live
+
+                        </span>
+
+                    </div>
+
+                    <div class="brand-sub">
+                        Campus Career Copilot
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <div class="top-actions">
+
+                <a
+                    class="logout-btn"
+                    href="/logout/"
+                >
+                    ↪ <span>Logout</span>
+                </a>
+
+
+                <a
+                    class="role-btn"
+                    href="/recruiter-dashboard/"
+                >
+                    ⇄ <span>Recruiter Mode</span>
+                </a>
+
+
+                <a
+                    class="icon-btn"
+                    href="/applications/"
+                >
+                    ◌
+                </a>
+
+
+                <a
+                    class="icon-btn"
+                    href="/profile/"
+                >
+                    A
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MESSAGES
+         ========================================================= -->
+
+    {% if messages %}
+
+        <div
+            class="container"
+            style="padding-bottom:0"
+        >
+
+            {% for message in messages %}
+
+                <div
+                    class="notice {% if message.tags == 'error' %}warn{% endif %}"
+                    style="margin-top:8px"
+                >
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- =========================================================
+         MAIN DASHBOARD
+         ========================================================= -->
+
+    <main class="nx-dashboard-page">
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="nx-dashboard-hero">
+
+            <span class="nx-eyebrow">
+                AI-powered placement command center
+            </span>
+
+
+            <h1>
+                Welcome back,
+                {{ request.user.first_name|default:request.user.username }}
+            </h1>
+
+
+            <p>
+                Discover opportunities, track applications,
+                improve your resume and prepare for placements.
+                Your NexusAI career workspace is ready.
+            </p>
+
+
+            <div class="nx-hero-actions">
+
+                <a
+                    class="nx-btn nx-btn-primary"
+                    href="/jobs/"
+                >
+                    Explore Jobs →
+                </a>
+
+
+                <a
+                    class="nx-btn"
+                    href="/resume-intelligence/"
+                >
+                    Run Resume Intelligence
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PLACEMENT METRICS
+             ===================================================== -->
+
+        <section class="nx-metrics">
+
+
+            <div class="nx-metric">
+
+                <div class="nx-metric-label">
+                    Eligible Jobs
+                </div>
+
+                <div class="nx-metric-value purple">
+                    {{ active_jobs }}
+                </div>
+
+                <div class="nx-metric-note">
+                    Active campus opportunities
+                </div>
+
+            </div>
+
+
+            <div class="nx-metric">
+
+                <div class="nx-metric-label">
+                    Applications
+                </div>
+
+                <div class="nx-metric-value orange">
+                    {{ application_count }}
+                </div>
+
+                <div class="nx-metric-note">
+                    Applications submitted
+                </div>
+
+            </div>
+
+
+            <div class="nx-metric">
+
+                <div class="nx-metric-label">
+                    ATS Score
+                </div>
+
+                <div class="nx-metric-value green">
+
+                    {% if latest_resume %}
+                        {{ latest_resume.ats_score }}
+                    {% else %}
+                        —
+                    {% endif %}
+
+                </div>
+
+                <div class="nx-metric-note">
+                    Resume intelligence
+                </div>
+
+            </div>
+
+
+            <div class="nx-metric">
+
+                <div class="nx-metric-label">
+                    Tests Completed
+                </div>
+
+                <div class="nx-metric-value purple">
+                    {{ test_count }}
+                </div>
+
+                <div class="nx-metric-note">
+                    Aptitude & assessments
+                </div>
+
+            </div>
+
+
+            <div class="nx-metric">
+
+                <div class="nx-metric-label">
+                    Interviews
+                </div>
+
+                <div class="nx-metric-value">
+                    {{ interview_count }}
+                </div>
+
+                <div class="nx-metric-note">
+                    Interview stage
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =====================================================
+             AI ACCELERATOR + DEADLINES
+             ===================================================== -->
+
+        <section class="nx-section">
+
+            <div class="nx-two-column">
+
+
+                <!-- ACCELERATOR -->
+
+                <div class="nx-panel">
+
+                    <div class="nx-panel-header">
+
+                        <h2 class="nx-panel-title">
+                            AI Strategic Accelerator
+                        </h2>
+
+                        <span class="nx-panel-badge">
+                            AI READY
+                        </span>
+
+                    </div>
+
+
+                    <p class="nx-panel-text">
+
+                        Strengthen your placement profile with
+                        resume intelligence, aptitude practice,
+                        coding preparation and interview readiness.
+
+                    </p>
+
+
+                    <div class="nx-panel-actions">
+
+                        <a
+                            class="nx-btn nx-btn-primary"
+                            href="/prep-and-tests/"
+                        >
+                            Take Practice Test
+                        </a>
+
+
+                        <a
+                            class="nx-btn"
+                            href="/resume-intelligence/"
+                        >
+                            View Resume AI
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DEADLINES -->
+
+                <div class="nx-panel">
+
+                    <div class="nx-panel-header">
+
+                        <h2 class="nx-panel-title">
+                            Urgent Deadlines
+                        </h2>
+
+                        <span class="nx-panel-badge">
+                            Upcoming
+                        </span>
+
+                    </div>
+
+
+                    <div class="nx-deadline-list">
+
+
+                        <div class="nx-deadline">
+
+                            <div class="nx-deadline-icon">
+                                G
+                            </div>
+
+                            <div class="nx-deadline-main">
+
+                                <p class="nx-deadline-title">
+                                    Google Campus Drive
+                                </p>
+
+                                <div class="nx-deadline-text">
+                                    Check eligibility and apply before the drive closes.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="nx-deadline">
+
+                            <div class="nx-deadline-icon">
+                                A
+                            </div>
+
+                            <div class="nx-deadline-main">
+
+                                <p class="nx-deadline-title">
+                                    Amazon Assessment
+                                </p>
+
+                                <div class="nx-deadline-text">
+                                    Complete coding and aptitude preparation.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="nx-deadline">
+
+                            <div class="nx-deadline-icon">
+                                AI
+                            </div>
+
+                            <div class="nx-deadline-main">
+
+                                <p class="nx-deadline-title">
+                                    Mock AI Interview
+                                </p>
+
+                                <div class="nx-deadline-text">
+                                    Practice HR and technical interview questions.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CURATED DRIVE MATCHES
+             ===================================================== -->
+
+        <section class="nx-section">
+
+
+            <div class="nx-section-header">
+
+                <h2 class="nx-section-title">
+                    Curated Drive Matches
+                </h2>
+
+                <a
+                    class="nx-section-link"
+                    href="/jobs/"
+                >
+                    Explore All →
+                </a>
+
+            </div>
+
+
+            <div class="nx-job-list">
+
+
+                {% for job in jobs|slice:":3" %}
+
+
+                    <article class="nx-job-card">
+
+
+                        <div class="nx-job-row">
+
+
+                            <div class="nx-company-logo">
+
+                                {{ job.company|slice:":2"|upper }}
+
+                            </div>
+
+
+                            <div class="nx-job-main">
+
+                                <h3 class="nx-job-title">
+                                    {{ job.title }}
+                                </h3>
+
+
+                                <div class="nx-job-company">
+                                    {{ job.company }} • {{ job.location }}
+                                </div>
+
+
+                                <div class="nx-job-meta">
+
+                                    <span>
+                                        {{ job.display_match }}% Match
+                                    </span>
+
+                                    <span>
+                                        Min CGPA {{ job.min_cgpa }}
+                                    </span>
+
+                                    <span>
+                                        {{ job.skills|truncatechars:45 }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="nx-score">
+
+                                <div class="nx-score-value">
+                                    {{ job.match_score }}%
+                                </div>
+
+                                <div class="nx-score-label">
+                                    Match
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="nx-job-actions">
+
+
+                            <a
+                                class="nx-btn nx-btn-primary"
+                                href="/jobs/{{ job.id }}/"
+                            >
+                                View Role
+                            </a>
+
+
+                            <a
+                                class="nx-btn"
+                                href="/jobs/"
+                            >
+                                View Match Report
+                            </a>
+
+
+                        </div>
+
+
+                    </article>
+
+
+                {% empty %}
+
+
+                    <div class="nx-empty">
+
+                        No live opportunities are available right now.
+
+                        <a href="/jobs/">
+                            Explore Jobs
+                        </a>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             COHORT + PREPARATION HUB
+             ===================================================== -->
+
+        <section class="nx-section">
+
+            <div class="nx-two-column">
+
+
+                <!-- COHORT -->
+
+                <div class="nx-panel">
+
+                    <div class="nx-panel-header">
+
+                        <h2 class="nx-panel-title">
+                            Cohort Benchmark
+                        </h2>
+
+                        <span class="nx-panel-badge">
+                            Placement Ready
+                        </span>
+
+                    </div>
+
+
+                    <div class="nx-statline">
+
+                        <span>
+                            Your preparation
+                        </span>
+
+                        <strong>
+                            94th Percentile
+                        </strong>
+
+                    </div>
+
+
+                    <div class="nx-progress">
+                        <span></span>
+                    </div>
+
+
+                    <p class="nx-small-note">
+
+                        Continue improving your resume,
+                        aptitude, coding and interview preparation
+                        to strengthen your placement profile.
+
+                    </p>
+
+                </div>
+
+
+                <!-- PREPARATION HUB -->
+
+                <div class="nx-panel">
+
+                    <div class="nx-panel-header">
+
+                        <h2 class="nx-panel-title">
+                            Preparation Hub
+                        </h2>
+
+                        <span class="nx-panel-badge">
+                            Quick Launch
+                        </span>
+
+                    </div>
+
+
+                    <div class="nx-prep-grid">
+
+
+                        <a
+                            class="nx-prep-card"
+                            href="/prep-and-tests/"
+                        >
+
+                            <div class="nx-prep-icon">
+                                ?
+                            </div>
+
+                            <div class="nx-prep-main">
+
+                                <h3 class="nx-prep-title">
+                                    Aptitude Simulators
+                                </h3>
+
+                                <div class="nx-prep-description">
+                                    Quant & Reasoning
+                                </div>
+
+                            </div>
+
+                        </a>
+
+
+                        <a
+                            class="nx-prep-card"
+                            href="/prep-and-tests/"
+                        >
+
+                            <div class="nx-prep-icon">
+                                &lt;/&gt;
+                            </div>
+
+                            <div class="nx-prep-main">
+
+                                <h3 class="nx-prep-title">
+                                    Coding Practice
+                                </h3>
+
+                                <div class="nx-prep-description">
+                                    Coding preparation
+                                </div>
+
+                            </div>
+
+                        </a>
+
+
+                        <a
+                            class="nx-prep-card"
+                            href="/mock-interview/"
+                        >
+
+                            <div class="nx-prep-icon">
+                                ◉
+                            </div>
+
+                            <div class="nx-prep-main">
+
+                                <h3 class="nx-prep-title">
+                                    Mock Interview
+                                </h3>
+
+                                <div class="nx-prep-description">
+                                    Interview feedback
+                                </div>
+
+                            </div>
+
+                        </a>
+
+
+                        <a
+                            class="nx-prep-card"
+                            href="/resume-intelligence/"
+                        >
+
+                            <div class="nx-prep-icon">
+                                ▤
+                            </div>
+
+                            <div class="nx-prep-main">
+
+                                <h3 class="nx-prep-title">
+                                    Resume Tailor
+                                </h3>
+
+                                <div class="nx-prep-description">
+                                    ATS resume analysis
+                                </div>
+
+                            </div>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             COMPANY INTERVIEWS
+             ===================================================== -->
+
+        <section class="nx-section">
+            <div class="nx-section-header">
+                <h2 class="nx-section-title">Company Interviews & Hiring Status</h2>
+                <a class="nx-section-link" href="/my-interviews/">Interview Center →</a>
+            </div>
+
+            <div class="nx-job-list">
+                {% for interview in recent_interviews %}
+                    <article class="nx-job-card">
+                        <div class="nx-job-row">
+                            <div class="nx-company-logo">{{ interview.application.job.company|slice:":2"|upper }}</div>
+
+                            <div class="nx-job-main">
+                                <h3 class="nx-job-title">{{ interview.application.job.title }}</h3>
+                                <div class="nx-job-company">{{ interview.application.job.company }} · {{ interview.get_interview_type_display }}</div>
+
+                                <div class="nx-job-meta">
+                                    <span>{{ interview.scheduled_at|date:"d M Y, h:i A" }}</span>
+                                    <span>{{ interview.duration_minutes }} min</span>
+
+                                    {% if interview.status == "scheduled" %}
+                                        <span>Interview Scheduled</span>
+                                    {% elif interview.status == "in_progress" %}
+                                        <span>Response Submitted</span>
+                                    {% elif interview.status == "completed" %}
+                                        <span>Interview Completed</span>
+                                    {% else %}
+                                        <span>{{ interview.get_status_display }}</span>
+                                    {% endif %}
+                                </div>
+
+                                {% if interview.status == "completed" %}
+                                    <div class="nx-job-meta">
+                                        <span>Result: {{ interview.overall_score }}%</span>
+                                        <span>Decision: {{ interview.get_decision_display }}</span>
+                                    </div>
+                                {% elif interview.status == "in_progress" %}
+                                    <div class="nx-job-meta">
+                                        <span>✓ Your response was submitted</span>
+                                        <span>Recruiter evaluation pending</span>
+                                    </div>
+                                {% else %}
+                                    <div class="nx-job-meta">
+                                        <span>Waiting for interview response</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="nx-score">
+                                {% if interview.status == "completed" %}
+                                    <div class="nx-score-value">{{ interview.overall_score }}%</div>
+                                    <div class="nx-score-label">Result</div>
+                                {% elif interview.status == "in_progress" %}
+                                    <div class="nx-score-value">LIVE</div>
+                                    <div class="nx-score-label">Review</div>
+                                {% else %}
+                                    <div class="nx-score-value">NEXT</div>
+                                    <div class="nx-score-label">Interview</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="nx-job-actions">
+                            <a class="nx-btn nx-btn-primary" href="/my-interviews/{{ interview.id }}/">
+                                {% if interview.status == "completed" %}View Result{% else %}Open Interview{% endif %}
+                            </a>
+
+                            {% if interview.meeting_link and interview.status != "completed" %}
+                                <a class="nx-btn" href="{{ interview.meeting_link }}" target="_blank">Join Meeting ↗</a>
+                            {% endif %}
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="nx-empty">
+                        No company interview is scheduled yet. When a recruiter shortlists you, your interview and hiring status will appear here.
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- =====================================================
+             RECENT TEST RESULTS
+             ===================================================== -->
+
+        <section class="nx-section">
+
+            <div class="nx-section-header">
+                <h2 class="nx-section-title">Recent Test Results</h2>
+                <a class="nx-section-link" href="/prep-and-tests/">Take a Test →</a>
+            </div>
+
+            <div class="nx-job-list">
+                {% for attempt in recent_attempts %}
+                    <article class="nx-job-card">
+                        <div class="nx-job-row">
+                            <div class="nx-company-logo">
+                                ✓
+                            </div>
+                            <div class="nx-job-main">
+                                <h3 class="nx-job-title">
+                                    {{ attempt.get_practice_type_display }}
+                                </h3>
+                                <div class="nx-job-company">
+                                    Completed {{ attempt.submitted_at|date:"d M Y, h:i A" }}
+                                </div>
+                                <div class="nx-job-meta">
+                                    <span>{{ attempt.score }}/{{ attempt.total }}</span>
+                                    <span>{{ attempt.score|floatformat:0 }} marks earned</span>
+                                </div>
+                            </div>
+                            <div class="nx-score">
+                                <div class="nx-score-value">
+                                    {% widthratio attempt.score attempt.total 100 %}%
+                                </div>
+                                <div class="nx-score-label">Score</div>
+                            </div>
+                        </div>
+                        <div class="nx-job-actions">
+                            <a class="nx-btn nx-btn-primary" href="/practice/result/{{ attempt.id }}/">View Result</a>
+                            <a class="nx-btn" href="/prep-and-tests/">Practice Again</a>
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="nx-empty">
+                        No test results yet. Complete an aptitude test or assessment to see your score here.
+                        <a href="/prep-and-tests/">Start a test</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             RECENT APPLICATIONS
+             ===================================================== -->
+
+        <section class="nx-section">
+
+
+            <div class="nx-section-header">
+
+                <h2 class="nx-section-title">
+                    Recent Applications
+                </h2>
+
+                <a
+                    class="nx-section-link"
+                    href="/applications/"
+                >
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div class="nx-job-list">
+
+
+                {% for app in applications %}
+
+
+                    <article class="nx-job-card">
+
+
+                        <div class="nx-job-row">
+
+
+                            <div class="nx-company-logo">
+
+                                {{ app.job.company|slice:":2"|upper }}
+
+                            </div>
+
+
+                            <div class="nx-job-main">
+
+                                <h3 class="nx-job-title">
+                                    {{ app.job.title }}
+                                </h3>
+
+
+                                <div class="nx-job-company">
+                                    {{ app.job.company }}
+                                </div>
+
+
+                                <div class="nx-job-meta">
+
+                                    <span>
+                                        {{ app.job.location }}
+                                    </span>
+
+                                    <span>
+                                        {{ app.get_status_display }}
+                                    </span>
+
+                                    <span>
+                                        {{ app.applied_at|date:"d M Y" }}
+                                    </span>
+
+                                </div>
+
+                                {% if app.dashboard_interviews %}
+                                    {% with interview=app.dashboard_interviews.0 %}
+                                        <div class="nx-job-meta">
+                                            {% if interview.status == "completed" %}
+                                                <span>Interview completed · {{ interview.overall_score }}%</span>
+                                                <span>{{ interview.get_decision_display }}</span>
+                                            {% elif interview.status == "in_progress" %}
+                                                <span>Interview response submitted</span>
+                                                <span>Recruiter review pending</span>
+                                            {% else %}
+                                                <span>Interview scheduled</span>
+                                                <span>{{ interview.scheduled_at|date:"d M, h:i A" }}</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endwith %}
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="nx-score">
+
+                                <div class="nx-score-value">
+                                    ✓
+                                </div>
+
+                                <div class="nx-score-label">
+                                    {{ app.get_status_display }}
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </article>
+
+
+                {% empty %}
+
+
+                    <div class="nx-empty">
+
+                        You have not applied to any jobs yet.
+
+                        <a href="/jobs/">
+                            Explore live jobs
+                        </a>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         FIXED BOTTOM NAVIGATION
+         ========================================================= -->
+
+    <nav class="nx-bottom-nav">
+
+        <div class="nx-bottom-inner">
+
+
+            <a
+                class="nx-nav-item active"
+                href="/student-dashboard/"
+            >
+
+                <span class="nx-nav-icon">
+                    ▦
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                class="nx-nav-item"
+                href="/resume-intelligence/"
+            >
+
+                <span class="nx-nav-icon">
+                    ✦
+                </span>
+
+                Resume AI
+
+            </a>
+
+
+            <a
+                class="nx-nav-item"
+                href="/jobs/"
+            >
+
+                <span class="nx-nav-icon">
+                    ⌁
+                </span>
+
+                Jobs & Match
+
+            </a>
+
+
+            <a
+                class="nx-nav-item"
+                href="/prep-and-tests/"
+            >
+
+                <span class="nx-nav-icon">
+                    ◫
+                </span>
+
+                Prep & Tests
+
+            </a>
+
+
+            <a
+                class="nx-nav-item"
+                href="/applications/"
+            >
+
+                <span class="nx-nav-icon">
+                    ✓
+                </span>
+
+                Applications
+
+            </a>
+
+
+        </div>
+
+    </nav>
+
+
+</div>
+
+</body>
+
+</html>

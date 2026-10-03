@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>
+    {{ job.title|default:"Job Details" }} — NexusAI
+  </title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+         Branding, logout, and recruiter mode.
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Branding -->
+        <a class="brand" href="/jobs.html">
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+              NexusAI
+
+              <span class="status">
+                <i class="dot"></i>
+                Placement Season Live
+              </span>
+            </div>
+
+            <div class="brand-sub">
+              Campus Career Copilot
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Navigation Actions -->
+        <div class="top-actions">
+
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+          <a
+            class="role-btn"
+            href="/recruiter-dashboard.html"
+          >
+            ⇄ <span>Recruiter Mode</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+      {% if job %}
+
+
+        <!-- =====================================================
+             JOB HEADER
+        ====================================================== -->
+        <div class="section-head">
+
+          <div>
+
+            <span class="label">
+              AI ELIGIBILITY CENTER
+            </span>
+
+            <h1 class="page-title">
+              {{ job.title }}
+            </h1>
+
+            <p class="subtitle">
+              {{ job.company }} · {{ job.location }}
+            </p>
+
+          </div>
+
+
+          <!-- AI Match Score -->
+          <span class="badge">
+            {{ job.match_score }}% AI Match
+          </span>
+
+        </div>
+
+
+        <!-- =====================================================
+             ROLE OVERVIEW + APPLICATION
+        ====================================================== -->
+        <section class="grid g2">
+
+
+          <!-- ===================================================
+               ROLE OVERVIEW
+          ==================================================== -->
+          <div class="card pad">
+
+            <h2>
+              Role Overview
+            </h2>
+
+            <p>
+              {{ job.description }}
+            </p>
+
+
+            <!-- Job Information -->
+            <div
+              class="list"
+              style="margin-top: 12px"
+            >
+
+              <!-- Salary -->
+              <div class="kpi">
+
+                <strong>
+                  Salary
+                </strong>
+
+                <span>
+                  {{ job.salary|default:"Not disclosed" }}
+                </span>
+
+              </div>
+
+
+              <!-- Minimum CGPA -->
+              <div class="kpi">
+
+                <strong>
+                  Minimum CGPA
+                </strong>
+
+                <span>
+                  {{ job.min_cgpa }}
+                </span>
+
+              </div>
+
+
+              <!-- Batch -->
+              <div class="kpi">
+
+                <strong>
+                  Batch
+                </strong>
+
+                <span>
+                  {{ job.batch }}
+                </span>
+
+              </div>
+
+
+              <!-- Required Skills -->
+              <div class="kpi">
+
+                <strong>
+                  Skills
+                </strong>
+
+                <span>
+                  {{ job.skills }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ===================================================
+               APPLICATION CARD
+          ==================================================== -->
+          <div class="card pad">
+
+            <h2>
+              Application
+            </h2>
+
+
+            {% if application %}
+
+              <!-- Already Applied -->
+              <div class="notice">
+
+                <strong>
+                  ✓ Already applied
+                </strong>
+
+                <br>
+
+                Current status:
+                {{ application.get_status_display }}.
+
+              </div>
+
+
+              <!-- View Existing Application -->
+              <a
+                class="btn secondary"
+                style="margin-top: 10px"
+                href="/applications.html#app-{{ job.id }}"
+              >
+                View Application
+              </a>
+
+
+            {% else %}
+
+              <!-- Application Instructions -->
+              <p class="muted">
+                Review the eligibility criteria, choose or upload
+                the resume you want the recruiter to receive,
+                and submit your application.
+              </p>
+
+
+              <a
+                class="btn secondary"
+                href="/jobs/{{ job.id }}/ai-match/"
+                style="margin-top: 10px;"
+              >
+                ✨ Check AI Resume Match
+              </a>
+
+              <!-- Continue to Application -->
+              <a
+                class="btn primary"
+                href="/jobs/{{ job.id }}/apply/"
+                style="margin-top: 10px;"
+              >
+                Continue to Application →
+              </a>
+
+            {% endif %}
+
+          </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DETAILED ELIGIBILITY
+        ====================================================== -->
+        <section class="section card pad">
+
+          <div class="section-head">
+
+            <h2>
+              Detailed Eligibility
+            </h2>
+
+            <span>
+              Placement pre-screen
+            </span>
+
+          </div>
+
+
+          <div class="list">
+
+            <!-- Academic Cutoff -->
+            <div class="kpi">
+
+              <strong>
+                Academic Cutoff
+              </strong>
+
+              <span>
+                {{ job.min_cgpa }} CGPA
+              </span>
+
+            </div>
+
+
+            <!-- Backlogs -->
+            <div class="kpi">
+
+              <strong>
+                Backlogs
+              </strong>
+
+              <span>
+                0 preferred
+              </span>
+
+            </div>
+
+
+            <!-- Required Skills -->
+            <div class="kpi">
+
+              <strong>
+                Required Skills
+              </strong>
+
+              <span>
+                {{ job.skills }}
+              </span>
+
+            </div>
+
+
+            <!-- Eligibility Notes -->
+            <div class="kpi">
+
+              <strong>
+                Eligibility Notes
+              </strong>
+
+              <span>
+                {{ job.eligibility }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+      {% else %}
+
+        <!-- =====================================================
+             NO JOB FOUND
+        ====================================================== -->
+        <div class="notice">
+          No active job was found.
+        </div>
+
+      {% endif %}
+
+    </main>
+
+
+    <!-- =========================================================
+         BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+        <!-- Dashboard -->
+        <a
+          class="nav-item"
+          href="/student-dashboard.html"
+        >
+          ▦ Dashboard
+        </a>
+
+
+        <!-- Jobs & Match — Active -->
+        <a
+          class="nav-item active"
+          href="/jobs.html"
+        >
+          ⌁ Jobs &amp; Match
+        </a>
+
+
+        <!-- Applications -->
+        <a
+          class="nav-item"
+          href="/applications.html"
+        >
+          ✓ Applications
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Create Student Account — NexusAI</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    /* =========================================================
+       NEXUSAI - FULL SCREEN STUDENT REGISTRATION
+       ========================================================= */
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body.auth-page {
+      width: 100%;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
+    body.auth-page *,
+    body.auth-page *::before,
+    body.auth-page *::after {
+      box-sizing: border-box;
+    }
+
+    /* Main wrapper */
+    .auth-page .auth-shell {
+      width: 100%;
+      max-width: none !important;
+      min-height: 100vh;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Brand area */
+    .auth-page .auth-brand {
+      width: 100%;
+      max-width: none;
+      padding: 24px 42px;
+    }
+
+    /* Main two-column area */
+    .auth-page .auth-grid {
+      width: 100%;
+      max-width: none !important;
+      min-height: calc(100vh - 90px);
+      margin: 0 !important;
+      padding: 40px 7vw 60px;
+
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) minmax(420px, 560px) !important;
+      gap: 7vw;
+      align-items: center;
+    }
+
+    /* Left section */
+    .auth-page .auth-copy {
+      width: 100%;
+      max-width: 720px;
+      justify-self: center;
+    }
+
+    .auth-page .auth-copy h1 {
+      max-width: 700px;
+    }
+
+    .auth-page .auth-copy p {
+      max-width: 650px;
+    }
+
+    /* Right registration card */
+    .auth-page .auth-card {
+      width: 100%;
+      max-width: 560px !important;
+      min-width: 0;
+      margin: 0 auto;
+    }
+
+    .auth-page .auth-card-pro {
+      width: 100%;
+    }
+
+    /* Form */
+    .auth-page .auth-form {
+      width: 100%;
+    }
+
+    .auth-page .formgrid {
+      width: 100%;
+    }
+
+    .auth-page .field {
+      min-width: 0;
+    }
+
+    .auth-page input {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .auth-page .auth-submit,
+    .auth-page .auth-alt {
+      width: 100%;
+    }
+
+    /* =========================================================
+       LARGE SCREENS
+       ========================================================= */
+
+    @media (min-width: 1200px) {
+
+      .auth-page .auth-grid {
+        grid-template-columns: minmax(0, 1fr) 560px !important;
+        gap: 9vw;
+        padding-left: 8vw;
+        padding-right: 8vw;
+      }
+
+      .auth-page .auth-copy {
+        max-width: 760px;
+      }
+    }
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media (max-width: 1000px) {
+
+      .auth-page .auth-grid {
+        grid-template-columns: minmax(0, 1fr) 460px !important;
+        gap: 35px;
+        padding-left: 35px;
+        padding-right: 35px;
+      }
+
+      .auth-page .auth-brand {
+        padding-left: 35px;
+        padding-right: 35px;
+      }
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 850px) {
+
+      body.auth-page {
+        min-height: 100vh;
+      }
+
+      .auth-page .auth-brand {
+        padding: 20px 22px;
+      }
+
+      .auth-page .auth-grid {
+        display: flex !important;
+        flex-direction: column;
+        min-height: auto;
+        padding: 25px 22px 45px;
+        gap: 30px;
+      }
+
+      .auth-page .auth-copy {
+        width: 100%;
+        max-width: 650px;
+      }
+
+      .auth-page .auth-card {
+        width: 100%;
+        max-width: 650px !important;
+      }
+    }
+
+    /* =========================================================
+       SMALL MOBILE
+       ========================================================= */
+
+    @media (max-width: 550px) {
+
+      .auth-page .auth-brand {
+        padding: 18px 16px;
+      }
+
+      .auth-page .auth-grid {
+        padding: 20px 16px 35px;
+      }
+
+      .auth-page .auth-copy h1 {
+        font-size: 32px;
+        line-height: 1.15;
+      }
+
+      .auth-page .formgrid {
+        display: block;
+      }
+
+      .auth-page .field {
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body class="auth-page">
+
+  <div class="auth-shell">
+
+    <!-- =====================================================
+         BRAND
+         ===================================================== -->
+
+    <header class="auth-brand">
+
+      <a class="brand" href="/index.html">
+
+        <div class="logo">
+          N
+        </div>
+
+        <div>
+
+          <div class="brand-title">
+
+            NexusAI
+
+            <span class="status">
+              <i class="dot"></i>
+              Placement Season Live
+            </span>
+
+          </div>
+
+          <div class="brand-sub">
+            Campus Career Copilot
+          </div>
+
+        </div>
+
+      </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <div class="auth-grid register-grid">
+
+
+      <!-- ===================================================
+           LEFT SIDE
+           =================================================== -->
+
+      <section class="auth-copy">
+
+        <span class="eyebrow">
+          JOIN NEXUSAI
+        </span>
+
+        <h1>
+          Build your placement journey in one place.
+        </h1>
+
+        <p>
+          Create a student workspace for job discovery,
+          resume intelligence, assessments, coding practice
+          and interview preparation.
+        </p>
+
+
+        <div class="auth-benefits">
+
+          <div>
+            <b>01</b>
+            <span>AI-ready resume profile</span>
+          </div>
+
+          <div>
+            <b>02</b>
+            <span>Campus job matching</span>
+          </div>
+
+          <div>
+            <b>03</b>
+            <span>Practice &amp; interview prep</span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           RIGHT SIDE
+           =================================================== -->
+
+      <section class="card auth-card auth-card-pro">
+
+
+        <!-- HEADER -->
+
+        <div class="auth-heading">
+
+          <div>
+
+            <span class="label">
+              ACCOUNT SETUP
+            </span>
+
+            <h2>
+              Create your account
+            </h2>
+
+            <p>
+              Start your student placement workspace.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ROLE TABS
+             ================================================= -->
+
+        <div class="role-tabs">
+
+          <a
+            class="active"
+            href="/register.html"
+          >
+            Student
+          </a>
+
+          <a
+            href="/register-recruiter.html"
+          >
+            Recruiter
+          </a>
+
+        </div>
+
+
+        <!-- =================================================
+             DJANGO REGISTRATION FORM
+             ================================================= -->
+
+        <form
+          action="/register/"
+          method="post"
+          class="auth-form"
+        >
+
+          {% csrf_token %}
+
+
+          <div class="formgrid">
+
+
+            <!-- FULL NAME -->
+
+            <div class="field full">
+
+              <label for="name">
+                Full Name
+              </label>
+
+              <input
+                id="name"
+                name="name"
+                placeholder="Alex Chen"
+                autocomplete="name"
+                required
+              >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="field">
+
+              <label for="email">
+                College Email
+              </label>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="alex.chen@campus.edu"
+                autocomplete="email"
+                required
+              >
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="field">
+
+              <label for="phone">
+                Phone Number
+              </label>
+
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="+91 98765 43210"
+                autocomplete="tel"
+                required
+              >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="field">
+
+              <label for="password">
+                Password
+              </label>
+
+              <input
+                id="password"
+                name="password"
+                type="password"
+                minlength="6"
+                placeholder="Minimum 6 characters"
+                autocomplete="new-password"
+                required
+              >
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="field">
+
+              <label for="confirm">
+                Confirm Password
+              </label>
+
+              <input
+                id="confirm"
+                name="confirm"
+                type="password"
+                minlength="6"
+                placeholder="Repeat password"
+                autocomplete="new-password"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               TERMS
+               ================================================= -->
+
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              name="terms"
+              required
+            >
+
+            I agree to the placement workspace terms.
+
+          </label>
+
+
+          <!-- =================================================
+               SERVER MESSAGES
+               ================================================= -->
+
+          {% if messages %}
+
+            <div style="
+              margin:14px 0;
+              padding:12px 14px;
+              border-radius:10px;
+              background:rgba(255,75,75,.10);
+              border:1px solid rgba(255,75,75,.25);
+              color:#b42318;
+              font-size:13px;
+              line-height:1.5;
+            ">
+
+              {% for message in messages %}
+
+                <div>
+                  {{ message }}
+                </div>
+
+              {% endfor %}
+
+            </div>
+
+          {% endif %}
+
+
+          <!-- =================================================
+               SUBMIT
+               ================================================= -->
+
+          <button
+            class="btn primary auth-submit"
+            type="submit"
+          >
+            Create Student Account →
+          </button>
+
+        </form>
+
+
+        <!-- =================================================
+             EXISTING ACCOUNT
+             ================================================= -->
+
+        <div class="auth-divider">
+
+          <span>
+            Already have an account?
+          </span>
+
+        </div>
+
+
+        <a
+          class="btn secondary auth-alt"
+          href="/login.html"
+        >
+          Back to Sign In
+        </a>
+
+
+        <!-- =================================================
+             BACK HOME
+             ================================================= -->
+
+        <p class="auth-legal">
+
+          <a href="/index.html">
+            ← Back to NexusAI home
+          </a>
+
+        </p>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

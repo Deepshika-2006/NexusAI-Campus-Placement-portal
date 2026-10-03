@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Recruiter Jobs — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Recruiter Branding -->
+        <a
+          class="brand"
+          href="/recruiter-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                Recruiter
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Talent Sourcing &amp; Pipeline
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Recruiter Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+
+          <!-- Student Mode -->
+          <a
+            class="role-btn"
+            href="/student-dashboard.html"
+          >
+            ⇄ <span>Student Mode</span>
+          </a>
+
+
+          <!-- Jobs -->
+          <a
+            class="icon-btn"
+            href="/recruiter-jobs.html"
+          >
+            ◌
+          </a>
+
+
+          <!-- Recruiter Settings -->
+          <a
+            class="icon-btn"
+            href="/recruiter-settings.html"
+          >
+            A
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           DJANGO MESSAGES
+      ======================================================== -->
+      {% if messages %}
+
+        <div class="section">
+
+          {% for message in messages %}
+
+            <div class="notice">
+              {{ message }}
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      {% endif %}
+
+
+      <!-- =======================================================
+           PAGE HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            Manage Campus Recruitment Drives
+          </h1>
+
+          <p class="subtitle">
+            Active corporate postings, automated ATS filters
+            &amp; student applicant pipelines
+          </p>
+
+        </div>
+
+
+        <!-- Scroll to New Drive Form -->
+        <a
+          class="btn primary"
+          href="#new-drive"
+        >
+          ＋ Post New Drive
+        </a>
+
+      </div>
+
+
+      <!-- =======================================================
+           EXISTING RECRUITMENT DRIVES
+      ======================================================== -->
+      <div class="list">
+
+        {% for job in jobs %}
+
+          <div class="card pad">
+
+
+            <!-- =================================================
+                 JOB HEADER
+            ================================================== -->
+            <div class="job">
+
+
+              <!-- Company Initial -->
+              <div class="logo">
+                {{ job.company|slice:":1"|upper }}
+              </div>
+
+
+              <!-- Job Information -->
+              <div class="job-main">
+
+                <h3 class="job-title">
+                  {{ job.title }}
+                </h3>
+
+
+                <div class="job-company">
+
+                  {{ job.company }}
+
+                  ·
+
+                  {{ job.location }}
+
+                </div>
+
+
+                <!-- Job Metadata -->
+                <div class="job-meta">
+
+                  <span>
+                    Min CGPA: {{ job.min_cgpa }}
+                  </span>
+
+                  <span>
+                    {{ job.applied_count }} Applied
+                  </span>
+
+                  <span>
+                    {{ job.skills }}
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <!-- Job Status -->
+              <span class="badge">
+
+                {% if job.active %}
+
+                  Active Drive
+
+                {% else %}
+
+                  Closed
+
+                {% endif %}
+
+              </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 JOB PIPELINE METRICS
+            ================================================== -->
+            <div
+              class="grid g3"
+              style="margin-top: 10px;"
+            >
+
+              <!-- Applied -->
+              <div class="kpi">
+
+                <strong>
+                  Applied
+                </strong>
+
+                <span>
+                  {{ job.applied_count }}
+                </span>
+
+              </div>
+
+
+              <!-- Shortlisted -->
+              <div class="kpi">
+
+                <strong>
+                  Shortlisted
+                </strong>
+
+                <span>
+                  {{ job.shortlisted_count }}
+                </span>
+
+              </div>
+
+
+              <!-- Interviews -->
+              <div class="kpi">
+
+                <strong>
+                  Interviews
+                </strong>
+
+                <span>
+                  {{ job.interview_count }}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+        {% empty %}
+
+          <!-- No Jobs -->
+          <div class="notice">
+            No drives posted yet.
+            Create your first campus drive below.
+          </div>
+
+        {% endfor %}
+
+      </div>
+
+
+      <!-- =======================================================
+           CREATE NEW CAMPUS DRIVE
+      ======================================================== -->
+      <section
+        class="section card pad"
+        id="new-drive"
+      >
+
+        <div class="section-head">
+
+          <h2>
+            Post New Campus Drive
+          </h2>
+
+          <span>
+            Live database form
+          </span>
+
+        </div>
+
+
+        <!-- =====================================================
+             NEW DRIVE FORM
+        ====================================================== -->
+        <form
+          class="drive-form"
+          action="/recruiter-jobs/"
+          method="post"
+        >
+
+          {% csrf_token %}
+
+
+          <div class="formgrid">
+
+
+            <!-- Job Title -->
+            <div class="field">
+
+              <label for="job-title">
+                Job Title
+              </label>
+
+              <input
+                id="job-title"
+                name="job_title"
+                placeholder="Software Engineer"
+                required
+              >
+
+            </div>
+
+
+            <!-- Company Name -->
+            <div class="field">
+
+              <label for="company-name">
+                Company Name
+              </label>
+
+              <input
+                id="company-name"
+                name="company"
+                placeholder="Company"
+                required
+              >
+
+            </div>
+
+
+            <!-- CTC / Salary -->
+            <div class="field">
+
+              <label for="ctc">
+                CTC / Salary
+              </label>
+
+              <input
+                id="ctc"
+                name="ctc"
+                placeholder="₹20 LPA"
+              >
+
+            </div>
+
+
+            <!-- Minimum CGPA -->
+            <div class="field">
+
+              <label for="cgpa">
+                Min CGPA
+              </label>
+
+              <input
+                id="cgpa"
+                name="cgpa"
+                type="number"
+                min="0"
+                max="10"
+                step="0.1"
+                placeholder="7.5"
+                required
+              >
+
+            </div>
+
+
+            <!-- Job Description for AI Resume Screening -->
+            <div class="field full">
+
+              <label for="job-description">Job Description</label>
+
+              <textarea
+                id="job-description"
+                name="description"
+                rows="7"
+                placeholder="Paste the complete job description here. NexusAI will use it for job-specific AI resume screening."
+                required
+              ></textarea>
+
+              <small class="muted">Students will be able to compare their resume against this description and see an ATS-style score, matched skills and missing keywords.</small>
+
+            </div>
+
+
+            <!-- Required Skills -->
+            <div class="field full">
+
+              <label for="skills">
+                Required Skill Tags (comma separated)
+              </label>
+
+              <input
+                id="skills"
+                name="skills"
+                placeholder="React, TypeScript, SQL"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- Form Actions -->
+          <div class="actions">
+
+            <a
+              class="btn secondary"
+              href="/recruiter-jobs.html"
+            >
+              Cancel
+            </a>
+
+            <button
+              class="btn primary"
+              type="submit"
+            >
+              Publish Drive
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         RECRUITER BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+
+        <!-- Candidates -->
+        <a
+          class="nav-item"
+          href="/recruiter-candidates.html"
+        >
+          ♟ Recruiter Candidates
+        </a>
+
+
+        <!-- Jobs — Active -->
+        <a
+          class="nav-item active"
+          href="/recruiter-jobs.html"
+        >
+          ▣ Jobs
+        </a>
+
+
+        <!-- Analytics -->
+        <a
+          class="nav-item"
+          href="/recruiter-analytics.html"
+        >
+          ◒ Analytics
+        </a>
+
+
+        <!-- Sourcing -->
+        <a
+          class="nav-item"
+          href="/recruiter-sourcing.html"
+        >
+          ⌕ Sourcing
+        </a>
+
+
+        <!-- Settings -->
+        <a
+          class="nav-item"
+          href="/recruiter-settings.html"
+        >
+          ⚙ Settings
+        </a>
+
+      </div>
+
+    </nav>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+    <div class="footer">
+      NexusAI • Live recruiter drive management • MySQL connected
+    </div>
+
+  </div>
+
+</body>
+
+</html>

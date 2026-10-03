@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Resume Intelligence — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+        <!-- NexusAI Student Branding -->
+        <a
+          class="brand"
+          href="/student-dashboard.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+
+                <i class="dot"></i>
+
+                Placement Season Live
+
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Campus Career Copilot
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Student Navigation Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+
+          <!-- Switch to Recruiter Mode -->
+          <a
+            class="role-btn"
+            href="/recruiter-dashboard.html"
+          >
+            ⇄ <span>Recruiter Mode</span>
+          </a>
+
+
+          <!-- Applications -->
+          <a
+            class="icon-btn"
+            href="/applications.html"
+          >
+            ◌
+          </a>
+
+
+          <!-- Profile -->
+          <a
+            class="icon-btn"
+            href="/profile.html"
+          >
+            A
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+
+      <!-- =======================================================
+           DJANGO MESSAGES
+      ======================================================== -->
+      {% if messages %}
+
+        {% for message in messages %}
+
+          <div class="notice section">
+            {{ message }}
+          </div>
+
+        {% endfor %}
+
+      {% endif %}
+
+
+      <!-- =======================================================
+           PAGE HEADER
+      ======================================================== -->
+      <div class="section-head">
+
+        <div>
+
+          <h1 class="page-title">
+            Resume Intelligence Studio
+          </h1>
+
+          <p class="subtitle">
+            AI ATS Scanner &amp; Keyword Optimization Engine
+          </p>
+
+        </div>
+
+
+        <!-- Match Tier -->
+        <span class="badge purple">
+          MATCH TIER 1
+        </span>
+
+      </div>
+
+
+      <!-- =======================================================
+           RESUME FILE + ATS SCORE
+      ======================================================== -->
+      <div class="grid g2">
+
+
+        <!-- =====================================================
+             RESUME FILE
+        ====================================================== -->
+        <div class="card pad">
+
+          <div class="section-head">
+
+            <h2>
+              Resume file
+            </h2>
+
+            <span>
+
+              {% if resume %}
+
+                Uploaded
+                {{ resume.created_at|date:"d M Y" }}
+
+              {% else %}
+
+                Not uploaded
+
+              {% endif %}
+
+            </span>
+
+          </div>
+
+
+          <!-- Existing Resume -->
+          {% if resume %}
+
+            <div class="kpi">
+
+              <strong>
+                {{ resume.file.name|cut:"resumes/" }}
+              </strong>
+
+              <span>
+                Latest analysis
+              </span>
+
+            </div>
+
+          {% else %}
+
+            <!-- No Resume -->
+            <div class="notice">
+              Upload a PDF or DOCX resume to start.
+            </div>
+
+          {% endif %}
+
+
+          <!-- ===================================================
+               RESUME UPLOAD / REPLACEMENT FORM
+          ==================================================== -->
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="/resume-intelligence/"
+            style="margin-top: 12px;"
+          >
+
+            {% csrf_token %}
+
+
+            <div class="field">
+
+              <label for="resume-file">
+                Replace Resume
+              </label>
+
+              <input
+                class="file-input"
+                id="resume-file"
+                name="resume"
+                type="file"
+                accept=".pdf,.docx"
+                required
+              >
+
+            </div>
+
+
+            <!-- Run AI Scan -->
+            <div class="actions">
+
+              <button
+                class="btn primary"
+                type="submit"
+              >
+                Run AI Scan
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+
+        <!-- =====================================================
+             ATS SCORE
+        ====================================================== -->
+        <div class="card pad">
+
+          <div class="section-head">
+
+            <h2>
+              ATS Score
+            </h2>
+
+            <span class="green">
+
+              {% if resume %}
+
+                Analyzed
+
+              {% else %}
+
+                Awaiting resume
+
+              {% endif %}
+
+            </span>
+
+          </div>
+
+
+          <!-- Current ATS Score -->
+          <div class="statline">
+
+            <strong
+              style="font-size: 30px;"
+              class="green"
+            >
+              {{ resume.ats_score|default:0 }}
+            </strong>
+
+            <span class="muted">
+              Current ATS-style score
+            </span>
+
+          </div>
+
+
+          <!-- ATS Progress Bar -->
+          <div class="progress green">
+
+            <span
+              style="width: {{ resume.ats_score|default:0 }}%;"
+            ></span>
+
+          </div>
+
+
+          <!-- Skill Analysis -->
+          <div
+            class="grid g2"
+            style="margin-top: 12px;"
+          >
+
+
+            <!-- Matched Skills -->
+            <div class="kpi">
+
+              <strong>
+                Matched Skills
+              </strong>
+
+              <span>
+                {{ resume.matched_skills|default:"—" }}
+              </span>
+
+            </div>
+
+
+            <!-- Missing Skills -->
+            <div class="kpi">
+
+              <strong>
+                Missing Skills
+              </strong>
+
+              <span>
+                {{ resume.missing_skills|default:"—" }}
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =======================================================
+           OPTIMIZATION + VERIFIED STRENGTHS
+      ======================================================== -->
+      <section class="section grid g2">
+
+
+        <!-- =====================================================
+             OPTIMIZATION ACTIONS
+        ====================================================== -->
+        <div class="card pad">
+
+          <div class="section-head">
+
+            <h2>
+              Optimization Actions
+            </h2>
+
+            <span>
+              AI recommended
+            </span>
+
+          </div>
+
+
+          <!-- Keyword Optimization Notice -->
+          <div class="notice warn">
+
+            <strong>
+              Keyword optimization
+            </strong>
+
+            <br>
+
+            Add relevant skills from your target job descriptions
+            that genuinely match your experience.
+
+          </div>
+
+
+          <!-- Optimization Actions -->
+          <div class="actions">
+
+            <a
+              class="btn secondary"
+              href="/role-match.html"
+            >
+              ⌕ Role Match
+            </a>
+
+            <a
+              class="btn primary"
+              href="/jobs.html"
+            >
+              Find Matching Jobs
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             VERIFIED STRENGTHS
+        ====================================================== -->
+        <div class="card pad">
+
+          <div class="feature">
+
+            <span
+              class="feature-icon"
+              style="color: var(--green);"
+            >
+              ✓
+            </span>
+
+            <span>
+
+              <h3>
+                Verified Strengths
+              </h3>
+
+              <p>
+                Your ATS score and extracted skills are stored
+                with your account for future matching.
+              </p>
+
+            </span>
+
+          </div>
+
+
+          <!-- Resume Analysis Details -->
+          {% if resume %}
+
+            <div
+              class="list"
+              style="margin-top: 12px;"
+            >
+
+
+              <!-- Extracted Text -->
+              <div class="kpi">
+
+                <strong>
+                  Extracted text
+                </strong>
+
+                <span>
+                  {{ resume.extracted_text|length }} characters
+                </span>
+
+              </div>
+
+
+              <!-- Latest ATS Score -->
+              <div class="kpi">
+
+                <strong>
+                  Latest score
+                </strong>
+
+                <span>
+                  {{ resume.ats_score }}/100
+                </span>
+
+              </div>
+
+            </div>
+
+          {% endif %}
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         STUDENT BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+
+        <!-- Dashboard -->
+        <a
+          class="nav-item"
+          href="/student-dashboard.html"
+        >
+          ▦ Dashboard
+        </a>
+
+
+        <!-- Resume AI — Active -->
+        <a
+          class="nav-item active"
+          href="/resume-intelligence.html"
+        >
+          ✦ Resume AI
+        </a>
+
+
+        <!-- Jobs -->
+        <a
+          class="nav-item"
+          href="/jobs.html"
+        >
+          ⌁ Jobs &amp; Match
+        </a>
+
+
+        <!-- Preparation & Tests -->
+        <a
+          class="nav-item"
+          href="/prep-and-tests.html"
+        >
+          ◫ Prep &amp; Tests
+        </a>
+
+
+        <!-- Applications -->
+        <a
+          class="nav-item"
+          href="/applications.html"
+        >
+          ✓ Applications
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Schedule Interview — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+
+
+  <!-- =========================================================
+       PAGE-SPECIFIC STYLES
+  ========================================================== -->
+  <style>
+    /* Interview scheduling container */
+    .schedule {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    /* Scheduling form grid */
+    .schedule-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 700px) {
+      .schedule-card {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+
+        <!-- NexusAI Recruiter Branding -->
+        <a
+          class="brand"
+          href="/recruiter-candidates.html"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                Recruiter
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+              Interview Scheduling
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Recruiter Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout.html"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+      <div class="schedule">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+        <div class="section-head">
+
+          <div>
+
+            <h1 class="page-title">
+              Schedule Candidate Interview
+            </h1>
+
+            <p class="subtitle">
+
+              {{ application.student.profile.full_name|default:application.student.username }}
+
+              ·
+
+              {{ application.job.title }}
+
+              ·
+
+              {{ application.job.company }}
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SCHEDULING CARD
+        ====================================================== -->
+        <div class="card pad">
+
+
+          <!-- ===================================================
+               INTERVIEW WORKFLOW INFORMATION
+          ==================================================== -->
+          <div
+            class="notice"
+            style="margin-bottom: 16px;"
+          >
+
+            <strong>
+              Interview workflow:
+            </strong>
+
+            After you schedule this round, the candidate will
+            receive it in their Interview Center.
+
+            You will see
+            <b>Waiting for response</b>
+            until they submit an answer.
+
+            Only after a response is received can you evaluate
+            the interview.
+
+          </div>
+
+
+          <!-- ===================================================
+               INTERVIEW SCHEDULING FORM
+          ==================================================== -->
+          <form
+            method="post"
+            action="/recruiter-candidates/{{ application.id }}/schedule-interview/"
+          >
+
+            {% csrf_token %}
+
+
+            <div class="schedule-card">
+
+
+              <!-- ===============================================
+                   INTERVIEW TYPE
+              ================================================ -->
+              <label class="field">
+
+                <span>
+                  Interview Type
+                </span>
+
+                <select name="interview_type">
+
+                  <option value="technical">
+                    Technical Interview
+                  </option>
+
+                  <option value="hr">
+                    HR Interview
+                  </option>
+
+                  <option value="behavioral">
+                    Behavioral Interview
+                  </option>
+
+                </select>
+
+              </label>
+
+
+              <!-- ===============================================
+                   DATE & TIME
+              ================================================ -->
+              <label class="field">
+
+                <span>
+                  Date &amp; Time
+                </span>
+
+                <input
+                  type="datetime-local"
+                  name="scheduled_at"
+                  required
+                >
+
+              </label>
+
+
+              <!-- ===============================================
+                   INTERVIEW DURATION
+              ================================================ -->
+              <label class="field">
+
+                <span>
+                  Duration (minutes)
+                </span>
+
+                <input
+                  type="number"
+                  name="duration_minutes"
+                  min="15"
+                  max="180"
+                  value="30"
+                  required
+                >
+
+              </label>
+
+
+              <!-- ===============================================
+                   MEETING LINK
+              ================================================ -->
+              <label class="field">
+
+                <span>
+                  Meeting Link (optional)
+                </span>
+
+                <input
+                  type="url"
+                  name="meeting_link"
+                  placeholder="https://meet.google.com/..."
+                >
+
+              </label>
+
+
+              <!-- ===============================================
+                   INTERVIEW QUESTION
+              ================================================ -->
+              <label
+                class="field"
+                style="grid-column: 1 / -1;"
+              >
+
+                <span>
+                  Interview Question / Prompt
+                </span>
+
+                <textarea
+                  name="question"
+                  rows="4"
+                >Explain one of your projects and your exact technical contribution.</textarea>
+
+              </label>
+
+            </div>
+
+
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+            <div class="actions">
+
+
+              <!-- Cancel -->
+              <a
+                class="btn secondary"
+                href="/recruiter-candidates/{{ application.id }}/review/"
+              >
+                Cancel
+              </a>
+
+
+              <!-- Schedule Interview -->
+              <button
+                class="btn primary"
+                type="submit"
+              >
+                Schedule Interview
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+
+        <!-- =====================================================
+             HOW THE INTERVIEW WORKFLOW WORKS
+        ====================================================== -->
+        <div class="notice section">
+
+          <strong>
+            How it works:
+          </strong>
+
+          The candidate moves to Interview status, sees the
+          scheduled round in their Applications/Interviews area,
+          and can join your meeting link or submit a response
+          in the NexusAI interview room.
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+
+</html>

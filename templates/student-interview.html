@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Company Interview — NexusAI</title>
+
+  <!-- Main NexusAI stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+
+
+  <!-- =========================================================
+       PAGE-SPECIFIC INTERVIEW STYLES
+  ========================================================== -->
+  <style>
+    /* Main interview container */
+    .interview-room {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    /* Interview question */
+    .question {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.45;
+      color: #172033;
+      background: #f7f8fc;
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    /* Response submitted state */
+    .submitted {
+      padding: 18px;
+      border: 1px solid #8ddfd1;
+      background: #effcf9;
+      border-radius: 14px;
+    }
+
+    /* Waiting state */
+    .waiting {
+      padding: 18px;
+      border: 1px solid #f2c94c;
+      background: #fff8df;
+      border-radius: 14px;
+    }
+
+    /* Final result card */
+    .result-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    /* Final score */
+    .result {
+      font-size: 48px;
+      font-weight: 950;
+    }
+
+    /* Interview status indicators */
+    .status-line {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Candidate response / feedback text */
+    .response-text {
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px solid #dfe5ee;
+      border-radius: 12px;
+      padding: 16px;
+      line-height: 1.6;
+    }
+
+    /* Responsive result score */
+    @media (max-width: 700px) {
+      .result {
+        font-size: 38px;
+      }
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  <div class="shell">
+
+
+    <!-- =========================================================
+         TOP NAVIGATION
+    ========================================================== -->
+    <header class="topbar">
+
+      <div class="topbar-inner">
+
+
+        <!-- NexusAI Interview Branding -->
+        <a
+          class="brand"
+          href="/student-dashboard/"
+        >
+
+          <div class="logo">
+            N
+          </div>
+
+          <div>
+
+            <div class="brand-title">
+
+              NexusAI
+
+              <span class="status">
+                Company Interview
+              </span>
+
+            </div>
+
+            <div class="brand-sub">
+
+              {{ interview.application.job.company }}
+
+              ·
+
+              {{ interview.application.job.title }}
+
+            </div>
+
+          </div>
+
+        </a>
+
+
+        <!-- Student Actions -->
+        <div class="top-actions">
+
+          <!-- Logout -->
+          <a
+            class="logout-btn"
+            href="/logout/"
+          >
+            ↪ <span>Logout</span>
+          </a>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+    <main class="container">
+
+      <div class="interview-room">
+
+
+        <!-- =====================================================
+             DJANGO MESSAGES
+        ====================================================== -->
+        {% if messages %}
+
+          {% for message in messages %}
+
+            <div class="notice section">
+              {{ message }}
+            </div>
+
+          {% endfor %}
+
+        {% endif %}
+
+
+        <!-- =====================================================
+             INTERVIEW HEADER
+        ====================================================== -->
+        <div class="section-head">
+
+          <div>
+
+            <h1 class="page-title">
+              {{ interview.get_interview_type_display }}
+            </h1>
+
+            <p class="subtitle">
+
+              Scheduled for
+
+              {{ interview.scheduled_at|date:"d M Y, h:i A" }}
+
+              ·
+
+              {{ interview.duration_minutes }}
+              minutes
+
+            </p>
+
+          </div>
+
+
+          <!-- Interview Status -->
+          <div class="status-line">
+
+            <span class="badge">
+              {{ interview.get_status_display }}
+            </span>
+
+
+            <!-- Response Submitted Indicator -->
+            {% if interview.candidate_response %}
+
+              <span class="badge">
+                Response Submitted
+              </span>
+
+            {% endif %}
+
+          </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             COMPLETED INTERVIEW
+        ====================================================== -->
+        {% if interview.status == "completed" %}
+
+          <section class="card pad result-card">
+
+
+            <!-- Result Heading -->
+            <span class="label">
+              INTERVIEW RESULT
+            </span>
+
+
+            <!-- Overall Score -->
+            <div class="result">
+              {{ interview.overall_score }}%
+            </div>
+
+
+            <!-- Decision -->
+            <strong>
+              {{ interview.get_decision_display }}
+            </strong>
+
+
+            <p class="muted">
+              The recruiter has finalized this interview.
+            </p>
+
+
+            <!-- Recruiter Feedback -->
+            {% if interview.recruiter_feedback %}
+
+              <div class="response-text">
+                {{ interview.recruiter_feedback }}
+              </div>
+
+            {% endif %}
+
+
+            <!-- Candidate's Submitted Response -->
+            {% if interview.candidate_response %}
+
+              <h3>
+                Your Submitted Response
+              </h3>
+
+              <div class="response-text">
+                {{ interview.candidate_response }}
+              </div>
+
+            {% endif %}
+
+
+            <!-- Result Actions -->
+            <div class="actions">
+
+              <a
+                class="btn primary"
+                href="/applications/"
+              >
+                Back to Applications
+              </a>
+
+              <a
+                class="btn secondary"
+                href="/my-interviews/"
+              >
+                Interview Center
+              </a>
+
+            </div>
+
+          </section>
+
+
+        <!-- =====================================================
+             ACTIVE INTERVIEW
+        ====================================================== -->
+        {% else %}
+
+          <section class="card pad">
+
+
+            <!-- =================================================
+                 INTERVIEW PROMPT
+            ================================================== -->
+            <div class="section-head">
+
+              <h2>
+                Interview Prompt
+              </h2>
+
+              <span>
+                Recruiter question
+              </span>
+
+            </div>
+
+
+            <!-- Interview Question -->
+            <div class="question">
+              {{ interview.question }}
+            </div>
+
+
+            <!-- =================================================
+                 MEETING LINK
+            ================================================== -->
+            {% if interview.meeting_link %}
+
+              <div class="actions">
+
+                <a
+                  class="btn primary"
+                  href="{{ interview.meeting_link }}"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Join Recruiter Meeting ↗
+                </a>
+
+              </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 CANDIDATE RESPONSE STATE
+            ================================================== -->
+            {% if interview.candidate_response %}
+
+
+              <!-- Response Already Submitted -->
+              <div
+                class="submitted"
+                style="margin-top: 20px;"
+              >
+
+                <strong>
+                  Response submitted ✓
+                </strong>
+
+                <p>
+                  Your response has been sent to the recruiter
+                  successfully. You cannot edit or submit another
+                  response for this interview.
+                </p>
+
+
+                <!-- Submitted Response -->
+                <div class="response-text">
+                  {{ interview.candidate_response }}
+                </div>
+
+
+                <!-- Next Step -->
+                <p
+                  class="muted"
+                  style="margin-bottom: 0;"
+                >
+
+                  <strong>
+                    Next step:
+                  </strong>
+
+                  recruiter evaluation is pending.
+                  You do not need to submit anything else
+                  for this round.
+
+                </p>
+
+              </div>
+
+
+            {% else %}
+
+
+              <!-- =================================================
+                   CANDIDATE RESPONSE FORM
+              ================================================== -->
+              <form
+                method="post"
+                action="/my-interviews/{{ interview.id }}/"
+                style="margin-top: 20px;"
+              >
+
+                {% csrf_token %}
+
+
+                <label class="field">
+
+                  <span>
+                    Your response / interview notes
+                  </span>
+
+                  <textarea
+                    name="candidate_response"
+                    rows="9"
+                    placeholder="Type your response here for the recruiter..."
+                    required
+                  ></textarea>
+
+                </label>
+
+
+                <!-- Submit Response -->
+                <button
+                  class="btn primary"
+                  type="submit"
+                >
+                  Submit Response
+                </button>
+
+              </form>
+
+            {% endif %}
+
+          </section>
+
+        {% endif %}
+
+      </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         STUDENT BOTTOM NAVIGATION
+    ========================================================== -->
+    <nav class="bottom-nav">
+
+      <div class="bottom-inner">
+
+
+        <!-- Dashboard -->
+        <a
+          class="nav-item"
+          href="/student-dashboard/"
+        >
+          ▦ Dashboard
+        </a>
+
+
+        <!-- Resume AI -->
+        <a
+          class="nav-item"
+          href="/resume-intelligence/"
+        >
+          ✦ Resume AI
+        </a>
+
+
+        <!-- Jobs -->
+        <a
+          class="nav-item"
+          href="/jobs/"
+        >
+          ⌁ Jobs &amp; Match
+        </a>
+
+
+        <!-- Applications — Active -->
+        <a
+          class="nav-item active"
+          href="/applications/"
+        >
+          ✓ Applications
+        </a>
+
+      </div>
+
+    </nav>
+
+  </div>
+
+</body>
+
+</html>
